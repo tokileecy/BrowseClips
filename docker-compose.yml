@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  node-app:
+    build:
+      context: ./docker/node-app
+      args:
+        NODE_VERSION: 16
+      dockerfile: Dockerfile
+    command: bash
+    <<: &default
+      image: vtuber_clips/node-app
+  postgres:
+    image: postgres
+    env_file: .env
+    container_name: vtuber_clips-postgres
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./apps/postgres:/var/lib/postgresql/data
+  nest-app:
+    build:
+      context: ./docker/nest-app
+      args:
+        BASE_IMAGE: vtuber_clips/node-app
+      dockerfile: Dockerfile
+    container_name: vtuber_clips-nest-app
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@postgres:5432/${DATABASE_NAME}?connect_timeout=300
+    volumes:
+      - ./apps/nest-app:/srv/app
+    command: >
+      /bin/sh -c "
+        echo DATABASE_URL = \"$$DATABASE_URL\" > .env &&
+        if [ $APP_ENV == \"production\" ]; then yarn start:prod; else yarn start:dev; fi
+      "
+    ports:
+      - '4000:4000'
+    depends_on:
+      - postgres
+  next-app:
+    <<: *default
+    container_name: vtuber_clips-next-app
+    command: >
+      /bin/sh -c "if [ $APP_ENV == \"production\" ]; then yarn start; else yarn dev; fi"
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./apps/next-app:/srv/app
