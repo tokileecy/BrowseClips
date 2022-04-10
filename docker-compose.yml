@@ -15,9 +15,9 @@ services:
     env_file: .env
     container_name: vtuber_clips-postgres
     environment:
-      POSTGRES_DB: ${DATABASE_NAME}
-      POSTGRES_USER: ${DATABASE_USERNAME}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME:-nest}
+      POSTGRES_USER: ${DATABASE_USERNAME:-nest}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-nest}
     ports:
       - '5432:5432'
     volumes:
@@ -32,13 +32,13 @@ services:
     restart: unless-stopped
     env_file: .env
     environment:
-      DATABASE_URL: postgresql://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@postgres:5432/${DATABASE_NAME}?connect_timeout=300
+      DATABASE_URL: postgresql://${DATABASE_USERNAME:-nest}:${DATABASE_PASSWORD:-nest}@postgres:5432/${DATABASE_NAME:-nest}?connect_timeout=300
     volumes:
       - ./apps/nest-app:/srv/app
     command: >
       /bin/sh -c "
         echo DATABASE_URL = \"$$DATABASE_URL\" > .env &&
-        if [ $APP_ENV == \"production\" ]; then yarn start:prod; else yarn start:dev; fi
+        if [ ${APP_ENV:-development} == \"production\" ]; then yarn start:prod; else yarn start:dev; fi
       "
     ports:
       - '4000:4000'
@@ -48,7 +48,7 @@ services:
     <<: *default
     container_name: vtuber_clips-next-app
     command: >
-      /bin/sh -c "if [ $APP_ENV == \"production\" ]; then yarn start; else yarn dev; fi"
+      /bin/sh -c "if [ ${APP_ENV:-development} == \"production\" ]; then yarn start; else yarn dev; fi"
     ports:
       - '3000:3000'
     volumes:

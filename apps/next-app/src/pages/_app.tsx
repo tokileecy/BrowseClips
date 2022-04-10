@@ -1,10 +1,13 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import store from '@/redux/store'
 import Head from 'next/head'
+import { Provider } from 'react-redux'
+import CssBaseline from '@mui/material/CssBaseline'
 
-function MyApp({ Component, pageProps }: AppProps) {
+const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <>
+    <Provider store={store}>
       <Head>
         {/* <link
           rel="icon"
@@ -14,8 +17,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         /> */}
         {/* <title></title> */}
       </Head>
+      <CssBaseline />
       <Component {...pageProps} />
-    </>
+    </Provider>
   )
 }
 

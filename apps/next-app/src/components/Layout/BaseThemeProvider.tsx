@@ -7,6 +7,8 @@ const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
+          position: 'fixed',
+          zIndex: 1000,
           // backgroundColor: 'white',
         },
       },
@@ -15,7 +17,8 @@ const theme = createTheme({
       styleOverrides: {
         root: {
           margin: 'auto',
-          width: ['100%', '100%', 640, 1024],
+          width: ['100%', '100%', '95%'],
+          maxWidth: 'initial',
         },
       },
     },

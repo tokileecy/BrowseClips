@@ -12,7 +12,12 @@ const Main = (props: MainProps) => {
     <Box
       sx={{
         flexGrow: 1,
-        backgroundColor: '#1c1c1c',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'start',
+        justifyContent: 'start',
+        overflowY: 'auto',
+        marginTop: '64px',
       }}
     >
       {children}

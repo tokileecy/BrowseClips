@@ -3,7 +3,7 @@ import { Container, Toolbar, Box } from '@mui/material'
 
 const Header = () => {
   return (
-    <AppBar position="static">
+    <AppBar>
       <Box>
         <Container>
           <Toolbar>
