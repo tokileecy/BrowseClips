@@ -1,15 +1,6 @@
 version: '3'
 
 services:
-  node-app:
-    build:
-      context: ./docker/node-app
-      args:
-        NODE_VERSION: 16
-      dockerfile: Dockerfile
-    command: bash
-    <<: &default
-      image: vtuber_clips/node-app
   postgres:
     image: postgres
     env_file: .env
@@ -23,21 +14,21 @@ services:
     volumes:
       - ./apps/postgres:/var/lib/postgresql/data
   nest-app:
-    build:
-      context: ./docker/nest-app
-      args:
-        BASE_IMAGE: vtuber_clips/node-app
-      dockerfile: Dockerfile
+    image: node:16
+    user: '1000:1000'
     container_name: vtuber_clips-nest-app
     restart: unless-stopped
     env_file: .env
     environment:
-      DATABASE_URL: postgresql://${DATABASE_USERNAME:-nest}:${DATABASE_PASSWORD:-nest}@postgres:5432/${DATABASE_NAME:-nest}?connect_timeout=300
+      - NODE_OPTIONS=--max_old_space_size=2048
+      - NODE_ENV=${APP_ENV:-development}
+      - DATABASE_URL=postgresql://${DATABASE_USERNAME:-nest}:${DATABASE_PASSWORD:-nest}@postgres:5432/${DATABASE_NAME:-nest}?connect_timeout=300
     volumes:
       - ./apps/nest-app:/srv/app
+      - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+    working_dir: /srv/app
     command: >
       /bin/sh -c "
-        echo DATABASE_URL = \"$$DATABASE_URL\" > .env &&
         if [ ${APP_ENV:-development} == \"production\" ]; then yarn start:prod; else yarn start:dev; fi
       "
     ports:
@@ -45,11 +36,19 @@ services:
     depends_on:
       - postgres
   next-app:
-    <<: *default
+    image: node:16
+    user: '1000:1000'
     container_name: vtuber_clips-next-app
-    command: >
-      /bin/sh -c "if [ ${APP_ENV:-development} == \"production\" ]; then yarn start; else yarn dev; fi"
+    env_file: .env
     ports:
       - '3000:3000'
+    environment:
+      - NODE_OPTIONS=--max_old_space_size=2048
+      - NODE_ENV=${APP_ENV:-development}
     volumes:
       - ./apps/next-app:/srv/app
+      - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+    working_dir: /srv/app
+    command: >
+      /bin/sh -c "if [ ${APP_ENV:-development} == \"production\" ]; then yarn start; else yarn dev; fi"
+    
