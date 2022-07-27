@@ -26,6 +26,22 @@ model Channel {
   country String? @default("")
   publishedAt DateTime?
   thumbnails Json?
+  videos Video[]
+}
+
+model Video {
+  id String @unique
+  channelId String
+  channel Channel @relation(fields: [channelId], references: [id])
+  title String? @default("")
+  description String? @default("")
+  publishedAt DateTime?
+  thumbnails Json?
+  status Json?
+  statistics Json?
+  liveStreamingDetails Json?
+  contentDetails Json?
+  tags String[]
 }
 
 model Playlist {
