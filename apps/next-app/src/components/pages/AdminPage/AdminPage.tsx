@@ -7,15 +7,24 @@ import { Paper } from '@mui/material'
 import api from '@/lib/api'
 import { ChangeEvent, useState } from 'react'
 
-const HomePage = () => {
+const AdminPage = () => {
   const [channelId, setChannelId] = useState('')
+  const [videoId, setVideoId] = useState('')
 
   const handleAddChannel = () => {
     api.addChannelByIds([channelId])
   }
 
-  const handleTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleAddVideo = () => {
+    api.addVideoByIds([videoId])
+  }
+
+  const handleChannelIdChange = (e: ChangeEvent<HTMLInputElement>) => {
     setChannelId(e.target.value)
+  }
+
+  const handleVideoIdChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setVideoId(e.target.value)
   }
 
   return (
@@ -51,7 +60,7 @@ const HomePage = () => {
                 color: 'black',
               }}
             >
-              Add Cannel
+              Add Data
             </Typography>
             <Box
               sx={{
@@ -69,9 +78,31 @@ const HomePage = () => {
                 size="small"
                 label="Channel Id"
                 value={channelId}
-                onChange={handleTextFieldChange}
+                onChange={handleChannelIdChange}
               />
               <Button variant="contained" onClick={handleAddChannel}>
+                Add
+              </Button>
+            </Box>
+            <Box
+              sx={{
+                mt: 2,
+                display: 'flex',
+                alignItems: 'center',
+                flexGrow: 1,
+              }}
+            >
+              <TextField
+                sx={{
+                  mr: 2,
+                  flexGrow: 1,
+                }}
+                size="small"
+                label="Video Id"
+                value={videoId}
+                onChange={handleVideoIdChange}
+              />
+              <Button variant="contained" onClick={handleAddVideo}>
                 Add
               </Button>
             </Box>
@@ -82,4 +113,4 @@ const HomePage = () => {
   )
 }
 
-export default HomePage
+export default AdminPage

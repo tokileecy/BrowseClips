@@ -1,10 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
-import vedioReducer from './features/vedios/vedioSlice'
+import videos from './features/videos/videoSlice'
 
 const store = configureStore({
   devTools: true,
   reducer: {
-    vedios: vedioReducer,
+    videos,
   },
 })
 

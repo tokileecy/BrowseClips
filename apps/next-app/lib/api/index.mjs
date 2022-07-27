@@ -30,6 +30,36 @@ class Api {
       ids,
     })
   }
+
+  /**
+   *
+   * @returns { import('axios').AxiosResponse<{
+   *  id: string,
+   *  title: string?,
+   *  description: string?,
+   *  country: string?,
+   *  publishedAt: DateTime,
+   *  thumbnails: {
+   *    height: number,
+   *    width: number,
+   *    url: string,
+   *  }[],
+   * }> }
+   */
+  listVideos = () => {
+    return apiInstance.get('/videos')
+  }
+
+  /**
+   *
+   * @param { string[] } ids
+   * @returns
+   */
+  addVideoByIds = (ids) => {
+    return apiInstance.post('/videos', {
+      ids,
+    })
+  }
 }
 
 export default new Api()

@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import VideoCard from './VideoCard'
 import { useSelector, useDispatch } from 'react-redux'
-import { setVedios } from '@/redux/features/vedios/vedioSlice'
+import { setVideos } from '@/redux/features/videos/videoSlice'
 import { RootState } from '@/redux/store'
 
 const mockDatas = Array(50)
@@ -21,11 +21,11 @@ const mockDatas = Array(50)
 
 const HomePage = () => {
   const dispatch = useDispatch()
-  const vedios = useSelector((state: RootState) => state.vedios)
+  const videos = useSelector((state: RootState) => state.videos)
 
   useEffect(() => {
     dispatch(
-      setVedios({ ids: [...Object.keys(mockDatas)], itemById: mockDatas })
+      setVideos({ ids: [...Object.keys(mockDatas)], itemById: mockDatas })
     )
   }, [])
   return (
@@ -69,10 +69,10 @@ const HomePage = () => {
             rowGap: 4,
           }}
         >
-          {vedios.ids.map((id) => {
-            const vedioData = vedios.itemById[id]
+          {videos.ids.map((id) => {
+            const videoData = videos.itemById[id]
 
-            return <VideoCard key={id} {...vedioData} />
+            return <VideoCard key={id} {...videoData} />
           })}
         </Box>
       </Box>

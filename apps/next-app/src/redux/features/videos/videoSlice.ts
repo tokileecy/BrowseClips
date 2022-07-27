@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-export type Vedio = {
+export type Video = {
   imgUrl: string
   userName: string
   name: string
@@ -9,7 +9,7 @@ export type Vedio = {
 
 export type InitialState = {
   ids: string[]
-  itemById: Record<string, Vedio>
+  itemById: Record<string, Video>
 }
 
 export const initialState: InitialState = {
@@ -17,15 +17,15 @@ export const initialState: InitialState = {
   itemById: {},
 }
 
-export const vedioSlice = createSlice({
-  name: 'vedios',
+export const videoSlice = createSlice({
+  name: 'videos',
   initialState,
   reducers: {
-    setVedios: (
+    setVideos: (
       state,
       action: PayloadAction<{
         ids: string[]
-        itemById: Record<string, Vedio>
+        itemById: Record<string, Video>
       }>
     ) => {
       state.ids = action.payload.ids
@@ -34,6 +34,6 @@ export const vedioSlice = createSlice({
   },
 })
 
-export const { setVedios } = vedioSlice.actions
+export const { setVideos } = videoSlice.actions
 
-export default vedioSlice.reducer
+export default videoSlice.reducer
