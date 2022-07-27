@@ -19,6 +19,15 @@ model User {
   @@map("user")
 }
 
+model Channel {
+  id String @unique
+  title String? @default("")
+  description String? @default("")
+  country String? @default("")
+  publishedAt DateTime?
+  thumbnails Json?
+}
+
 model Playlist {
   id        Int      @default(autoincrement()) @id
   owner     User     @relation(fields: [ownerId], references: [id])
