@@ -16,6 +16,7 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
+      "@/lib/*": ["lib/*"],
       "@/redux/*": ["src/redux/*"],
       "@/page/*": ["src/page/*"],
       "@/components/*": ["src/components/*"],

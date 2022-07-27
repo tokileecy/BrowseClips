@@ -45,6 +45,8 @@ services:
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
       - NODE_ENV=${APP_ENV:-development}
+      - SERVER_NEST_URL=http://nest-app:4000/
+      - PUBLIC_NEST_URL=${PUBLIC_NEST_URL:-http://127.0.0.1:4000}
     volumes:
       - ./apps/next-app:/srv/app
       - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
