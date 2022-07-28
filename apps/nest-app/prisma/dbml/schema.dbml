@@ -1,0 +1,46 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table user {
+  id Int [pk, increment]
+  email String [unique, not null]
+  name String
+  playlists playlist [not null]
+}
+
+Table Channel {
+  id String [unique, not null]
+  title String [default: '']
+  description String [default: '']
+  country String [default: '']
+  publishedAt DateTime
+  thumbnails Json
+  videos Video [not null]
+}
+
+Table Video {
+  id String [unique, not null]
+  channelId String [not null]
+  channel Channel [not null]
+  title String [default: '']
+  description String [default: '']
+  publishedAt DateTime
+  thumbnails Json
+  status Json
+  statistics Json
+  liveStreamingDetails Json
+  contentDetails Json
+  tags String[] [not null]
+}
+
+Table playlist {
+  id Int [pk, increment]
+  owner user [not null]
+  ownerId Int [not null]
+  name String
+}
+
+Ref: Video.channelId > Channel.id
+
+Ref: playlist.ownerId > user.id
