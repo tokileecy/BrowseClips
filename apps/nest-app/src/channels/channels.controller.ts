@@ -15,4 +15,9 @@ export class ChannelsController {
   async create(@Body() data: { ids: string[] }): Promise<ChannelsModule> {
     return this.channelsService.addChannelById(data.ids);
   }
+
+  @Get('sync')
+  async sync() {
+    return this.channelsService.syncChannelVideos();
+  }
 }
