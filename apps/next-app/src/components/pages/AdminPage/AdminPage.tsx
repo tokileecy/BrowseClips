@@ -8,19 +8,23 @@ import api from '@/lib/api'
 import { ChangeEvent, useState } from 'react'
 
 const AdminPage = () => {
-  const [channelId, setChannelId] = useState('')
+  const [channelIds, setChannelIds] = useState('')
   const [videoId, setVideoId] = useState('')
 
   const handleAddChannel = () => {
-    api.addChannelByIds([channelId])
+    api.addChannelByIds(channelIds.split(','))
   }
 
   const handleAddVideo = () => {
     api.addVideoByIds([videoId])
   }
 
+  const handleSync = () => {
+    api.syncChannelVideos()
+  }
+
   const handleChannelIdChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setChannelId(e.target.value)
+    setChannelIds(e.target.value)
   }
 
   const handleVideoIdChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -62,48 +66,56 @@ const AdminPage = () => {
             >
               Add Data
             </Typography>
-            <Box
-              sx={{
-                mt: 2,
-                display: 'flex',
-                alignItems: 'center',
-                flexGrow: 1,
-              }}
-            >
-              <TextField
+            <Box sx={{
+              mt: 2,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 2,
+            }}>
+              <Box
                 sx={{
-                  mr: 2,
+                  display: 'flex',
+                  alignItems: 'center',
                   flexGrow: 1,
                 }}
-                size="small"
-                label="Channel Id"
-                value={channelId}
-                onChange={handleChannelIdChange}
-              />
-              <Button variant="contained" onClick={handleAddChannel}>
-                Add
-              </Button>
-            </Box>
-            <Box
-              sx={{
-                mt: 2,
-                display: 'flex',
-                alignItems: 'center',
-                flexGrow: 1,
-              }}
-            >
-              <TextField
+              >
+                <TextField
+                  sx={{
+                    mr: 2,
+                    flexGrow: 1,
+                  }}
+                  size="small"
+                  label="Channel Id"
+                  value={channelIds}
+                  onChange={handleChannelIdChange}
+                />
+                <Button variant="contained" onClick={handleAddChannel}>
+                  Add
+                </Button>
+              </Box>
+              <Box
                 sx={{
-                  mr: 2,
+                  display: 'flex',
+                  alignItems: 'center',
                   flexGrow: 1,
                 }}
-                size="small"
-                label="Video Id"
-                value={videoId}
-                onChange={handleVideoIdChange}
-              />
-              <Button variant="contained" onClick={handleAddVideo}>
-                Add
+              >
+                <TextField
+                  sx={{
+                    mr: 2,
+                    flexGrow: 1,
+                  }}
+                  size="small"
+                  label="Video Id"
+                  value={videoId}
+                  onChange={handleVideoIdChange}
+                />
+                <Button variant="contained" onClick={handleAddVideo}>
+                  Add
+                </Button>
+              </Box>
+              <Button variant="contained" onClick={handleSync}>
+                Sync Videos
               </Button>
             </Box>
           </Paper>

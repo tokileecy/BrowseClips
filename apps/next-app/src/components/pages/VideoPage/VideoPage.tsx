@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import Layout from '../../Layout'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -6,14 +7,14 @@ import { useEffect, useState } from 'react'
 import VideoCard from './VideoCard'
 
 const VideoPage = () => {
-  const [vedios, setVedios] = useState<any[]>([])
+  const [videos, setVedios] = useState<any[]>([])
 
   const fetchVideos = async () => {
     try {
       const res = await api.listVideos()
 
-      console.log(res.data)
-      setVedios(res.data)
+      const sortVideos = res.data.sort((a, b) => (new Date(b.publishedAt) - new Date(a.publishedAt )))
+      setVedios(sortVideos)
     } catch (error) {
       console.error(error)
     }
@@ -50,19 +51,21 @@ const VideoPage = () => {
         <Box
           sx={{
             display: 'grid',
+            margin: 'atuo',
             columnGap: 2,
             rowGap: 2,
-            gridTemplateColumns: '1fr 1fr 1fr',
+            gridTemplateColumns: '1fr 1fr 1fr 1fr',
           }}
         >
-          {vedios.map((vedio) => {
+          {videos.map((video) => {
+            const thumbnails = (video.thumbnails?.standard ?? video.thumbnails?.high ?? video.thumbnails?.medium ?? video.thumbnails?.default).url ?? ''
             return (
               <VideoCard
-                key={vedio.id}
-                id={vedio.id}
-                title={vedio.title}
-                thumbnails={vedio.thumbnails.standard.url}
-                description={vedio.description}
+                key={video.id}
+                id={video.id}
+                title={video.title}
+                thumbnails={thumbnails}
+                description={video.description}
               />
             )
           })}

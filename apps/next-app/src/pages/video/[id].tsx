@@ -1,8 +1,10 @@
-import type { NextPage } from 'next'
+import type { GetServerSideProps } from 'next'
 import WatchPage from '../../components/pages/WatchPage'
 
-const Watch: NextPage = () => {
-  return <WatchPage />
-}
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const { id } = query
+  
+  return { props: { id } }
+} 
 
-export default Watch
+export default WatchPage

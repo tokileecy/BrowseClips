@@ -31,6 +31,10 @@ class Api {
     })
   }
 
+  syncChannelVideos = () => {
+    return apiInstance.get('/channels/sync')
+  }
+
   /**
    *
    * @returns { import('axios').AxiosResponse<{

@@ -1,3 +1,5 @@
+import Link from 'next/link'
+import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import CardMedia from '@mui/material/CardMedia'
@@ -20,13 +22,17 @@ const VideoCard = (props: VideoCardProps): JSX.Element => {
         width: '300px',
       }}
     >
-      <CardMedia
-        component="img"
-        height="150"
-        width="300"
-        image={thumbnails}
-        alt="vedio"
-      />
+      <Link href={`/video/${id}`}>
+        <Box component="a" sx={{ cursor: 'pointer' }}>
+          <CardMedia
+            component="img"
+            height="150"
+            width="300"
+            image={thumbnails}
+            alt="vedio"
+          />
+        </Box>
+      </Link>
       <CardContent
         sx={{
           'display': 'flex',

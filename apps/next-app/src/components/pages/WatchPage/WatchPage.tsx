@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography'
 const WatchPage = (props: {id?: string}) => {
   const { id = '' } = props
 
+  console.log(id)
   return (
     <Layout>
       <Box
