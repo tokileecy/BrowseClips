@@ -13,6 +13,25 @@ services:
       - '5432:5432'
     volumes:
       - ./dbs/postgres:/var/lib/postgresql/data
+  crawler-app:
+    image: mcr.microsoft.com/playwright:v1.24.2-focal
+    user: '1000:1000'
+    container_name: vtuber_clips-crawler-app
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      - NODE_OPTIONS=--max_old_space_size=2048
+      - PORT=5000
+    volumes:
+      - ./apps/crawler-app:/srv/app
+      - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+    working_dir: /srv/app
+    command: >
+      /bin/sh -c "
+        if [ ${APP_ENV:-development} == \"production\" ]; then yarn start; else yarn dev; fi
+      "
+    ports:
+      - '5000:5000'
   nest-app:
     image: node:16
     user: '1000:1000'
@@ -53,4 +72,3 @@ services:
     working_dir: /srv/app
     command: >
       /bin/sh -c "if [ ${APP_ENV:-development} == \"production\" ]; then yarn start; else yarn dev; fi"
-    

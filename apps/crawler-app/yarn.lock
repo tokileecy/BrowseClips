@@ -938,9 +938,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"crawler@workspace:.":
+"crawler-app@workspace:.":
   version: 0.0.0-use.local
-  resolution: "crawler@workspace:."
+  resolution: "crawler-app@workspace:."
   dependencies:
     "@playwright/test": ^1.24.2
     "@swc/core": ^1.2.224
