@@ -1,20 +1,16 @@
-import dotenv from 'dotenv';
+import { Router } from 'express';
 import playwright from 'playwright';
 
-dotenv.config();
-
-async function main() {
+async function main(id: string) {
   const browser = await playwright.firefox.launch({
     headless: true, // setting this to true will not run the UI
   });
   const context = await browser.newContext();
   const page = await context.newPage();
 
-  console.log(`goto ${process.env.CHANNEL_ID} channel page`);
+  console.log(`goto ${id} channel page`);
 
-  await page.goto(
-    `https://www.youtube.com/channel/${process.env.CHANNEL_ID}/videos`,
-  );
+  await page.goto(`https://www.youtube.com/channel/${id}/videos`);
 
   await page.waitForTimeout(1000);
 
@@ -30,10 +26,20 @@ async function main() {
 
   const vedioIds = vedioLinks.map((link) => link.replace('/watch?v=', ''));
 
-  console.log(vedioIds);
   console.log('browser close');
 
   await browser.close();
+  return vedioIds;
 }
 
-main();
+export default (router: Router) => {
+  router.get('/channels/:id/videos', async (req, res) => {
+    const id = req.params.id;
+
+    const viedoIds = await main(id);
+
+    res.send({
+      data: viedoIds,
+    });
+  });
+};
