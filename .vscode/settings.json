@@ -4,6 +4,7 @@
 	},
 	"eslint.workingDirectories": [
 			"./apps/nest-app",
-			"./apps/next-app"
+			"./apps/next-app",
+			"./apps/web-crawler"
     ]
 }
