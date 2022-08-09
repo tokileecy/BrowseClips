@@ -51,6 +51,7 @@ services:
     working_dir: /srv/app
     command: >
       /bin/sh -c "
+        yarn prisma migrate dev
         if [ ${APP_ENV:-development} == \"production\" ]; then yarn start:prod; else yarn start:dev; fi
       "
     ports:
