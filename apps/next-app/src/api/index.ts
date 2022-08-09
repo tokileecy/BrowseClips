@@ -24,34 +24,23 @@ class Api {
     })
   }
 
-  // syncChannelVideos = () => {
-  //   return apiInstance.get('/channels/sync')
-  // }
-
-  /**
-   *
-   * @returns { import('axios').AxiosResponse<{
-   *  id: string,
-   *  title: string?,
-   *  description: string?,
-   *  country: string?,
-   *  publishedAt: DateTime,
-   *  thumbnails: {
-   *    height: number,
-   *    width: number,
-   *    url: string,
-   *  }[],
-   * }> }
-   */
   listVideos = () => {
-    return apiInstance.get('/videos')
+    return apiInstance.get<
+      {
+        id: string
+        title?: string
+        description?: string
+        country?: string
+        publishedAt: string
+        thumbnails: {
+          height: number
+          width: number
+          url: string
+        }[]
+      }[]
+    >('/videos')
   }
 
-  /**
-   *
-   * @param { string[] } ids
-   * @returns
-   */
   addVideoByIds = (ids: string[]) => {
     return apiInstance.post('/videos', {
       ids,

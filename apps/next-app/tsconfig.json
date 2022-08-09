@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "target": "es5",
+    "target": "ES2015",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -17,6 +17,8 @@
     "incremental": true,
     "paths": {
       "@/lib/*": ["lib/*"],
+      "@/api": ["src/api"],
+      "@/api/*": ["src/api/*"],
       "@/redux/*": ["src/redux/*"],
       "@/page/*": ["src/page/*"],
       "@/components/*": ["src/components/*"],

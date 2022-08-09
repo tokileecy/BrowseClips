@@ -1,14 +1,28 @@
-import Layout from '../../Layout'
+import { ChangeEvent, useEffect, useRef, useState } from 'react'
+import { io, Socket } from 'socket.io-client'
+import getConfig from 'next/config'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { Paper } from '@mui/material'
 import api from '@/api'
+import Layout from '../../Layout'
+
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+
+const runtimeConfig =
+  typeof document === 'undefined' ? serverRuntimeConfig : publicRuntimeConfig
+
+const { NEST_WS_URL, APP_ENV } = runtimeConfig
+
+const uri = new URL('', NEST_WS_URL).href
 
 const AdminPage = () => {
   const [channelIds, setChannelIds] = useState('')
   const [videoId, setVideoId] = useState('')
+  const [socketConnected, setSocketConnected] = useState(false)
+  const socketRef = useRef<Socket>()
 
   const handleAddChannel = () => {
     api.addChannelByIds(channelIds.split(','))
@@ -19,7 +33,9 @@ const AdminPage = () => {
   }
 
   const handleSync = () => {
-    api.syncChannelVideos()
+    if (socketConnected) {
+      socketRef.current?.emit('crawl-videos')
+    }
   }
 
   const handleChannelIdChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +45,21 @@ const AdminPage = () => {
   const handleVideoIdChange = (e: ChangeEvent<HTMLInputElement>) => {
     setVideoId(e.target.value)
   }
+
+  useEffect(() => {
+    if (APP_ENV === 'development') {
+      localStorage.debug = '*'
+    }
+
+    socketRef.current = io(uri, {
+      reconnectionDelayMax: 10000,
+    })
+
+    socketRef.current?.on('connect', () => {
+      console.log(`socket.io is connected`)
+      setSocketConnected(true)
+    })
+  }, [])
 
   return (
     <Layout>
@@ -65,12 +96,14 @@ const AdminPage = () => {
             >
               Add Data
             </Typography>
-            <Box sx={{
-              mt: 2,
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 2,
-            }}>
+            <Box
+              sx={{
+                mt: 2,
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 2,
+              }}
+            >
               <Box
                 sx={{
                   display: 'flex',

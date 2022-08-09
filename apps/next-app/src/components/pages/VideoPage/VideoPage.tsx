@@ -1,9 +1,9 @@
-import Link from 'next/link'
-import Layout from '../../Layout'
+import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import dayjs from 'dayjs'
 import api from '@/api'
-import { useEffect, useState } from 'react'
+import Layout from '../../Layout'
 import VideoCard from './VideoCard'
 
 const VideoPage = () => {
@@ -13,7 +13,10 @@ const VideoPage = () => {
     try {
       const res = await api.listVideos()
 
-      const sortVideos = res.data.sort((a, b) => (new Date(b.publishedAt) - new Date(a.publishedAt )))
+      const sortVideos = res.data.sort(
+        (a, b) => dayjs(b.publishedAt).unix() - dayjs(a.publishedAt).unix()
+      )
+
       setVedios(sortVideos)
     } catch (error) {
       console.error(error)
@@ -58,7 +61,14 @@ const VideoPage = () => {
           }}
         >
           {videos.map((video) => {
-            const thumbnails = (video.thumbnails?.standard ?? video.thumbnails?.high ?? video.thumbnails?.medium ?? video.thumbnails?.default).url ?? ''
+            const thumbnails =
+              (
+                video.thumbnails?.standard ??
+                video.thumbnails?.high ??
+                video.thumbnails?.medium ??
+                video.thumbnails?.default
+              ).url ?? ''
+
             return (
               <VideoCard
                 key={video.id}

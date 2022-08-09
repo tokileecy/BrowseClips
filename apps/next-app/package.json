@@ -1,7 +1,6 @@
 {
   "name": "next-app",
   "version": "0.1.0",
-  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,23 +11,28 @@
     "eslint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@emotion/cache": "^11.10.1",
     "@emotion/css": "^11.7.1",
     "@emotion/react": "^11.8.1",
+    "@emotion/server": "^11.10.0",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.4.4",
     "@mui/material": "^5.4.4",
     "@reduxjs/toolkit": "^1.8.1",
     "axios": "^0.27.2",
+    "dayjs": "^1.11.4",
     "next": "12.1.0",
     "qs": "^6.11.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-redux": "^7.2.8",
     "react-scroll-parallax": "^3.0.4",
+    "socket.io-client": "^4.5.1",
     "swiper": "^8.0.7"
   },
   "devDependencies": {
     "@types/node": "17.0.21",
+    "@types/qs": "^6.9.7",
     "@types/react": "17.0.39",
     "@types/react-redux": "^7.1.23",
     "@typescript-eslint/eslint-plugin": "^5.13.0",
