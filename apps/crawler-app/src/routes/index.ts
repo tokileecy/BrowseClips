@@ -1,7 +1,7 @@
-import express from 'express';
+import express, { Router } from 'express';
 import channels from './channels';
 
-const router = express.Router();
+const router: Router = express.Router();
 
 channels(router);
 

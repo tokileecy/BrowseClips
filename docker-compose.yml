@@ -21,6 +21,7 @@ services:
     env_file: .env
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
+      - NEST_URL=http://nest-app:4000/
       - PORT=5000
     volumes:
       - ./apps/crawler-app:/srv/app
