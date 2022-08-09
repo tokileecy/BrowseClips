@@ -76,6 +76,23 @@
         }
       }
     },
+    "Subject": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string"
+        },
+        "videos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SubjectsOnVideos"
+          }
+        }
+      }
+    },
     "Video": {
       "type": "object",
       "properties": {
@@ -161,6 +178,23 @@
           "items": {
             "type": "string"
           }
+        },
+        "subjects": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SubjectsOnVideos"
+          }
+        }
+      }
+    },
+    "SubjectsOnVideos": {
+      "type": "object",
+      "properties": {
+        "video": {
+          "$ref": "#/definitions/Video"
+        },
+        "subject": {
+          "$ref": "#/definitions/Subject"
         }
       }
     },
@@ -190,8 +224,14 @@
     "channel": {
       "$ref": "#/definitions/Channel"
     },
+    "subject": {
+      "$ref": "#/definitions/Subject"
+    },
     "video": {
       "$ref": "#/definitions/Video"
+    },
+    "subjectsOnVideos": {
+      "$ref": "#/definitions/SubjectsOnVideos"
     },
     "playlist": {
       "$ref": "#/definitions/Playlist"

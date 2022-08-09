@@ -42,6 +42,12 @@ model Channel {
   videos Video[]
 }
 
+model Subject {
+  id Int @default(autoincrement()) @id
+  name String 
+  videos SubjectsOnVideos[]
+}
+
 model Video {
   id String @unique
   channelId String
@@ -55,6 +61,16 @@ model Video {
   liveStreamingDetails Json?
   contentDetails Json?
   tags String[]
+  subjects SubjectsOnVideos[]
+}
+
+model SubjectsOnVideos {
+  video Video @relation(fields: [videoId], references: [id])
+  videoId String
+  subject Subject @relation(fields: [subjectId], references: [id])
+  subjectId Int
+
+  @@id([subjectId, videoId])
 }
 
 model Playlist {

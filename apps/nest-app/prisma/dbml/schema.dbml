@@ -19,6 +19,12 @@ Table Channel {
   videos Video [not null]
 }
 
+Table Subject {
+  id Int [pk, increment]
+  name String [not null]
+  videos SubjectsOnVideos [not null]
+}
+
 Table Video {
   id String [unique, not null]
   channelId String [not null]
@@ -32,6 +38,18 @@ Table Video {
   liveStreamingDetails Json
   contentDetails Json
   tags String[] [not null]
+  subjects SubjectsOnVideos [not null]
+}
+
+Table SubjectsOnVideos {
+  video Video [not null]
+  videoId String [not null]
+  subject Subject [not null]
+  subjectId Int [not null]
+
+  indexes {
+    (subjectId, videoId) [pk]
+  }
 }
 
 Table playlist {
@@ -42,5 +60,9 @@ Table playlist {
 }
 
 Ref: Video.channelId > Channel.id
+
+Ref: SubjectsOnVideos.videoId > Video.id
+
+Ref: SubjectsOnVideos.subjectId > Subject.id
 
 Ref: playlist.ownerId > user.id
