@@ -25,9 +25,11 @@ services:
     volumes:
       - ./apps/crawler-app:/srv/app
       - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+      - ./.cache/yarn:/home/pwuser/.yarn/berry/cache
     working_dir: /srv/app
     command: >
       /bin/sh -c "
+        yarn install
         if [ ${APP_ENV:-development} == \"production\" ]; then yarn start; else yarn dev; fi
       "
     ports:
@@ -45,6 +47,7 @@ services:
     volumes:
       - ./apps/nest-app:/srv/app
       - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+      - ./.cache/yarn:/home/node/.yarn/berry/cache
     working_dir: /srv/app
     command: >
       /bin/sh -c "
@@ -66,9 +69,12 @@ services:
       - NODE_ENV=${APP_ENV:-development}
       - SERVER_NEST_URL=http://nest-app:4000/
       - PUBLIC_NEST_URL=${PUBLIC_NEST_URL:-http://127.0.0.1:4000}
+      - SERVER_NEST_WS_URL=ws://nest-app:5000/
+      - PUBLIC_NEST_WS_URL=${PUBLIC_NEST_WS_URL:-ws://127.0.0.1:5000}
     volumes:
       - ./apps/next-app:/srv/app
       - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
+      - ./.cache/yarn:/home/node/.yarn/berry/cache
     working_dir: /srv/app
     command: >
       /bin/sh -c "if [ ${APP_ENV:-development} == \"production\" ]; then yarn start; else yarn dev; fi"
