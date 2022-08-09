@@ -1,7 +1,7 @@
 import Layout from '../../Layout'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import api from '@/lib/api'
+import api from '@/api'
 import { useEffect, useState } from 'react'
 import ChannelCard from './ChannelCard'
 

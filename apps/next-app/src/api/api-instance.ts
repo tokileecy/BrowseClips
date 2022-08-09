@@ -1,8 +1,8 @@
-import config from 'next/config'
+import getConfig from 'next/config'
 import axios from 'axios'
 import qs from 'qs'
 
-const { publicRuntimeConfig, serverRuntimeConfig } = config.default()
+const { publicRuntimeConfig, serverRuntimeConfig } = getConfig()
 
 const runtimeConfig =
   typeof document === 'undefined' ? serverRuntimeConfig : publicRuntimeConfig
