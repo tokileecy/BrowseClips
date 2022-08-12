@@ -5,6 +5,8 @@ import { Server } from 'socket.io';
 import cors from 'cors';
 import routes from './routes';
 import ioCommends from './ioCommends';
+import { writeFileSync } from 'fs';
+import * as path from 'path';
 
 dotenv.config();
 
@@ -44,5 +46,7 @@ io.on('connection', (socket) => {
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+writeFileSync(path.resolve(__dirname, '../tmp/pid'), process.pid.toString());
 
 export default server;
