@@ -3,7 +3,7 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import dayjs from 'dayjs'
 import api from '@/api'
-import Layout from '../../Layout'
+import Layout from '../../components/Layout'
 import VideoCard from './VideoCard'
 
 const VideoPage = () => {

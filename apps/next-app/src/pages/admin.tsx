@@ -1,3 +1,3 @@
-import AdminPage from '../components/pages/AdminPage'
+import AdminPage from '../containers/AdminPage'
 
 export default AdminPage

@@ -1,4 +1,4 @@
-import Layout from '../../Layout'
+import Layout from '../../components/Layout'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import api from '@/api'

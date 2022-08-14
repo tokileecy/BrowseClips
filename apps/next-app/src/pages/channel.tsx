@@ -1,3 +1,3 @@
-import ChannelPage from '../components/pages/ChannelPage'
+import ChannelPage from '../containers/ChannelPage'
 
 export default ChannelPage

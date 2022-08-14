@@ -1,3 +1,3 @@
-import VideoPage from '../../components/pages/VideoPage'
+import VideoPage from '../../containers/VideoPage'
 
 export default VideoPage

@@ -12,7 +12,7 @@ import { useForm } from 'react-hook-form'
 import { AxiosError } from 'axios'
 import api from '@/api'
 import { setAuth } from '@/redux/features/auth/authSlice'
-import Layout from '../Layout'
+import Layout from '../components/Layout'
 
 interface LoginFormFieldData {
   username: string

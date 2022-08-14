@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import Layout from '../../Layout'
+import Layout from '../../components/Layout'
 
 const WatchPage = (props: { id?: string }) => {
   const { id = '' } = props
