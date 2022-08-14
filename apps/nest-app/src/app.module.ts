@@ -3,9 +3,10 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ChannelsModule } from './channels/channels.module';
-import { UserModule } from './users/users.module';
+import { UsersModule } from './users/users.module';
 import { VideosModule } from './videos/videos.module';
 import { join } from 'path';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -13,8 +14,9 @@ import { join } from 'path';
       rootPath: join(__dirname, '..', 'public'),
     }),
     ChannelsModule,
-    UserModule,
+    UsersModule,
     VideosModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

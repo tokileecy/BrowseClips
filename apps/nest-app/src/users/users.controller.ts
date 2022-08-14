@@ -1,5 +1,13 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
-import { UserModule } from './users.module';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Request,
+  UseGuards,
+} from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { UsersModule } from './users.module';
 import { UsersService } from './users.service';
 
 @Controller('users')
@@ -12,14 +20,20 @@ export class UsersController {
   // }
 
   @Get()
-  async listAll(): Promise<UserModule> {
+  async listAll(): Promise<UsersModule> {
     return this.usersService.users({});
   }
 
   @Post()
   async create(
-    @Body() data: { email: string; name: string },
-  ): Promise<UserModule> {
+    @Body() data: { email: string; username: string; password: string },
+  ): Promise<UsersModule> {
     return this.usersService.createUser(data);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
   }
 }
