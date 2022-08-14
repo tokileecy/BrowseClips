@@ -1,6 +1,16 @@
 import apiInstance from './api-instance'
 
 class Api {
+  login = (data: { username: string; password: string }) => {
+    return apiInstance.post<
+      {
+        username: string
+        password: string
+      },
+      { data: { accessToken: string } }
+    >('/auth/login', data)
+  }
+
   listChannels = () => {
     return apiInstance.get<
       {

@@ -2706,6 +2706,7 @@ __metadata:
     qs: ^6.11.0
     react: 17.0.2
     react-dom: 17.0.2
+    react-hook-form: ^7.34.1
     react-redux: ^7.2.8
     react-scroll-parallax: ^3.0.4
     socket.io-client: ^4.5.1
@@ -3080,6 +3081,15 @@ __metadata:
   peerDependencies:
     react: 17.0.2
   checksum: 1c1eaa3bca7c7228d24b70932e3d7c99e70d1d04e13bb0843bbf321582bc25d7961d6b8a6978a58a598af2af496d1cedcfb1bf65f6b0960a0a8161cb8dab743c
+  languageName: node
+  linkType: hard
+
+"react-hook-form@npm:^7.34.1":
+  version: 7.34.1
+  resolution: "react-hook-form@npm:7.34.1"
+  peerDependencies:
+    react: ^16.8.0 || ^17 || ^18
+  checksum: d7e7424a07119a1c789d453a8266f8ffbad45b074060555dfcef24e084baff50aab981da151e3c2ba02ba0d9774c8f0063723a90d115f1cd13822a46c56ed352
   languageName: node
   linkType: hard
 
