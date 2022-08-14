@@ -1,0 +1,9 @@
+/public
+/node_modules/*
+/dist
+/prisma
+/test
+
+package.json
+next.config.js
+.eslintrc.js
