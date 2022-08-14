@@ -1026,17 +1026,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/client@npm:3.12.0":
-  version: 3.12.0
-  resolution: "@prisma/client@npm:3.12.0"
+"@prisma/client@npm:4.2.1":
+  version: 4.2.1
+  resolution: "@prisma/client@npm:4.2.1"
   dependencies:
-    "@prisma/engines-version": 3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980
+    "@prisma/engines-version": 4.2.0-33.2920a97877e12e055c1333079b8d19cee7f33826
   peerDependencies:
     prisma: "*"
   peerDependenciesMeta:
     prisma:
       optional: true
-  checksum: b342c6e771e671a49684f69a2cb27df1d5083fb97a55aa0d07db3e6ad5bf16e27ee566e528b97b1c501be2c46b98eb7577996e1be6e029910537538107eba471
+  checksum: 2eefe7182f2ebc26c35777e9ff22acb9c1d1f6e0988c518b32063d7677d066ab7258d13a0ee851addc77526dc0de9c05a02d5688c55377d65ddee1b6866b9e95
   languageName: node
   linkType: hard
 
@@ -1159,10 +1159,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@prisma/engines-version@npm:3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980":
-  version: 3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980
-  resolution: "@prisma/engines-version@npm:3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980"
-  checksum: e69f48def4b5761d594ebe7c87f04772fd03f2fb3cc2eacee92188b244d6c2d9aeff75be88d10bfd2a3c05b1da8d04d2a4d4a977b7a23671cc0617fb811b2855
+"@prisma/engines-version@npm:4.2.0-33.2920a97877e12e055c1333079b8d19cee7f33826":
+  version: 4.2.0-33.2920a97877e12e055c1333079b8d19cee7f33826
+  resolution: "@prisma/engines-version@npm:4.2.0-33.2920a97877e12e055c1333079b8d19cee7f33826"
+  checksum: 65975c69a361b56a85cf3652c8d7aec7549abe574158e423a64bc0be4bee83fe72ac2abd60133f776f3d410f97e7dc8c5dc516791ec963703cc6f914d378efc4
   languageName: node
   linkType: hard
 
@@ -1170,13 +1170,6 @@ __metadata:
   version: 3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b
   resolution: "@prisma/engines@npm:3.11.0-48.b371888aaf8f51357c7457d836b86d12da91658b"
   checksum: a2ca2af2fa0f5ab6616a0f9372f9a88bd200faaf4d2cdcbfa9c300550d0d592c5d55f32d0966944822a61e640b8dc1a3ac396b9f650a570f97775229b169280a
-  languageName: node
-  linkType: hard
-
-"@prisma/engines@npm:3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980":
-  version: 3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980
-  resolution: "@prisma/engines@npm:3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980"
-  checksum: 7f4dafe75ab5c47847ef3be72812ddc553944baf821600349bd023d11187245bc5c56a1df0b0a34b91ec5072627418690c20bf934c1e4242b388e6225bfa3604
   languageName: node
   linkType: hard
 
@@ -1191,6 +1184,13 @@ __metadata:
   version: 4.1.0
   resolution: "@prisma/engines@npm:4.1.0"
   checksum: b549d20b18d224388f267d92e9a53e4570064c74eff02bb7f2259cefdf060785a65c49afb5d6f897a3ab907a50425b0dff83ed06018ce5d465f0583a9dc4b893
+  languageName: node
+  linkType: hard
+
+"@prisma/engines@npm:4.2.1":
+  version: 4.2.1
+  resolution: "@prisma/engines@npm:4.2.1"
+  checksum: 60a13c34412d875f803fbf6452df7dd811b92f9d08e0096629841f404b14e9830ff2e487c8e462d710a1a38a6b0a202e60369d804d0251ae139376772c64f00a
   languageName: node
   linkType: hard
 
@@ -7103,15 +7103,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prisma@npm:3.12.0":
-  version: 3.12.0
-  resolution: "prisma@npm:3.12.0"
+"prisma@npm:4.2.1":
+  version: 4.2.1
+  resolution: "prisma@npm:4.2.1"
   dependencies:
-    "@prisma/engines": 3.12.0-37.22b822189f46ef0dc5c5b503368d1bee01213980
+    "@prisma/engines": 4.2.1
   bin:
     prisma: build/index.js
     prisma2: build/index.js
-  checksum: ac4aefdaa7af285686fcdfb9060f65a650ef4576000718c7c53372326f631ca5a5649ed10398db89952c63b2c6fbcd227e38de59a6e69f9dcb746fac680da650
+  checksum: 7f6fa164e153aa09f28f90420756831bb275a123ee0691fdd70bccee193ccc1d537cd14394cdf2ad549bb8773e06704025664948275d17f0fe4c139a470848e1
   languageName: node
   linkType: hard
 
@@ -8773,7 +8773,7 @@ __metadata:
     "@nestjs/schematics": ^8.0.0
     "@nestjs/serve-static": ^3.0.0
     "@nestjs/testing": ^8.0.0
-    "@prisma/client": 3.12.0
+    "@prisma/client": 4.2.1
     "@types/express": ^4.17.13
     "@types/jest": 27.4.1
     "@types/node": ^16.0.0
@@ -8791,7 +8791,7 @@ __metadata:
     passport: ^0.6.0
     passport-local: ^1.0.0
     prettier: ^2.3.2
-    prisma: 3.12.0
+    prisma: 4.2.1
     prisma-dbml-generator: ^0.9.1
     prisma-docs-generator: ^0.5.0
     prisma-json-schema-generator: ^3.0.1

@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,7 +8,7 @@ generator dbml {
 
 generator docs {
   provider = "node node_modules/prisma-docs-generator"
-  output = "../public/docs"
+  output   = "../public/docs"
 }
 
 generator jsonSchema {
@@ -24,60 +21,61 @@ datasource db {
 }
 
 model User {
-  id    Int     @default(autoincrement()) @id
-  email String  @unique
-  name  String?
+  id        Int        @id @default(autoincrement())
+  email     String     @unique
+  username  String     @unique
+  password  String
   playlists Playlist[]
 
   @@map("user")
 }
 
 model Channel {
-  id String @unique
-  title String? @default("")
-  description String? @default("")
-  country String? @default("")
+  id          String    @unique
+  title       String?   @default("")
+  description String?   @default("")
+  country     String?   @default("")
   publishedAt DateTime?
-  thumbnails Json?
-  videos Video[]
+  thumbnails  Json?
+  videos      Video[]
 }
 
 model Subject {
-  id Int @default(autoincrement()) @id
-  name String 
+  id     Int                @id @default(autoincrement())
+  name   String
   videos SubjectsOnVideos[]
 }
 
 model Video {
-  id String @unique
-  channelId String
-  channel Channel @relation(fields: [channelId], references: [id])
-  title String? @default("")
-  description String? @default("")
-  publishedAt DateTime?
-  thumbnails Json?
-  status Json?
-  statistics Json?
+  id                   String             @unique
+  channelId            String
+  title                String?            @default("")
+  description          String?            @default("")
+  publishedAt          DateTime?
+  thumbnails           Json?
+  status               Json?
+  statistics           Json?
   liveStreamingDetails Json?
-  contentDetails Json?
-  tags String[]
-  subjects SubjectsOnVideos[]
+  contentDetails       Json?
+  tags                 String[]
+  channel              Channel            @relation(fields: [channelId], references: [id])
+  subjects             SubjectsOnVideos[]
 }
 
 model SubjectsOnVideos {
-  video Video @relation(fields: [videoId], references: [id])
-  videoId String
-  subject Subject @relation(fields: [subjectId], references: [id])
+  videoId   String
   subjectId Int
+  subject   Subject @relation(fields: [subjectId], references: [id])
+  video     Video   @relation(fields: [videoId], references: [id])
 
   @@id([subjectId, videoId])
 }
 
 model Playlist {
-  id        Int      @default(autoincrement()) @id
-  owner     User     @relation(fields: [ownerId], references: [id])
-  ownerId   Int
-  name      String?
+  id      Int     @id @default(autoincrement())
+  ownerId Int
+  name    String?
+  owner   User    @relation(fields: [ownerId], references: [id])
 
   @@map("playlist")
 }

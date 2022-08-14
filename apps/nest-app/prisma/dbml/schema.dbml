@@ -5,7 +5,8 @@
 Table user {
   id Int [pk, increment]
   email String [unique, not null]
-  name String
+  username String [unique, not null]
+  password String [not null]
   playlists playlist [not null]
 }
 
@@ -28,7 +29,6 @@ Table Subject {
 Table Video {
   id String [unique, not null]
   channelId String [not null]
-  channel Channel [not null]
   title String [default: '']
   description String [default: '']
   publishedAt DateTime
@@ -38,14 +38,15 @@ Table Video {
   liveStreamingDetails Json
   contentDetails Json
   tags String[] [not null]
+  channel Channel [not null]
   subjects SubjectsOnVideos [not null]
 }
 
 Table SubjectsOnVideos {
-  video Video [not null]
   videoId String [not null]
-  subject Subject [not null]
   subjectId Int [not null]
+  subject Subject [not null]
+  video Video [not null]
 
   indexes {
     (subjectId, videoId) [pk]
@@ -54,15 +55,15 @@ Table SubjectsOnVideos {
 
 Table playlist {
   id Int [pk, increment]
-  owner user [not null]
   ownerId Int [not null]
   name String
+  owner user [not null]
 }
 
 Ref: Video.channelId > Channel.id
 
-Ref: SubjectsOnVideos.videoId > Video.id
-
 Ref: SubjectsOnVideos.subjectId > Subject.id
+
+Ref: SubjectsOnVideos.videoId > Video.id
 
 Ref: playlist.ownerId > user.id

@@ -10,11 +10,11 @@
         "email": {
           "type": "string"
         },
-        "name": {
-          "type": [
-            "string",
-            "null"
-          ]
+        "username": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
         },
         "playlists": {
           "type": "array",
@@ -99,9 +99,6 @@
         "id": {
           "type": "string"
         },
-        "channel": {
-          "$ref": "#/definitions/Channel"
-        },
         "title": {
           "type": [
             "string",
@@ -179,6 +176,9 @@
             "type": "string"
           }
         },
+        "channel": {
+          "$ref": "#/definitions/Channel"
+        },
         "subjects": {
           "type": "array",
           "items": {
@@ -190,11 +190,11 @@
     "SubjectsOnVideos": {
       "type": "object",
       "properties": {
-        "video": {
-          "$ref": "#/definitions/Video"
-        },
         "subject": {
           "$ref": "#/definitions/Subject"
+        },
+        "video": {
+          "$ref": "#/definitions/Video"
         }
       }
     },
@@ -204,14 +204,14 @@
         "id": {
           "type": "integer"
         },
-        "owner": {
-          "$ref": "#/definitions/User"
-        },
         "name": {
           "type": [
             "string",
             "null"
           ]
+        },
+        "owner": {
+          "$ref": "#/definitions/User"
         }
       }
     }
