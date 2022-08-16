@@ -27,7 +27,7 @@ export class ChannelsService {
       id,
     });
 
-    const data = res.data.items.map((item) => ({
+    const channels = res.data.items.map((item) => ({
       id: item.id,
       title: item.snippet.title,
       description: item.snippet.description,
@@ -36,9 +36,15 @@ export class ChannelsService {
       thumbnails: item.snippet.thumbnails as any,
     }));
 
-    return this.prisma.channel.createMany({
-      data,
-    });
+    return this.prisma.$transaction(
+      channels.map((data) =>
+        this.prisma.channel.upsert({
+          where: { id: data.id },
+          update: { ...data },
+          create: { ...data },
+        }),
+      ),
+    );
   }
 
   async syncChannelVideos() {
