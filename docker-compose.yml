@@ -4,6 +4,8 @@ services:
   postgres:
     image: postgres
     env_file: .env
+    networks:
+      - vtuber_clips_default
     container_name: vtuber_clips-postgres
     environment:
       POSTGRES_DB: ${DATABASE_NAME:-nest}
@@ -19,6 +21,8 @@ services:
     container_name: vtuber_clips-crawler-app
     restart: unless-stopped
     env_file: .env
+    networks:
+      - vtuber_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
       - NEST_URL=http://nest-app:4000/
@@ -41,6 +45,8 @@ services:
     container_name: vtuber_clips-nest-app
     restart: unless-stopped
     env_file: .env
+    networks:
+      - vtuber_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
       - NODE_ENV=${APP_ENV:-development}
@@ -64,6 +70,8 @@ services:
     user: '1000:1000'
     container_name: vtuber_clips-next-app
     env_file: .env
+    networks:
+      - vtuber_clips_default
     ports:
       - '3000:3000'
     environment:
@@ -80,3 +88,6 @@ services:
     working_dir: /srv/app
     command: >
       /bin/sh -c "if [ ${APP_ENV:-development} == \"production\" ]; then yarn start; else yarn dev; fi"
+networks:
+  vtuber_clips_default:
+    driver: bridge
