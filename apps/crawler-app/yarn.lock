@@ -594,13 +594,43 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vtuber_clip/api@file:../libs/api/dist::locator=crawler-app%40workspace%3A.":
+"@vtuber-clips/crawler-app@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@vtuber-clips/crawler-app@workspace:."
+  dependencies:
+    "@playwright/test": ^1.25.0
+    "@swc/core": ^1.2.233
+    "@swc/wasm": ^1.2.233
+    "@types/express": ^4.17.13
+    "@types/node": ^18.7.5
+    "@types/qs": ^6.9.7
+    "@typescript-eslint/eslint-plugin": ^5.33.1
+    "@typescript-eslint/parser": ^5.33.1
+    "@vtuber_clip/api": ../libs/api/dist
+    axios: ^0.27.2
+    cors: ^2.8.5
+    dotenv: ^16.0.1
+    eslint: ^8.22.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.2.1
+    express: ^4.18.1
+    nodemon: ^2.0.19
+    playwright: ^1.25.0
+    prettier: ^2.7.1
+    qs: ^6.11.0
+    socket.io: ^4.5.1
+    ts-node: ^10.9.1
+    typescript: ^4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@vtuber_clip/api@file:../libs/api/dist::locator=%40vtuber-clips%2Fcrawler-app%40workspace%3A.":
   version: 0.1.0
-  resolution: "@vtuber_clip/api@file:../libs/api/dist#../libs/api/dist::hash=e33108&locator=crawler-app%40workspace%3A."
+  resolution: "@vtuber_clip/api@file:../libs/api/dist#../libs/api/dist::hash=d86ee9&locator=%40vtuber-clips%2Fcrawler-app%40workspace%3A."
   dependencies:
     axios: ^0.27.2
     qs: ^6.11.0
-  checksum: ac316359ba8a0f51565e8885b935d2f85ceb0485aa6c5e77d6d8c34251b7d959ebcc0c311f623cf6100fe741b9aa7e9943c0f6855c31f1b01015f4fc35562d00
+  checksum: 59b2fed88db7e9f26a8404f36092d7bc974627288495a63e5a02a978d5af979ad663d98fec82befc5a514a9ad22552e4bcda681f14bb37b1fbaa2256dce0ed3d
   languageName: node
   linkType: hard
 
@@ -1039,36 +1069,6 @@ __metadata:
   checksum: ced838404ccd184f61ab4fdc5847035b681c90db7ac17e428f3d81d69e2989d2b680cc254da0e2554f5ed4f8a341820a1ce3d1c16b499f6e2f47a1b9b07b5006
   languageName: node
   linkType: hard
-
-"crawler-app@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "crawler-app@workspace:."
-  dependencies:
-    "@playwright/test": ^1.25.0
-    "@swc/core": ^1.2.233
-    "@swc/wasm": ^1.2.233
-    "@types/express": ^4.17.13
-    "@types/node": ^18.7.5
-    "@types/qs": ^6.9.7
-    "@typescript-eslint/eslint-plugin": ^5.33.1
-    "@typescript-eslint/parser": ^5.33.1
-    "@vtuber_clip/api": ../libs/api/dist
-    axios: ^0.27.2
-    cors: ^2.8.5
-    dotenv: ^16.0.1
-    eslint: ^8.22.0
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-prettier: ^4.2.1
-    express: ^4.18.1
-    nodemon: ^2.0.19
-    playwright: ^1.25.0
-    prettier: ^2.7.1
-    qs: ^6.11.0
-    socket.io: ^4.5.1
-    ts-node: ^10.9.1
-    typescript: ^4.7.4
-  languageName: unknown
-  linkType: soft
 
 "create-require@npm:^1.1.0":
   version: 1.1.1

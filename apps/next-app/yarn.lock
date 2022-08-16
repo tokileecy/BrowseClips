@@ -939,13 +939,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vtuber_clip/api@file:../libs/api/dist::locator=next-app%40workspace%3A.":
+"@vtuber-clips/next-app@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@vtuber-clips/next-app@workspace:."
+  dependencies:
+    "@emotion/cache": ^11.10.1
+    "@emotion/css": ^11.10.0
+    "@emotion/react": ^11.10.0
+    "@emotion/server": ^11.10.0
+    "@emotion/styled": ^11.10.0
+    "@mui/icons-material": ^5.8.4
+    "@mui/material": ^5.10.0
+    "@reduxjs/toolkit": ^1.8.4
+    "@types/node": 17.0.45
+    "@types/qs": ^6.9.7
+    "@types/react": 17.0.48
+    "@types/react-redux": ^7.1.24
+    "@typescript-eslint/eslint-plugin": ^5.33.1
+    "@typescript-eslint/parser": ^5.33.1
+    "@vtuber_clip/api": ../libs/api/dist
+    axios: ^0.27.2
+    dayjs: ^1.11.5
+    eslint: ^7.32.0
+    eslint-config-next: 12.2.5
+    eslint-config-prettier: ^8.5.0
+    eslint-config-standard: ^16.0.3
+    eslint-import-resolver-typescript: ^2.7.1
+    eslint-plugin-import: ^2.26.0
+    eslint-plugin-node: ^11.1.0
+    eslint-plugin-prettier: ^4.2.1
+    eslint-plugin-promise: ^6.0.0
+    eslint-plugin-react: ^7.30.1
+    next: 12.2.5
+    prettier: 2.7.1
+    qs: ^6.11.0
+    react: 17.0.2
+    react-dom: 17.0.2
+    react-hook-form: ^7.34.2
+    react-redux: ^7.2.8
+    react-scroll-parallax: ^3.3.1
+    socket.io-client: ^4.5.1
+    swiper: ^8.3.2
+    typescript: 4.7.4
+  languageName: unknown
+  linkType: soft
+
+"@vtuber_clip/api@file:../libs/api/dist::locator=%40vtuber-clips%2Fnext-app%40workspace%3A.":
   version: 0.1.0
-  resolution: "@vtuber_clip/api@file:../libs/api/dist#../libs/api/dist::hash=e33108&locator=next-app%40workspace%3A."
+  resolution: "@vtuber_clip/api@file:../libs/api/dist#../libs/api/dist::hash=d86ee9&locator=%40vtuber-clips%2Fnext-app%40workspace%3A."
   dependencies:
     axios: ^0.27.2
     qs: ^6.11.0
-  checksum: ac316359ba8a0f51565e8885b935d2f85ceb0485aa6c5e77d6d8c34251b7d959ebcc0c311f623cf6100fe741b9aa7e9943c0f6855c31f1b01015f4fc35562d00
+  checksum: 59b2fed88db7e9f26a8404f36092d7bc974627288495a63e5a02a978d5af979ad663d98fec82befc5a514a9ad22552e4bcda681f14bb37b1fbaa2256dce0ed3d
   languageName: node
   linkType: hard
 
@@ -2836,51 +2881,6 @@ __metadata:
   checksum: 23ad088b08f898fc9b53011d7bb78ec48e79de7627e01ab5518e806033861bef68d5b0cd0e2205c2f36690ac9571ff6bcb05eb777ced2eeda8d4ac5b44592c3d
   languageName: node
   linkType: hard
-
-"next-app@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "next-app@workspace:."
-  dependencies:
-    "@emotion/cache": ^11.10.1
-    "@emotion/css": ^11.10.0
-    "@emotion/react": ^11.10.0
-    "@emotion/server": ^11.10.0
-    "@emotion/styled": ^11.10.0
-    "@mui/icons-material": ^5.8.4
-    "@mui/material": ^5.10.0
-    "@reduxjs/toolkit": ^1.8.4
-    "@types/node": 17.0.45
-    "@types/qs": ^6.9.7
-    "@types/react": 17.0.48
-    "@types/react-redux": ^7.1.24
-    "@typescript-eslint/eslint-plugin": ^5.33.1
-    "@typescript-eslint/parser": ^5.33.1
-    "@vtuber_clip/api": ../libs/api/dist
-    axios: ^0.27.2
-    dayjs: ^1.11.5
-    eslint: ^7.32.0
-    eslint-config-next: 12.2.5
-    eslint-config-prettier: ^8.5.0
-    eslint-config-standard: ^16.0.3
-    eslint-import-resolver-typescript: ^2.7.1
-    eslint-plugin-import: ^2.26.0
-    eslint-plugin-node: ^11.1.0
-    eslint-plugin-prettier: ^4.2.1
-    eslint-plugin-promise: ^6.0.0
-    eslint-plugin-react: ^7.30.1
-    next: 12.2.5
-    prettier: 2.7.1
-    qs: ^6.11.0
-    react: 17.0.2
-    react-dom: 17.0.2
-    react-hook-form: ^7.34.2
-    react-redux: ^7.2.8
-    react-scroll-parallax: ^3.3.1
-    socket.io-client: ^4.5.1
-    swiper: ^8.3.2
-    typescript: 4.7.4
-  languageName: unknown
-  linkType: soft
 
 "next@npm:12.2.5":
   version: 12.2.5

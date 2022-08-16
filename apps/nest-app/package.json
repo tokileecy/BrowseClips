@@ -1,10 +1,10 @@
 {
-  "name": "vtuber-clips",
-  "version": "0.0.1",
+  "name": "@vtuber-clips/nest-app",
+  "version": "0.1.0",
   "description": "",
-  "author": "",
+  "author": "tokileecy",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",

@@ -1,6 +1,7 @@
 {
-  "name": "crawler-app",
+  "name": "@vtuber-clips/crawler-app",
   "version": "0.1.0",
+  "author": "tokileecy",
   "private": true,
   "license": "MIT",
   "scripts": {

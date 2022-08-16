@@ -231,9 +231,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vtuber_clip/api@workspace:.":
+"@vtuber-clips/api@workspace:.":
   version: 0.0.0-use.local
-  resolution: "@vtuber_clip/api@workspace:."
+  resolution: "@vtuber-clips/api@workspace:."
   dependencies:
     "@types/node": ^18.7.3
     "@types/qs": ^6.9.7
