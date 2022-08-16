@@ -25,7 +25,7 @@ export interface LoginDialogProps {
   onClose?: () => void
 }
 
-const LoginDialog = (props: LoginDialogProps) => {
+export default function LoginDialog(props: LoginDialogProps) {
   const { open, onClose } = props
 
   const {
@@ -169,5 +169,3 @@ const LoginDialog = (props: LoginDialogProps) => {
     </Dialog>
   )
 }
-
-export default LoginDialog

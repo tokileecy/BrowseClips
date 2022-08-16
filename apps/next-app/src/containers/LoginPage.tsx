@@ -19,7 +19,7 @@ interface LoginFormFieldData {
   password: string
 }
 
-const LoginPaper = () => {
+function LoginPaper() {
   const [rememberMe, setRememberMe] = useState(false)
   const [formError, setFormError] = useState('')
   const dispatch = useDispatch()
@@ -154,7 +154,7 @@ const LoginPaper = () => {
   )
 }
 
-const HomePage = () => {
+export default function HomePage() {
   return (
     <Layout variant="login">
       <Box
@@ -171,5 +171,3 @@ const HomePage = () => {
     </Layout>
   )
 }
-
-export default HomePage

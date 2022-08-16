@@ -13,7 +13,7 @@ export interface LayoutProps {
   children?: ReactNode
 }
 
-const Layout = (props: LayoutProps): JSX.Element => {
+export default function Layout(props: LayoutProps) {
   const { children, variant = 'common' } = props
 
   const jwt = useSelector((state: RootState) => state.auth.jwt)
@@ -45,5 +45,3 @@ const Layout = (props: LayoutProps): JSX.Element => {
     </BaseThemeProvider>
   )
 }
-
-export default Layout

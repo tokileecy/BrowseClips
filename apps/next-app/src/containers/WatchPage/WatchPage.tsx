@@ -2,10 +2,13 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import Layout from '../../components/Layout'
 
-const WatchPage = (props: { id?: string }) => {
+export interface WatchPageProps {
+  id?: string
+}
+
+export default function WatchPage(props: WatchPageProps) {
   const { id = '' } = props
 
-  console.log(id)
   return (
     <Layout>
       <Box
@@ -44,5 +47,3 @@ const WatchPage = (props: { id?: string }) => {
     </Layout>
   )
 }
-
-export default WatchPage

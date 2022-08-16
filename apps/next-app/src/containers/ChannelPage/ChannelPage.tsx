@@ -5,7 +5,7 @@ import api from '@/api'
 import { useEffect, useState } from 'react'
 import ChannelCard from './ChannelCard'
 
-const HomePage = () => {
+export default function HomePage() {
   const [channels, setChannels] = useState<any[]>([])
 
   const fetchChannelList = async () => {
@@ -69,5 +69,3 @@ const HomePage = () => {
     </Layout>
   )
 }
-
-export default HomePage

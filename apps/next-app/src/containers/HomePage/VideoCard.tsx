@@ -11,7 +11,7 @@ export interface VideoCardProps {
   description: string
 }
 
-const VideoCard = (props: VideoCardProps): JSX.Element => {
+export default function VideoCard(props: VideoCardProps) {
   const { imgUrl, name, userName, description } = props
 
   return (
@@ -58,5 +58,3 @@ const VideoCard = (props: VideoCardProps): JSX.Element => {
     </Card>
   )
 }
-
-export default VideoCard

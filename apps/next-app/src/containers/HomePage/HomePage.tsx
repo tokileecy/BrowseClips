@@ -19,7 +19,7 @@ const mockDatas = Array(50)
     return acc
   }, {})
 
-const HomePage = () => {
+export default function HomePage() {
   const dispatch = useDispatch()
   const videos = useSelector((state: RootState) => state.videos)
 
@@ -79,5 +79,3 @@ const HomePage = () => {
     </Layout>
   )
 }
-
-export default HomePage

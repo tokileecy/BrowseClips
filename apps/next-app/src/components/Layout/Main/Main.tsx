@@ -5,7 +5,7 @@ export interface MainProps {
   children?: ReactNode
 }
 
-const Main = (props: MainProps) => {
+export default function Main(props: MainProps) {
   const { children } = props
 
   return (
@@ -24,5 +24,3 @@ const Main = (props: MainProps) => {
     </Box>
   )
 }
-
-export default Main

@@ -11,7 +11,7 @@ export interface ChannelCardProps {
   description: string
 }
 
-const ChannelCard = (props: ChannelCardProps): JSX.Element => {
+export default function ChannelCard(props: ChannelCardProps) {
   const { thumbnails, id, title, description } = props
 
   return (
@@ -65,5 +65,3 @@ const ChannelCard = (props: ChannelCardProps): JSX.Element => {
     </Card>
   )
 }
-
-export default ChannelCard

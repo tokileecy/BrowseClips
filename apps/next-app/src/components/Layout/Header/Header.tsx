@@ -10,7 +10,7 @@ import { RootState } from '@/redux/store'
 import { useRouter } from 'next/router'
 import LoginDialog from '../LoginDialog'
 
-const Header = () => {
+export default function Header() {
   const [open, setOpen] = useState(false)
   const router = useRouter()
   const jwt = useSelector((state: RootState) => state.auth.jwt)
@@ -85,5 +85,3 @@ const Header = () => {
     </AppBar>
   )
 }
-
-export default Header

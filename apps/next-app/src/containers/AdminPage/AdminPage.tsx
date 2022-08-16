@@ -18,7 +18,7 @@ const { NEST_WS_URL, APP_ENV } = runtimeConfig
 
 const uri = new URL('', NEST_WS_URL).href
 
-const AdminPage = () => {
+export default function AdminPage() {
   const [channelIds, setChannelIds] = useState('')
   const [videoId, setVideoId] = useState('')
   const [socketConnected, setSocketConnected] = useState(false)
@@ -156,5 +156,3 @@ const AdminPage = () => {
     </Layout>
   )
 }
-
-export default AdminPage

@@ -6,7 +6,7 @@ import api from '@/api'
 import Layout from '../../components/Layout'
 import VideoCard from './VideoCard'
 
-const VideoPage = () => {
+export default function VideoPage() {
   const [videos, setVedios] = useState<any[]>([])
 
   const fetchVideos = async () => {
@@ -84,5 +84,3 @@ const VideoPage = () => {
     </Layout>
   )
 }
-
-export default VideoPage
