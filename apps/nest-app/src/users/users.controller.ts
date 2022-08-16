@@ -31,10 +31,4 @@ export class UsersController {
   ): Promise<UsersModule> {
     return this.usersService.createUser(data);
   }
-
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
-  }
 }
