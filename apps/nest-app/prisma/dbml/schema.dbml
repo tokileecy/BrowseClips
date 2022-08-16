@@ -18,6 +18,25 @@ Table Channel {
   publishedAt DateTime
   thumbnails Json
   videos Video [not null]
+  channelGroups ChannelGroupsOnChannels [not null]
+}
+
+Table ChannelGroup {
+  id Int [pk, increment]
+  name String
+  channels ChannelGroupsOnChannels [not null]
+}
+
+Table ChannelGroupsOnChannels {
+  channel Channel [not null]
+  channelId String [not null]
+  channelGroup ChannelGroup [not null]
+  channelGroupId Int [not null]
+  assignedAt DateTime [default: `now()`, not null]
+
+  indexes {
+    (channelGroupId, channelId) [pk]
+  }
 }
 
 Table Subject {
@@ -59,6 +78,10 @@ Table playlist {
   name String
   owner user [not null]
 }
+
+Ref: ChannelGroupsOnChannels.channelId > Channel.id
+
+Ref: ChannelGroupsOnChannels.channelGroupId > ChannelGroup.id
 
 Ref: Video.channelId > Channel.id
 

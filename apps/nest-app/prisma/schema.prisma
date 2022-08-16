@@ -38,6 +38,23 @@ model Channel {
   publishedAt DateTime?
   thumbnails  Json?
   videos      Video[]
+  channelGroups ChannelGroupsOnChannels[]
+}
+
+model ChannelGroup {
+  id        Int        @id @default(autoincrement())
+  name      String?    
+  channels ChannelGroupsOnChannels[]
+}
+
+model ChannelGroupsOnChannels {
+  channel Channel @relation(fields: [channelId], references: [id])
+  channelId String
+  channelGroup ChannelGroup @relation(fields: [channelGroupId], references: [id])
+  channelGroupId Int
+  assignedAt DateTime @default(now())
+
+  @@id([channelGroupId, channelId])
 }
 
 model Subject {

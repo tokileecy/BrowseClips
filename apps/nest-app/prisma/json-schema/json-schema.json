@@ -73,6 +73,47 @@
           "items": {
             "$ref": "#/definitions/Video"
           }
+        },
+        "channelGroups": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ChannelGroupsOnChannels"
+          }
+        }
+      }
+    },
+    "ChannelGroup": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "channels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ChannelGroupsOnChannels"
+          }
+        }
+      }
+    },
+    "ChannelGroupsOnChannels": {
+      "type": "object",
+      "properties": {
+        "channel": {
+          "$ref": "#/definitions/Channel"
+        },
+        "channelGroup": {
+          "$ref": "#/definitions/ChannelGroup"
+        },
+        "assignedAt": {
+          "type": "string",
+          "format": "date-time"
         }
       }
     },
@@ -223,6 +264,12 @@
     },
     "channel": {
       "$ref": "#/definitions/Channel"
+    },
+    "channelGroup": {
+      "$ref": "#/definitions/ChannelGroup"
+    },
+    "channelGroupsOnChannels": {
+      "$ref": "#/definitions/ChannelGroupsOnChannels"
     },
     "subject": {
       "$ref": "#/definitions/Subject"
