@@ -24,6 +24,7 @@ export class UsersController {
     return this.usersService.users({});
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post()
   async create(
     @Body() data: { email: string; username: string; password: string },
