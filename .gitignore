@@ -142,7 +142,8 @@ dist
 # custom
 
 .turbo
-apps/postgres/
+./volumes/*
+./volumes/.gitkeep
 .env
 
 .cache/yarn/*
