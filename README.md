@@ -13,6 +13,8 @@ Install Recommended Extensions.s
 
 ### Runing on Docker
 
+if Docker is Running on MacOS, Enable **VirtioFS accelerated directory sharing** feature in Experimental features might speed up Yarn Linking.
+
 1. check docker version:
   * docker version above 20.10.14
   * docker compose version above v2.4.1
