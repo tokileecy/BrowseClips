@@ -1,0 +1,16 @@
+{
+    "recommendations": [
+        "ms-azuretools.vscode-docker",
+        "dbaeumer.vscode-eslint",
+        "mhutchie.git-graph",
+        "eamodio.gitlens",
+        "ms-vscode.vscode-typescript-next",
+        "vscodeshift.material-ui-snippets",
+        "christian-kohler.path-intellisense",
+        "esbenp.prettier-vscode",
+        "prisma.prisma",
+        "redhat.vscode-yaml",
+        "formulahendry.auto-complete-tag",
+        "PKief.material-icon-theme"
+    ]
+}

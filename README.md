@@ -1,5 +1,14 @@
 # Vtuber_Clips
 
+## VSCode Setup
+
+Install Recommended Extensions.s
+
+```
+# vscode commend(cmd + p)
+> Extensions: Show Recommended Extensions
+```
+
 ## Run App
 
 ### Runing on Docker
