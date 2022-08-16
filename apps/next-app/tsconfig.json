@@ -20,6 +20,7 @@
       "@/api/*": ["src/api/*"],
       "@/redux/*": ["src/redux/*"],
       "@/page/*": ["src/page/*"],
+      "@/containers/*": ["src/containers/*"],
       "@/components/*": ["src/components/*"],
       "@/hooks/*": ["src/hooks/*"],
       "@/utils/*": ["src/utils/*"],
