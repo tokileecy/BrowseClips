@@ -9,6 +9,7 @@
     "eslint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@vtuber_clip/api": "../libs/api/dist",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "express": "^4.18.1",

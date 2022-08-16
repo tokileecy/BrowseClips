@@ -587,6 +587,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@vtuber_clip/api@file:../libs/api/dist::locator=crawler-app%40workspace%3A.":
+  version: 0.1.0
+  resolution: "@vtuber_clip/api@file:../libs/api/dist#../libs/api/dist::hash=8a61c3&locator=crawler-app%40workspace%3A."
+  dependencies:
+    axios: ^0.27.2
+    qs: ^6.11.0
+  checksum: 1baea12016d7b61fe3a33f76fd99476cd2afda338ffc75ade9c36ab747e9aed055d0e52e8663efd6e9eab35c5bf1ff1122cf19e4531ddd1756040e1577a413ae
+  languageName: node
+  linkType: hard
+
 "abbrev@npm:1":
   version: 1.1.1
   resolution: "abbrev@npm:1.1.1"
@@ -1035,6 +1045,7 @@ __metadata:
     "@types/qs": ^6.9.7
     "@typescript-eslint/eslint-plugin": ^5.0.0
     "@typescript-eslint/parser": ^5.0.0
+    "@vtuber_clip/api": ../libs/api/dist
     axios: ^0.27.2
     cors: ^2.8.5
     dotenv: ^16.0.1
