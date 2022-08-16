@@ -5,16 +5,17 @@ import { JwtStrategy } from './jwt.strategy';
 import { UsersModule } from '../users/users.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
 import { AuthController } from './auth.controller';
 import { PrismaService } from 'src/prisma.service';
+
+const JWT_WECRET = process.env.JWT_WECRET;
 
 @Module({
   imports: [
     UsersModule,
     PassportModule,
     JwtModule.register({
-      secret: jwtConstants.secret,
+      secret: JWT_WECRET,
       signOptions: { expiresIn: '0.5d' },
     }),
   ],
