@@ -596,11 +596,11 @@ __metadata:
 
 "@vtuber_clip/api@file:../libs/api/dist::locator=crawler-app%40workspace%3A.":
   version: 0.1.0
-  resolution: "@vtuber_clip/api@file:../libs/api/dist#../libs/api/dist::hash=8a61c3&locator=crawler-app%40workspace%3A."
+  resolution: "@vtuber_clip/api@file:../libs/api/dist#../libs/api/dist::hash=e33108&locator=crawler-app%40workspace%3A."
   dependencies:
     axios: ^0.27.2
     qs: ^6.11.0
-  checksum: 1baea12016d7b61fe3a33f76fd99476cd2afda338ffc75ade9c36ab747e9aed055d0e52e8663efd6e9eab35c5bf1ff1122cf19e4531ddd1756040e1577a413ae
+  checksum: ac316359ba8a0f51565e8885b935d2f85ceb0485aa6c5e77d6d8c34251b7d959ebcc0c311f623cf6100fe741b9aa7e9943c0f6855c31f1b01015f4fc35562d00
   languageName: node
   linkType: hard
 

@@ -84,6 +84,12 @@ export class Api {
       ids,
     })
   }
+
+  getUserProfile = () => {
+    return this.apiInstance.get<{ data: { accessToken: string } }>(
+      '/user/profile'
+    )
+  }
 }
 
 export default new Api()
