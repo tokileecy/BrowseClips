@@ -1,11 +1,11 @@
 import { useEffect } from 'react'
-import Layout from '../../components/Layout'
+import { useSelector, useDispatch } from 'react-redux'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import VideoCard from './VideoCard'
-import { useSelector, useDispatch } from 'react-redux'
+import Layout from '@/components/Layout'
 import { setVideos } from '@/redux/features/videos/videoSlice'
 import { RootState } from '@/redux/store'
+import VideoCard from './VideoCard'
 
 const mockDatas = Array(50)
   .fill({

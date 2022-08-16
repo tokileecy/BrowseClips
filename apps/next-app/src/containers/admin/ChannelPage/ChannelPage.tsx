@@ -1,8 +1,8 @@
-import Layout from '../../components/Layout'
+import { useEffect, useState } from 'react'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import Layout from '@/components/Layout'
 import api from '@/api'
-import { useEffect, useState } from 'react'
 import ChannelCard from './ChannelCard'
 
 export default function HomePage() {

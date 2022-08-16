@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
+import dayjs from 'dayjs'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import dayjs from 'dayjs'
 import api from '@/api'
-import Layout from '../../components/Layout'
+import Layout from '@/components/Layout'
 import VideoCard from './VideoCard'
 
 export default function VideoPage() {

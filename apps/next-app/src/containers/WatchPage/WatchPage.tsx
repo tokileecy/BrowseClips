@@ -1,6 +1,6 @@
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
-import Layout from '../../components/Layout'
+import Layout from '@/components/Layout'
 
 export interface WatchPageProps {
   id?: string

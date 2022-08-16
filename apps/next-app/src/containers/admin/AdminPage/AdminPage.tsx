@@ -7,7 +7,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import { Paper } from '@mui/material'
 import api from '@/api'
-import Layout from '../../components/Layout'
+import Layout from '@/components/Layout'
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
 
