@@ -18,6 +18,7 @@
     "@mui/icons-material": "^5.4.4",
     "@mui/material": "^5.4.4",
     "@reduxjs/toolkit": "^1.8.1",
+    "@vtuber_clip/api": "../libs/api/dist",
     "axios": "^0.27.2",
     "dayjs": "^1.11.4",
     "next": "12.1.0",

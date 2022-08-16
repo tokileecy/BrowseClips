@@ -1,61 +1,15 @@
-import apiInstance from './api-instance'
+import { Api } from '@vtuber_clip/api'
+import getConfig from 'next/config'
 
-class Api {
-  login = (data: { username: string; password: string }) => {
-    return apiInstance.post<
-      {
-        username: string
-        password: string
-      },
-      { data: { accessToken: string } }
-    >('/auth/login', data)
-  }
+const { publicRuntimeConfig, serverRuntimeConfig } = getConfig()
 
-  listChannels = () => {
-    return apiInstance.get<
-      {
-        id: string
-        title?: string
-        description?: string
-        country?: string
-        publishedAt: string
-        thumbnails: {
-          height: number
-          width: number
-          url: string
-        }[]
-      }[]
-    >('/channels')
-  }
+const runtimeConfig =
+  typeof document === 'undefined' ? serverRuntimeConfig : publicRuntimeConfig
 
-  addChannelByIds = (ids: string[]) => {
-    return apiInstance.post('/channels', {
-      ids,
-    })
-  }
+const { NEST_URL } = runtimeConfig
 
-  listVideos = () => {
-    return apiInstance.get<
-      {
-        id: string
-        title?: string
-        description?: string
-        country?: string
-        publishedAt: string
-        thumbnails: {
-          height: number
-          width: number
-          url: string
-        }[]
-      }[]
-    >('/videos')
-  }
+const uri = new URL('', NEST_URL).href
 
-  addVideoByIds = (ids: string[]) => {
-    return apiInstance.post('/videos', {
-      ids,
-    })
-  }
-}
-
-export default new Api()
+export default new Api({
+  baseURL: uri,
+})
