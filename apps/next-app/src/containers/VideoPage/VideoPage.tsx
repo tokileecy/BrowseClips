@@ -35,8 +35,6 @@ export default function VideoPage() {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          pl: 8,
-          pr: 8,
           pt: 4,
         }}
       >

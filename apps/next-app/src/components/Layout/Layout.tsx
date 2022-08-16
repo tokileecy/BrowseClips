@@ -1,12 +1,11 @@
 import { ReactNode, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
-import BaseThemeProvider from './BaseThemeProvider'
-import Header from './Header'
-import Main from './Main'
 import { setAuth } from '@/redux/features/auth/authSlice'
 import { RootState } from '@/redux/store'
 import api from '@/api'
+import Header from './Header'
+import Main from './Main'
 
 export interface LayoutProps {
   variant?: 'common' | 'login'
@@ -39,9 +38,9 @@ export default function Layout(props: LayoutProps) {
   }, [variant])
 
   return (
-    <BaseThemeProvider>
+    <>
       <Header />
       <Main>{children}</Main>
-    </BaseThemeProvider>
+    </>
   )
 }

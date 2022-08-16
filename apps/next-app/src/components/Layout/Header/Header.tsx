@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useRouter } from 'next/router'
+import getConfig from 'next/config'
 import { useDispatch, useSelector } from 'react-redux'
 import AppBar from '@mui/material/AppBar'
 import Button from '@mui/material/Button'
@@ -7,8 +9,9 @@ import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import { logout } from '@/redux/features/auth/authSlice'
 import { RootState } from '@/redux/store'
-import { useRouter } from 'next/router'
 import LoginDialog from '../LoginDialog'
+
+const { publicRuntimeConfig } = getConfig()
 
 export default function Header() {
   const [open, setOpen] = useState(false)
@@ -31,57 +34,60 @@ export default function Header() {
   }
 
   return (
-    <AppBar>
-      <Box
-        sx={{
-          pl: 4,
-          pr: 4,
-        }}
+    <AppBar
+      sx={(theme) => ({
+        justifyContent: 'space-between',
+        height: theme.custom.headerHeight,
+      })}
+    >
+      <Toolbar
+        sx={(theme) => ({
+          ml: theme.custom.headerPaddingLeft,
+          mr: theme.custom.headerPaddingRight,
+          p: 0,
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+        })}
       >
-        <Toolbar
+        <Box
+          component="a"
           sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
+            fontWeight: 'bold',
+            width: 254,
           }}
         >
-          <Box
-            component="a"
-            sx={{
-              width: 254,
-            }}
-          >
-            Next-App
-          </Box>
-          {!jwt ? (
-            <Button variant="text">
-              <Typography
-                sx={{
-                  fontSize: '16px',
-                  color: 'white',
-                  fontWeight: 'bold',
-                }}
-                onClick={handleClickOpen}
-              >
-                Login
-              </Typography>
-            </Button>
-          ) : (
-            <Button variant="text">
-              <Typography
-                sx={{
-                  fontSize: '16px',
-                  color: 'white',
-                  fontWeight: 'bold',
-                }}
-                onClick={handleLogout}
-              >
-                Logout
-              </Typography>
-            </Button>
-          )}
-          <LoginDialog open={open} onClose={handleClose} />
-        </Toolbar>
-      </Box>
+          {publicRuntimeConfig.BRAND_NAME}
+        </Box>
+        {!jwt ? (
+          <Button variant="text">
+            <Typography
+              sx={{
+                fontSize: '16px',
+                color: 'white',
+                fontWeight: 'bold',
+              }}
+              onClick={handleClickOpen}
+            >
+              Login
+            </Typography>
+          </Button>
+        ) : (
+          <Button variant="text">
+            <Typography
+              sx={{
+                fontSize: '16px',
+                color: 'white',
+                fontWeight: 'bold',
+              }}
+              onClick={handleLogout}
+            >
+              Logout
+            </Typography>
+          </Button>
+        )}
+        <LoginDialog open={open} onClose={handleClose} />
+      </Toolbar>
     </AppBar>
   )
 }

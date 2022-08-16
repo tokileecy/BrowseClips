@@ -83,6 +83,7 @@ services:
       - PUBLIC_NEST_URL=${PUBLIC_NEST_URL:-http://127.0.0.1:4000}
       - SERVER_NEST_WS_URL=ws://nest-app:5000/
       - PUBLIC_NEST_WS_URL=${PUBLIC_NEST_WS_URL:-ws://127.0.0.1:5000}
+      - BRAND_NAME=${NEXT_BRAND_NAME:-NEXT_BRAND_NAME}
     volumes:
       - ./apps/libs:/srv/libs
       - ./apps/next-app:/srv/app
