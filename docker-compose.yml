@@ -64,6 +64,7 @@ services:
         if [ ${APP_ENV:-development} == \"production\" ]; then yarn start:prod; else yarn start:dev; fi
       "
     ports:
+      - '5555:5555'
       - '4000:4000'
     depends_on:
       - postgres
