@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
@@ -11,7 +11,8 @@ import Checkbox, { CheckboxProps } from '@mui/material/Checkbox'
 import { useForm } from 'react-hook-form'
 import { AxiosError } from 'axios'
 import api from '@/api'
-import { setAuth } from '@/redux/features/auth/authSlice'
+import { setAuth, setRememberJwt } from '@/redux/features/auth/authSlice'
+import { RootState } from '@/redux/store'
 import Layout from '../components/Layout'
 
 interface LoginFormFieldData {
@@ -20,8 +21,8 @@ interface LoginFormFieldData {
 }
 
 function LoginPaper() {
-  const [rememberMe, setRememberMe] = useState(false)
   const [formError, setFormError] = useState('')
+  const rememberMe = useSelector((state: RootState) => state.auth.rememberJwt)
   const dispatch = useDispatch()
   const router = useRouter()
 
@@ -32,7 +33,7 @@ function LoginPaper() {
   } = useForm<LoginFormFieldData>()
 
   const hadleCheckRememberMe: CheckboxProps['onChange'] = (e) => {
-    setRememberMe(e.target.checked)
+    dispatch(setRememberJwt({ rememberJwt: e.target.checked }))
   }
 
   const handleLogin = async (data: LoginFormFieldData) => {
@@ -41,10 +42,6 @@ function LoginPaper() {
         username: data.username,
         password: data.password,
       })
-
-      if (rememberMe) {
-        localStorage.setItem('jwt', res.data.accessToken)
-      }
 
       dispatch(setAuth({ jwt: res.data.accessToken }))
       router.push('/admin')

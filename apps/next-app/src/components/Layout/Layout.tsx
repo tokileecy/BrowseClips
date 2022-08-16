@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useRouter } from 'next/router'
 import { setAuth } from '@/redux/features/auth/authSlice'
@@ -15,27 +15,49 @@ export interface LayoutProps {
 export default function Layout(props: LayoutProps) {
   const { children, variant = 'common' } = props
 
+  const [isStartup, setIsStartup] = useState(false)
+  const rememberMe = useSelector((state: RootState) => state.auth.rememberJwt)
   const jwt = useSelector((state: RootState) => state.auth.jwt)
   const router = useRouter()
   const dispatch = useDispatch()
 
   useEffect(() => {
+    const localJwt = localStorage.getItem('jwt')
+
     if (jwt !== undefined) {
       api.setJwt(jwt)
+
+      if (rememberMe && jwt !== localJwt) {
+        localStorage.setItem('jwt', jwt)
+      }
+    } else {
+      if (localJwt) {
+        dispatch(setAuth({ jwt: localJwt }))
+        api.setJwt(localJwt)
+      }
+    }
+
+    if (!isStartup) {
+      setIsStartup(true)
     }
   }, [jwt])
 
   useEffect(() => {
-    if (variant === 'common') {
-      const jwt = localStorage.getItem('jwt')
-
-      if (jwt) {
-        dispatch(setAuth({ jwt }))
-      } else {
-        router.push('/login')
+    const getUserProfile = async () => {
+      if (variant === 'common') {
+        try {
+          await api.getUserProfile()
+        } catch {
+          localStorage.removeItem('jwt')
+          router.push('/login')
+        }
       }
     }
-  }, [variant])
+
+    if (isStartup) {
+      getUserProfile()
+    }
+  }, [isStartup, variant])
 
   return (
     <>
