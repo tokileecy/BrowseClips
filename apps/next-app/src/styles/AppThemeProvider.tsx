@@ -63,6 +63,7 @@ theme = createTheme(theme, {
         root: {
           margin: 'auto',
           maxWidth: 'initial',
+          minHeight: '100%',
           [theme.breakpoints.up('mobile')]: {
             paddingLeft: 36,
             paddingRight: 36,
