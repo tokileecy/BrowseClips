@@ -90,6 +90,23 @@ export class Api {
       '/user/profile'
     )
   }
+
+  listChannelGroups = () => {
+    return this.apiInstance.get<
+      {
+        id: number;
+        name: string;
+        channelIds?: string[]
+      }[]
+    >('/channels/groups')
+  }
+
+  createChannelGroup = (data: {
+    name: string;
+    channelIds?: string[]
+  }) => {
+    return this.apiInstance.post('/channels/groups', data)
+  }
 }
 
 export default new Api()
