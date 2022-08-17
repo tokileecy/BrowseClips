@@ -64,7 +64,6 @@ function LoginPaper() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        p: 4,
       }}
     >
       <Box

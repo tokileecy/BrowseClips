@@ -35,7 +35,6 @@ export default function VideoPage() {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          pt: 4,
         }}
       >
         <Box sx={{ pb: 3 }}>

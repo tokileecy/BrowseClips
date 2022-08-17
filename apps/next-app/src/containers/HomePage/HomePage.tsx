@@ -36,7 +36,6 @@ export default function HomePage() {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          pt: 4,
         }}
       >
         <Box sx={{ pl: 3, pb: 3 }}>

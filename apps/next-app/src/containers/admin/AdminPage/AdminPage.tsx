@@ -69,7 +69,6 @@ export default function AdminPage() {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          pt: 4,
         }}
       >
         <Box sx={{ pb: 3 }}>

@@ -29,7 +29,6 @@ export default function HomePage() {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          pt: 4,
         }}
       >
         <Box sx={{ pb: 3 }}>
