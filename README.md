@@ -1,5 +1,16 @@
 # Vtuber_Clips
 
+## Site
+
+```
+-- :3000/    (Next App)
+  -- /login
+  -- /admin
+-- :4000/    (Nest App)
+  -- /api    (Swagger Doc)
+-- :5555/    (Prisma Studio)
+```
+
 ## VSCode Setup
 
 Install Recommended Extensions.s
