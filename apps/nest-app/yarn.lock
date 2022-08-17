@@ -886,9 +886,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/common@npm:^9.0.9":
-  version: 9.0.9
-  resolution: "@nestjs/common@npm:9.0.9"
+"@nestjs/common@npm:^9.0.11":
+  version: 9.0.11
+  resolution: "@nestjs/common@npm:9.0.11"
   dependencies:
     iterare: 1.2.1
     tslib: 2.4.0
@@ -906,13 +906,13 @@ __metadata:
       optional: true
     class-validator:
       optional: true
-  checksum: 012450e6dac7e2196cd92276edc581cf0825780133a68f3cbf42e50763757ff381531d5de7d73bc24b88aed0e967e24fa0b21223b7b36d6f3cc3ca618e39b265
+  checksum: 57c6618f13e3c9d16665ba0f10318bd1fea9d46eb5b609c8d79ccf4f41ed2dd97668fa51142aeaed4da5a4cd9388aee9cad5730916f4831b6ea23ded6f0265ce
   languageName: node
   linkType: hard
 
-"@nestjs/core@npm:^9.0.9":
-  version: 9.0.9
-  resolution: "@nestjs/core@npm:9.0.9"
+"@nestjs/core@npm:^9.0.11":
+  version: 9.0.11
+  resolution: "@nestjs/core@npm:9.0.11"
   dependencies:
     "@nuxtjs/opencollective": 0.3.2
     fast-safe-stringify: 2.1.1
@@ -935,7 +935,7 @@ __metadata:
       optional: true
     "@nestjs/websockets":
       optional: true
-  checksum: 1dedb63ebaac1561e648038b172e556289cff74740b63a1e39b6ea2b5163f803ffe51ee475c1ef72d4eecf64427c36c5af9a654b1ad208844207bceeb1885153
+  checksum: 645081107b3cacbbb6318ca64ccc388bea4b3e3e407183af568d57c05d2f15b4284736efd634b205088ddbedaf55e891096dc7af6b1e07858eb470559f3378d1
   languageName: node
   linkType: hard
 
@@ -978,9 +978,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@nestjs/platform-express@npm:^9.0.9":
-  version: 9.0.9
-  resolution: "@nestjs/platform-express@npm:9.0.9"
+"@nestjs/platform-express@npm:^9.0.11":
+  version: 9.0.11
+  resolution: "@nestjs/platform-express@npm:9.0.11"
   dependencies:
     body-parser: 1.20.0
     cors: 2.8.5
@@ -990,7 +990,7 @@ __metadata:
   peerDependencies:
     "@nestjs/common": ^9.0.0
     "@nestjs/core": ^9.0.0
-  checksum: 8171548e8bda4eed5a5722b304edfbb49b26b02c17745382171b05947de2a3b10bd3f2248c0d6f350730332ed12d058ae2c1167b9a368cb6b25d137df4050738
+  checksum: 64c7da4c754dac92f753274740fc23618c2efee40b6195429f4e6633c73826de1fe03fcf386bb7612fdd2fa720077ad117b79a7d289336dc062bc0a94d1cf9b3
   languageName: node
   linkType: hard
 
@@ -2242,12 +2242,12 @@ __metadata:
   resolution: "@vtuber-clips/nest-app@workspace:."
   dependencies:
     "@nestjs/cli": ^8.2.8
-    "@nestjs/common": ^9.0.9
-    "@nestjs/core": ^9.0.9
+    "@nestjs/common": ^9.0.11
+    "@nestjs/core": ^9.0.11
     "@nestjs/jwt": ^9.0.0
     "@nestjs/mapped-types": ^1.1.0
     "@nestjs/passport": ^9.0.0
-    "@nestjs/platform-express": ^9.0.9
+    "@nestjs/platform-express": ^9.0.11
     "@nestjs/schematics": ^8.0.11
     "@nestjs/serve-static": ^3.0.0
     "@nestjs/swagger": ^6.0.5
@@ -2267,7 +2267,7 @@ __metadata:
     eslint-config-prettier: ^8.5.0
     eslint-plugin-prettier: ^4.2.1
     express: ^4.18.1
-    google-auth-library: ^8.1.1
+    google-auth-library: ^8.2.0
     googleapis: ^105.0.0
     jest: ^27.5.1
     passport: ^0.6.0
@@ -4900,7 +4900,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"google-auth-library@npm:^8.0.2, google-auth-library@npm:^8.1.1":
+"google-auth-library@npm:^8.0.2":
   version: 8.1.1
   resolution: "google-auth-library@npm:8.1.1"
   dependencies:
@@ -4914,6 +4914,23 @@ __metadata:
     jws: ^4.0.0
     lru-cache: ^6.0.0
   checksum: 581badf70974b900cdf6fa1749a14f8a42885cfab8ce5731101e40de286d977e30845e6815f58ea329eaf7ee4678262415ab1ea13aa29bce3609131be967787c
+  languageName: node
+  linkType: hard
+
+"google-auth-library@npm:^8.2.0":
+  version: 8.2.0
+  resolution: "google-auth-library@npm:8.2.0"
+  dependencies:
+    arrify: ^2.0.0
+    base64-js: ^1.3.0
+    ecdsa-sig-formatter: ^1.0.11
+    fast-text-encoding: ^1.0.0
+    gaxios: ^5.0.0
+    gcp-metadata: ^5.0.0
+    gtoken: ^6.0.0
+    jws: ^4.0.0
+    lru-cache: ^6.0.0
+  checksum: cd8e32e73e12c186aa672f9b558dcf4b4b28412531bd673988bce46b3f6e8276b82da3f9127610160de484675e8033f5696af4177eaf44d7facf342a3a1fe940
   languageName: node
   linkType: hard
 
