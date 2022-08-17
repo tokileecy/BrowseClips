@@ -11,6 +11,7 @@
         "prisma.prisma",
         "redhat.vscode-yaml",
         "formulahendry.auto-complete-tag",
-        "PKief.material-icon-theme"
+        "pkief.material-icon-theme",
+        "aaron-bond.better-comments"
     ]
 }
