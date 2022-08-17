@@ -1,3 +1,7 @@
+:root {
+  --colors\/background: #1c1c1c;
+}
+
 html,
 body {
   padding: 0;
@@ -20,6 +24,6 @@ a {
   width: 100vw;
   display: flex;
   flex-direction: column;
-  background-color: #1c1c1c;
+  background-color: var(--colors\/background);
   overflow-y: hidden;
 }

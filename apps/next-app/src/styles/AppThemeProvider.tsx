@@ -3,11 +3,16 @@ import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { ParallaxProvider } from 'react-scroll-parallax'
 
 declare module '@mui/material/styles' {
+  type CustomColors = 'background'
+
   interface Theme {
     custom: {
       headerHeight: string
       headerPaddingLeft: string
       headerPaddingRight: string
+      colors?: {
+        [key in CustomColors]: string
+      }
     }
   }
 
@@ -16,6 +21,9 @@ declare module '@mui/material/styles' {
       headerHeight?: string
       headerPaddingLeft?: string
       headerPaddingRight?: string
+      colors?: {
+        [key in CustomColors]: string
+      }
     }
   }
 
@@ -37,7 +45,11 @@ let theme = createTheme({
     headerHeight: '64px',
     headerPaddingLeft: '36px',
     headerPaddingRight: '36px',
+    colors: {
+      background: '#1c1c1c',
+    },
   },
+  spacing: 8,
   breakpoints: {
     values: {
       mobile: 0,
