@@ -5,7 +5,8 @@
 	"eslint.workingDirectories": [
 		"./apps/nest-app",
 		"./apps/next-app",
-		"./apps/web-crawler"
+		"./apps/web-crawler",
+		"./apps/libs/api"
 	],
 	"editor.tabSize": 2
 }
