@@ -13,14 +13,13 @@ import { AxiosError } from 'axios'
 import api from '@/api'
 import { setAuth, setRememberJwt } from '@/redux/features/auth/authSlice'
 import { RootState } from '@/redux/store'
-import Layout from '../components/Layout'
 
 interface LoginFormFieldData {
   username: string
   password: string
 }
 
-function LoginPaper() {
+export default function LoginPaper() {
   const [formError, setFormError] = useState('')
   const rememberMe = useSelector((state: RootState) => state.auth.rememberJwt)
   const dispatch = useDispatch()
@@ -64,6 +63,7 @@ function LoginPaper() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
+        p: 4,
       }}
     >
       <Box
@@ -147,23 +147,5 @@ function LoginPaper() {
         Login
       </Button>
     </Paper>
-  )
-}
-
-export default function HomePage() {
-  return (
-    <Layout variant="login">
-      <Box
-        sx={{
-          width: '100%',
-          height: '100%',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <LoginPaper />
-      </Box>
-    </Layout>
   )
 }
