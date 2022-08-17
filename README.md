@@ -37,3 +37,15 @@ if Docker is Running on MacOS, Enable **VirtioFS accelerated directory sharing**
   # or docker-compose up
   docker compose up
 ```
+
+## Dev
+
+### Refresh VSCode TypeScript Path IntelliSense
+
+VSCode intelliSense might lost when remove and reisntall node_modules, restart TS server for get IntelliSense back.
+
+```
+# Selected a Ts file.
+# vscode commend(cmd + p)
+> TypeScript: Restart TS server
+```
