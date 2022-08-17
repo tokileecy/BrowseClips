@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+# path
+PROJECT_ROOT="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; cd ..; pwd -P )"
+API_LIB_DIRECTORY="$(cd -- "$PROJECT_ROOT" >/dev/null 2>&1; cd apps/libs/api; pwd -P)"
+
+docker compose exec next-app yarn
+docker compose exec nest-app yarn
+docker compose exec crawler-app yarn
+/usr/bin/env sh -c "cd $API_LIB_DIRECTORY && yarn"
