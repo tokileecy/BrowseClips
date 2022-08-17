@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { Channel, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { google } from 'googleapis';
@@ -8,6 +8,7 @@ const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 @Injectable()
 export class ChannelsService {
   constructor(private prisma: PrismaService) {}
+  private readonly logger = new Logger('HTTP');
 
   async channels(): Promise<Channel[]> {
     return this.prisma.channel.findMany();
@@ -75,7 +76,7 @@ export class ChannelsService {
     }
 
     if (process.env.APP_ENV === 'development') {
-      console.log(`video length: ${videoIds.length}`);
+      this.logger.log(`video length: ${videoIds.length}`);
     }
 
     const videoDatas = [];
@@ -121,5 +122,13 @@ export class ChannelsService {
         }),
       ),
     );
+  }
+
+  async listAllGroups() {
+    return this.prisma.channelGroup.findMany();
+  }
+
+  async createGroup(data: Prisma.ChannelGroupCreateInput) {
+    return this.prisma.channelGroup.create({ data });
   }
 }

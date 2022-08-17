@@ -3,6 +3,7 @@ import { ChannelsModule } from './channels.module';
 import { ChannelsService } from './channels.service';
 import { CreateTodoDto } from './dto/create-channel.dto';
 import { UseJwtAuth } from '../common/decorators/use-jwt-auth.decorator';
+import { CreateChannelGroupDto } from './dto/create-channel-group.dto';
 
 @UseJwtAuth()
 @Controller('channels')
@@ -22,5 +23,15 @@ export class ChannelsController {
   @Get('sync')
   async sync() {
     return this.channelsService.syncChannelVideos();
+  }
+
+  @Get('groups')
+  async listAllGroups() {
+    return this.channelsService.listAllGroups();
+  }
+
+  @Post('groups')
+  async createGroup(@Body() data: CreateChannelGroupDto) {
+    return this.channelsService.createGroup(data);
   }
 }
