@@ -12,6 +12,14 @@ const nextConfig = {
     NEST_WS_URL: process.env?.PUBLIC_NEST_WS_URL ?? 'http://127.0.0.1:4000/',
     BRAND_NAME: process.env?.BRAND_NAME ?? 'BRAND_NAME',
   },
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    })
+
+    return config
+  },
 }
 
 export default nextConfig
