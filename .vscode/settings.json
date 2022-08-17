@@ -3,8 +3,9 @@
 		"source.fixAll.eslint": true,
 	},
 	"eslint.workingDirectories": [
-			"./apps/nest-app",
-			"./apps/next-app",
-			"./apps/web-crawler"
-    ]
+		"./apps/nest-app",
+		"./apps/next-app",
+		"./apps/web-crawler"
+	],
+	"editor.tabSize": 2
 }
