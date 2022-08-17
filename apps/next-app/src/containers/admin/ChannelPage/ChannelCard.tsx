@@ -1,18 +1,18 @@
-import Card from '@mui/material/Card'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import CardContent from '@mui/material/CardContent'
-import Avatar from '@mui/material/Avatar'
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import CardContent from '@mui/material/CardContent';
+import Avatar from '@mui/material/Avatar';
 
 export interface ChannelCardProps {
-  thumbnails: string
-  title: string
-  id: string
-  description: string
+  thumbnails: string;
+  title: string;
+  id: string;
+  description: string;
 }
 
 export default function ChannelCard(props: ChannelCardProps) {
-  const { thumbnails, id, title, description } = props
+  const { thumbnails, id, title, description } = props;
 
   return (
     <Card
@@ -63,5 +63,5 @@ export default function ChannelCard(props: ChannelCardProps) {
         </Box>
       </CardContent>
     </Card>
-  )
+  );
 }

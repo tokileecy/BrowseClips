@@ -1,3 +1,3 @@
-import ChannelPage from '@/containers/admin/ChannelPage'
+import ChannelPage from '@/containers/admin/ChannelPage';
 
-export default ChannelPage
+export default ChannelPage;

@@ -1,42 +1,42 @@
-import { ReactNode } from 'react'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { ParallaxProvider } from 'react-scroll-parallax'
+import { ReactNode } from 'react';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { ParallaxProvider } from 'react-scroll-parallax';
 
 declare module '@mui/material/styles' {
-  type CustomColors = 'background'
+  type CustomColors = 'background';
 
   interface Theme {
     custom: {
-      headerHeight: string
-      headerPaddingLeft: string
-      headerPaddingRight: string
+      headerHeight: string;
+      headerPaddingLeft: string;
+      headerPaddingRight: string;
       colors?: {
-        [key in CustomColors]: string
-      }
-    }
+        [key in CustomColors]: string;
+      };
+    };
   }
 
   interface ThemeOptions {
     custom?: {
-      headerHeight?: string
-      headerPaddingLeft?: string
-      headerPaddingRight?: string
+      headerHeight?: string;
+      headerPaddingLeft?: string;
+      headerPaddingRight?: string;
       colors?: {
-        [key in CustomColors]: string
-      }
-    }
+        [key in CustomColors]: string;
+      };
+    };
   }
 
   interface BreakpointOverrides {
-    xs: false
-    sm: false
-    md: false
-    lg: false
-    xl: false
-    mobile: true
-    tablet: true
-    laptop: true
-    desktop: true
+    xs: false;
+    sm: false;
+    md: false;
+    lg: false;
+    xl: false;
+    mobile: true;
+    tablet: true;
+    laptop: true;
+    desktop: true;
   }
 }
 
@@ -58,7 +58,7 @@ let theme = createTheme({
       desktop: 1440,
     },
   },
-})
+});
 
 theme = createTheme(theme, {
   components: {
@@ -97,18 +97,18 @@ theme = createTheme(theme, {
       },
     },
   },
-})
+});
 
 export interface AppThemeProviderProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 export default function AppThemeProvider(props: AppThemeProviderProps) {
-  const { children } = props
+  const { children } = props;
 
   return (
     <ThemeProvider theme={theme}>
       <ParallaxProvider>{children}</ParallaxProvider>
     </ThemeProvider>
-  )
+  );
 }

@@ -1,16 +1,16 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export type State = {
-  jwt?: string
-  isAuth: boolean
-  rememberJwt: boolean
-}
+  jwt?: string;
+  isAuth: boolean;
+  rememberJwt: boolean;
+};
 
 export const initialState: State = {
   jwt: undefined,
   rememberJwt: false,
   isAuth: false,
-}
+};
 
 export const authSlice = createSlice({
   name: 'auth',
@@ -18,21 +18,21 @@ export const authSlice = createSlice({
   reducers: {
     setRememberJwt: (
       state,
-      action: PayloadAction<{ rememberJwt: boolean }>
+      action: PayloadAction<{ rememberJwt: boolean }>,
     ) => {
-      state.rememberJwt = action.payload.rememberJwt
+      state.rememberJwt = action.payload.rememberJwt;
     },
     setAuth: (state, action: PayloadAction<{ jwt: string }>) => {
-      state.jwt = action.payload.jwt
-      state.isAuth = true
+      state.jwt = action.payload.jwt;
+      state.isAuth = true;
     },
     logout: (state) => {
-      state.jwt = undefined
-      state.isAuth = false
+      state.jwt = undefined;
+      state.isAuth = false;
     },
   },
-})
+});
 
-export const { setAuth, setRememberJwt, logout } = authSlice.actions
+export const { setAuth, setRememberJwt, logout } = authSlice.actions;
 
-export default authSlice.reducer
+export default authSlice.reducer;

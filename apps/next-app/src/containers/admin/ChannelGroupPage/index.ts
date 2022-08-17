@@ -1,2 +1,2 @@
-export { default } from './ChannelGroupPage'
-export * from './ChannelGroupPage'
+export { default } from './ChannelGroupPage';
+export * from './ChannelGroupPage';

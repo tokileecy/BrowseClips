@@ -1,68 +1,68 @@
-import { ReactNode, useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useRouter } from 'next/router'
-import { setAuth } from '@/redux/features/auth/authSlice'
-import { RootState } from '@/redux/store'
-import api from '@/api'
-import Header from './Header'
-import Main from './Main'
+import { ReactNode, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
+import { setAuth } from '@/redux/features/auth/authSlice';
+import { RootState } from '@/redux/store';
+import api from '@/api';
+import Header from './Header';
+import Main from './Main';
 
 export interface LayoutProps {
-  variant?: 'common' | 'login'
-  children?: ReactNode
+  variant?: 'common' | 'login';
+  children?: ReactNode;
 }
 
 export default function Layout(props: LayoutProps) {
-  const { children, variant = 'common' } = props
+  const { children, variant = 'common' } = props;
 
-  const [isStartup, setIsStartup] = useState(false)
-  const rememberMe = useSelector((state: RootState) => state.auth.rememberJwt)
-  const jwt = useSelector((state: RootState) => state.auth.jwt)
-  const router = useRouter()
-  const dispatch = useDispatch()
+  const [isStartup, setIsStartup] = useState(false);
+  const rememberMe = useSelector((state: RootState) => state.auth.rememberJwt);
+  const jwt = useSelector((state: RootState) => state.auth.jwt);
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const localJwt = localStorage.getItem('jwt')
+    const localJwt = localStorage.getItem('jwt');
 
     if (jwt !== undefined) {
-      api.setJwt(jwt)
+      api.setJwt(jwt);
 
       if (rememberMe && jwt !== localJwt) {
-        localStorage.setItem('jwt', jwt)
+        localStorage.setItem('jwt', jwt);
       }
     } else {
       if (localJwt) {
-        dispatch(setAuth({ jwt: localJwt }))
-        api.setJwt(localJwt)
+        dispatch(setAuth({ jwt: localJwt }));
+        api.setJwt(localJwt);
       }
     }
 
     if (!isStartup) {
-      setIsStartup(true)
+      setIsStartup(true);
     }
-  }, [jwt])
+  }, [jwt]);
 
   useEffect(() => {
     const getUserProfile = async () => {
       if (variant === 'common') {
         try {
-          await api.getUserProfile()
+          await api.getUserProfile();
         } catch {
-          localStorage.removeItem('jwt')
-          router.push('/login')
+          localStorage.removeItem('jwt');
+          router.push('/login');
         }
       }
-    }
+    };
 
     if (isStartup) {
-      getUserProfile()
+      getUserProfile();
     }
-  }, [isStartup, variant])
+  }, [isStartup, variant]);
 
   return (
     <>
       <Header />
       <Main>{children}</Main>
     </>
-  )
+  );
 }

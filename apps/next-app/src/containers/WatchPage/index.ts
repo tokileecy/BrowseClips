@@ -1,2 +1,2 @@
-export { default } from './WatchPage'
-export * from './WatchPage'
+export { default } from './WatchPage';
+export * from './WatchPage';

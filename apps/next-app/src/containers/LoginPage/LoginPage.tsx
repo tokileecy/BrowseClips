@@ -1,7 +1,6 @@
-import Box from '@mui/material/Box'
-import Layout from '@/components/Layout'
-import LoginPaper from './LoginPaper'
-
+import Box from '@mui/material/Box';
+import Layout from '@/components/Layout';
+import LoginPaper from './LoginPaper';
 
 export default function LoginPage() {
   return (
@@ -18,5 +17,5 @@ export default function LoginPage() {
         <LoginPaper />
       </Box>
     </Layout>
-  )
+  );
 }

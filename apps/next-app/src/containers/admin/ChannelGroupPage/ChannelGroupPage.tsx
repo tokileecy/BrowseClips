@@ -1,56 +1,56 @@
-import { useEffect, useState } from 'react'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
-import SvgIcon from '@mui/material/SvgIcon'
-import CircleAdd from '@/images/circle-add.svg'
-import Layout from '@/components/Layout'
-import api from '@/api'
-import ChannelGroupCard from './ChannelCard'
-import CreateGroupDialog, { ChannelGroupFormData } from './CreateGroupDialog'
+import { useEffect, useState } from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
+import SvgIcon from '@mui/material/SvgIcon';
+import CircleAdd from '@/images/circle-add.svg';
+import Layout from '@/components/Layout';
+import api from '@/api';
+import ChannelGroupCard from './ChannelCard';
+import CreateGroupDialog, { ChannelGroupFormData } from './CreateGroupDialog';
 
 export default function HomePage() {
-  const [open, setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const [channelGroups, setChannelGroups] = useState<
     {
-      id: number
-      name: string
-      channelIds?: string[]
+      id: number;
+      name: string;
+      channelIds?: string[];
     }[]
-  >([])
+  >([]);
 
   const fetchChannelGroups = async () => {
     try {
-      const res = await api.listChannelGroups()
+      const res = await api.listChannelGroups();
 
-      setChannelGroups(res.data)
+      setChannelGroups(res.data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const handleCreateSvgClick = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   const handleOk = async (form: ChannelGroupFormData) => {
     try {
-      await api.createChannelGroup(form)
-      await fetchChannelGroups()
-      setOpen(false)
+      await api.createChannelGroup(form);
+      await fetchChannelGroups();
+      setOpen(false);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   const handleCancel = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   useEffect(() => {
-    fetchChannelGroups()
-  }, [])
+    fetchChannelGroups();
+  }, []);
 
   return (
     <Layout>
@@ -99,11 +99,11 @@ export default function HomePage() {
                 key={channelGroups.id}
                 name={channelGroups.name}
               />
-            )
+            );
           })}
         </Box>
       </Box>
       <CreateGroupDialog open={open} onOk={handleOk} onCancel={handleCancel} />
     </Layout>
-  )
+  );
 }

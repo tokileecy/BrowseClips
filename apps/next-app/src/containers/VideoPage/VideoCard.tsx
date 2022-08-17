@@ -1,19 +1,19 @@
-import Link from 'next/link'
-import Box from '@mui/material/Box'
-import Card from '@mui/material/Card'
-import Typography from '@mui/material/Typography'
-import CardMedia from '@mui/material/CardMedia'
-import CardContent from '@mui/material/CardContent'
+import Link from 'next/link';
+import Box from '@mui/material/Box';
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
 
 export interface VideoCardProps {
-  id: string
-  thumbnails: string
-  title: string
-  description: string
+  id: string;
+  thumbnails: string;
+  title: string;
+  description: string;
 }
 
 export default function VideoCard(props: VideoCardProps) {
-  const { id, thumbnails, title } = props
+  const { id, thumbnails, title } = props;
 
   return (
     <Card
@@ -57,5 +57,5 @@ export default function VideoCard(props: VideoCardProps) {
         </Typography>
       </CardContent>
     </Card>
-  )
+  );
 }

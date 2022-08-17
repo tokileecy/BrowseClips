@@ -17,6 +17,7 @@ const corsOrigin = APP_ENV === 'development' ? '*' : '';
 
 const app = express();
 const server = http.createServer(app);
+
 export const io = new Server(server, {
   cors: {
     origin: corsOrigin,

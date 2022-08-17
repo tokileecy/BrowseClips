@@ -1,4 +1,4 @@
-import { Container, Box } from '@mui/material'
+import { Container, Box } from '@mui/material';
 
 export default function Footer() {
   return (
@@ -19,5 +19,5 @@ export default function Footer() {
         ></Box>
       </Container>
     </Box>
-  )
+  );
 }

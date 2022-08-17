@@ -1,11 +1,11 @@
-import { useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Layout from '@/components/Layout'
-import { setVideos } from '@/redux/features/videos/videoSlice'
-import { RootState } from '@/redux/store'
-import VideoCard from './VideoCard'
+import { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Layout from '@/components/Layout';
+import { setVideos } from '@/redux/features/videos/videoSlice';
+import { RootState } from '@/redux/store';
+import VideoCard from './VideoCard';
 
 const mockDatas = Array(50)
   .fill({
@@ -15,19 +15,19 @@ const mockDatas = Array(50)
     description: 'This is a mock image.',
   })
   .reduce((acc, data, index) => {
-    acc[index] = data
-    return acc
-  }, {})
+    acc[index] = data;
+    return acc;
+  }, {});
 
 export default function HomePage() {
-  const dispatch = useDispatch()
-  const videos = useSelector((state: RootState) => state.videos)
+  const dispatch = useDispatch();
+  const videos = useSelector((state: RootState) => state.videos);
 
   useEffect(() => {
     dispatch(
-      setVideos({ ids: [...Object.keys(mockDatas)], itemById: mockDatas })
-    )
-  }, [])
+      setVideos({ ids: [...Object.keys(mockDatas)], itemById: mockDatas }),
+    );
+  }, []);
   return (
     <Layout>
       <Box
@@ -67,12 +67,12 @@ export default function HomePage() {
           }}
         >
           {videos.ids.map((id) => {
-            const videoData = videos.itemById[id]
+            const videoData = videos.itemById[id];
 
-            return <VideoCard key={id} {...videoData} />
+            return <VideoCard key={id} {...videoData} />;
           })}
         </Box>
       </Box>
     </Layout>
-  )
+  );
 }

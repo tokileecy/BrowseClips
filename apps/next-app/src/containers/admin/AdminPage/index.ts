@@ -1,2 +1,2 @@
-export { default } from './AdminPage'
-export * from './AdminPage'
+export { default } from './AdminPage';
+export * from './AdminPage';

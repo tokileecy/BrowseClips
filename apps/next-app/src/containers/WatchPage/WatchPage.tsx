@@ -1,13 +1,13 @@
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Layout from '@/components/Layout'
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Layout from '@/components/Layout';
 
 export interface WatchPageProps {
-  id?: string
+  id?: string;
 }
 
 export default function WatchPage(props: WatchPageProps) {
-  const { id = '' } = props
+  const { id = '' } = props;
 
   return (
     <Layout>
@@ -42,5 +42,5 @@ export default function WatchPage(props: WatchPageProps) {
         </Box>
       </Box>
     </Layout>
-  )
+  );
 }

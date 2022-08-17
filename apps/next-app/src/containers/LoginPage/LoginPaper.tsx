@@ -1,57 +1,57 @@
-import { useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { useRouter } from 'next/router'
-import TextField from '@mui/material/TextField'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import Paper from '@mui/material/Paper'
-import Button from '@mui/material/Button'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox, { CheckboxProps } from '@mui/material/Checkbox'
-import { useForm } from 'react-hook-form'
-import { AxiosError } from 'axios'
-import api from '@/api'
-import { setAuth, setRememberJwt } from '@/redux/features/auth/authSlice'
-import { RootState } from '@/redux/store'
+import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useRouter } from 'next/router';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox, { CheckboxProps } from '@mui/material/Checkbox';
+import { useForm } from 'react-hook-form';
+import { AxiosError } from 'axios';
+import api from '@/api';
+import { setAuth, setRememberJwt } from '@/redux/features/auth/authSlice';
+import { RootState } from '@/redux/store';
 
 interface LoginFormFieldData {
-  username: string
-  password: string
+  username: string;
+  password: string;
 }
 
 export default function LoginPaper() {
-  const [formError, setFormError] = useState('')
-  const rememberMe = useSelector((state: RootState) => state.auth.rememberJwt)
-  const dispatch = useDispatch()
-  const router = useRouter()
+  const [formError, setFormError] = useState('');
+  const rememberMe = useSelector((state: RootState) => state.auth.rememberJwt);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormFieldData>()
+  } = useForm<LoginFormFieldData>();
 
   const hadleCheckRememberMe: CheckboxProps['onChange'] = (e) => {
-    dispatch(setRememberJwt({ rememberJwt: e.target.checked }))
-  }
+    dispatch(setRememberJwt({ rememberJwt: e.target.checked }));
+  };
 
   const handleLogin = async (data: LoginFormFieldData) => {
     try {
       const res = await api.login({
         username: data.username,
         password: data.password,
-      })
+      });
 
-      dispatch(setAuth({ jwt: res.data.accessToken }))
-      router.push('/admin')
+      dispatch(setAuth({ jwt: res.data.accessToken }));
+      router.push('/admin');
     } catch (error) {
-      const err = error as AxiosError
+      const err = error as AxiosError;
 
-      console.error(err)
-      setFormError('something went wrong.')
-      return error
+      console.error(err);
+      setFormError('something went wrong.');
+      return error;
     }
-  }
+  };
 
   return (
     <Paper
@@ -147,5 +147,5 @@ export default function LoginPaper() {
         Login
       </Button>
     </Paper>
-  )
+  );
 }

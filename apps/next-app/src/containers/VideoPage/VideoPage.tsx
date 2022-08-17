@@ -1,31 +1,31 @@
-import { useEffect, useState } from 'react'
-import dayjs from 'dayjs'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import api from '@/api'
-import Layout from '@/components/Layout'
-import VideoCard from './VideoCard'
+import { useEffect, useState } from 'react';
+import dayjs from 'dayjs';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import api from '@/api';
+import Layout from '@/components/Layout';
+import VideoCard from './VideoCard';
 
 export default function VideoPage() {
-  const [videos, setVedios] = useState<any[]>([])
+  const [videos, setVedios] = useState<any[]>([]);
 
   const fetchVideos = async () => {
     try {
-      const res = await api.listVideos()
+      const res = await api.listVideos();
 
       const sortVideos = res.data.sort(
-        (a, b) => dayjs(b.publishedAt).unix() - dayjs(a.publishedAt).unix()
-      )
+        (a, b) => dayjs(b.publishedAt).unix() - dayjs(a.publishedAt).unix(),
+      );
 
-      setVedios(sortVideos)
+      setVedios(sortVideos);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchVideos()
-  }, [])
+    fetchVideos();
+  }, []);
 
   return (
     <Layout>
@@ -64,7 +64,7 @@ export default function VideoPage() {
                 video.thumbnails?.high ??
                 video.thumbnails?.medium ??
                 video.thumbnails?.default
-              ).url ?? ''
+              ).url ?? '';
 
             return (
               <VideoCard
@@ -74,10 +74,10 @@ export default function VideoPage() {
                 thumbnails={thumbnails}
                 description={video.description}
               />
-            )
+            );
           })}
         </Box>
       </Box>
     </Layout>
-  )
+  );
 }

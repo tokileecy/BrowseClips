@@ -1,12 +1,12 @@
-import { ReactNode } from 'react'
-import Container from '@mui/material/Container'
+import { ReactNode } from 'react';
+import Container from '@mui/material/Container';
 
 export interface MainProps {
-  children?: ReactNode
+  children?: ReactNode;
 }
 
 export default function Main(props: MainProps) {
-  const { children } = props
+  const { children } = props;
 
   return (
     <Container
@@ -17,5 +17,5 @@ export default function Main(props: MainProps) {
     >
       {children}
     </Container>
-  )
+  );
 }

@@ -1,37 +1,37 @@
-import { useState } from 'react'
-import { useRouter } from 'next/router'
-import getConfig from 'next/config'
-import { useDispatch, useSelector } from 'react-redux'
-import AppBar from '@mui/material/AppBar'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import { logout } from '@/redux/features/auth/authSlice'
-import { RootState } from '@/redux/store'
-import LoginDialog from '../LoginDialog'
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import getConfig from 'next/config';
+import { useDispatch, useSelector } from 'react-redux';
+import AppBar from '@mui/material/AppBar';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import { logout } from '@/redux/features/auth/authSlice';
+import { RootState } from '@/redux/store';
+import LoginDialog from '../LoginDialog';
 
-const { publicRuntimeConfig } = getConfig()
+const { publicRuntimeConfig } = getConfig();
 
 export default function Header() {
-  const [open, setOpen] = useState(false)
-  const router = useRouter()
-  const jwt = useSelector((state: RootState) => state.auth.jwt)
-  const dispatch = useDispatch()
+  const [open, setOpen] = useState(false);
+  const router = useRouter();
+  const jwt = useSelector((state: RootState) => state.auth.jwt);
+  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
-    setOpen(true)
-  }
+    setOpen(true);
+  };
 
   const handleLogout = () => {
-    localStorage.removeItem('jwt')
-    dispatch(logout())
-    router.push('/login')
-  }
+    localStorage.removeItem('jwt');
+    dispatch(logout());
+    router.push('/login');
+  };
 
   const handleClose = () => {
-    setOpen(false)
-  }
+    setOpen(false);
+  };
 
   return (
     <AppBar
@@ -89,5 +89,5 @@ export default function Header() {
         <LoginDialog open={open} onClose={handleClose} />
       </Toolbar>
     </AppBar>
-  )
+  );
 }

@@ -22,6 +22,7 @@ export class ChannelsService {
 
   async addChannelById(id: string[]) {
     const service = google.youtube('v3');
+
     const res = await service.channels.list({
       auth: GOOGLE_API_KEY,
       part: ['snippet', 'contentDetails', 'statistics'],
@@ -63,6 +64,7 @@ export class ChannelsService {
 
     for (let i = 0; i < channelIds.length; i++) {
       const channelId = channelIds[i];
+
       const res = await service.search.list({
         auth: GOOGLE_API_KEY,
         part: [],
@@ -83,6 +85,7 @@ export class ChannelsService {
 
     while (videoIds.length > 0) {
       const ids = videoIds.splice(0, 50);
+
       const res = await service.videos.list({
         auth: GOOGLE_API_KEY,
         part: [

@@ -1,3 +1,3 @@
-import LoginPage from '@/containers/LoginPage'
+import LoginPage from '@/containers/LoginPage';
 
-export default LoginPage
+export default LoginPage;

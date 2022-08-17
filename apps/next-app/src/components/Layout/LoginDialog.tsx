@@ -1,32 +1,32 @@
-import { useState } from 'react'
-import { AxiosError } from 'axios'
-import { useDispatch } from 'react-redux'
-import { useForm } from 'react-hook-form'
-import Box from '@mui/material/Box'
-import DialogTitle from '@mui/material/DialogTitle'
-import Typography from '@mui/material/Typography'
-import DialogContent from '@mui/material/DialogContent'
-import DialogActions from '@mui/material/DialogActions'
-import Button from '@mui/material/Button'
-import Checkbox, { CheckboxProps } from '@mui/material/Checkbox'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Dialog from '@mui/material/Dialog'
-import TextField from '@mui/material/TextField'
-import api from '@/api'
-import { setAuth } from '@/redux/features/auth/authSlice'
+import { useState } from 'react';
+import { AxiosError } from 'axios';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import Box from '@mui/material/Box';
+import DialogTitle from '@mui/material/DialogTitle';
+import Typography from '@mui/material/Typography';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
+import Checkbox, { CheckboxProps } from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Dialog from '@mui/material/Dialog';
+import TextField from '@mui/material/TextField';
+import api from '@/api';
+import { setAuth } from '@/redux/features/auth/authSlice';
 
 interface LoginFormFieldData {
-  username: string
-  password: string
+  username: string;
+  password: string;
 }
 
 export interface LoginDialogProps {
-  open: boolean
-  onClose?: () => void
+  open: boolean;
+  onClose?: () => void;
 }
 
 export default function LoginDialog(props: LoginDialogProps) {
-  const { open, onClose } = props
+  const { open, onClose } = props;
 
   const {
     register,
@@ -34,45 +34,45 @@ export default function LoginDialog(props: LoginDialogProps) {
     clearErrors,
     reset,
     formState: { errors },
-  } = useForm<LoginFormFieldData>()
+  } = useForm<LoginFormFieldData>();
 
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-  const [rememberMe, setRememberMe] = useState(false)
-  const [formError, setFormError] = useState('')
+  const [rememberMe, setRememberMe] = useState(false);
+  const [formError, setFormError] = useState('');
 
   const handleClose = () => {
-    onClose?.()
-    clearErrors()
-    reset()
-  }
+    onClose?.();
+    clearErrors();
+    reset();
+  };
 
   const handleLogin = async (data: LoginFormFieldData) => {
     try {
       const res = await api.login({
         username: data.username,
         password: data.password,
-      })
+      });
 
       if (rememberMe) {
-        localStorage.setItem('jwt', res.data.accessToken)
+        localStorage.setItem('jwt', res.data.accessToken);
       }
 
-      dispatch(setAuth({ jwt: res.data.accessToken }))
+      dispatch(setAuth({ jwt: res.data.accessToken }));
 
-      handleClose()
+      handleClose();
     } catch (error) {
-      const err = error as AxiosError
+      const err = error as AxiosError;
 
-      console.error(err)
-      setFormError('something went wrong.')
-      return error
+      console.error(err);
+      setFormError('something went wrong.');
+      return error;
     }
-  }
+  };
 
   const hadleCheckRememberMe: CheckboxProps['onChange'] = (e) => {
-    setRememberMe(e.target.checked)
-  }
+    setRememberMe(e.target.checked);
+  };
 
   return (
     <Dialog open={open} onClose={handleClose}>
@@ -167,5 +167,5 @@ export default function LoginDialog(props: LoginDialogProps) {
         </DialogActions>
       </Box>
     </Dialog>
-  )
+  );
 }

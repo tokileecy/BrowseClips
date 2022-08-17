@@ -10,8 +10,10 @@ export async function login() {
   const browser = await playwright.firefox.launch({
     headless: false, // setting this to true will not run the UI
   });
+
   const context = await browser.newContext();
   const page = await context.newPage();
+
   // const page = await browser.newPage();
   await page.goto('https://www.youtube.com/');
   await page.waitForTimeout(1000); // wait for 5 seconds

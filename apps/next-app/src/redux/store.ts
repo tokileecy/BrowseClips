@@ -1,6 +1,6 @@
-import { configureStore } from '@reduxjs/toolkit'
-import videos from './features/videos/videoSlice'
-import auth from './features/auth/authSlice'
+import { configureStore } from '@reduxjs/toolkit';
+import videos from './features/videos/videoSlice';
+import auth from './features/auth/authSlice';
 
 const store = configureStore({
   devTools: process.env.APP_ENV === 'development',
@@ -8,10 +8,10 @@ const store = configureStore({
     auth,
     videos,
   },
-})
+});
 
-export type RootState = ReturnType<typeof store.getState>
+export type RootState = ReturnType<typeof store.getState>;
 
-export type AppDispatch = typeof store.dispatch
+export type AppDispatch = typeof store.dispatch;
 
-export default store
+export default store;

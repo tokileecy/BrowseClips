@@ -18,12 +18,11 @@ module.exports = {
     "import/ignore": ["node_modules/*"]
   },
   "extends": [
-    "standard",
     "eslint:recommended",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended",
-    "eslint-config-prettier"
+    'plugin:prettier/recommended',
   ],
   "globals": {
     "globalThis": false,
@@ -50,16 +49,6 @@ module.exports = {
       2,
       {
         "ignore": ["children"]
-      }
-    ],
-    "comma-dangle": [
-      "error",
-      {
-        "arrays": "always-multiline",
-        "objects": "always-multiline",
-        "imports": "always-multiline",
-        "exports": "always-multiline",
-        "functions": "never"
       }
     ],
     "object-shorthand": "error",

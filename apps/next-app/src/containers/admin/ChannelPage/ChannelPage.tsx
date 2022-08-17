@@ -1,26 +1,26 @@
-import { useEffect, useState } from 'react'
-import Box from '@mui/material/Box'
-import Typography from '@mui/material/Typography'
-import Layout from '@/components/Layout'
-import api from '@/api'
-import ChannelCard from './ChannelCard'
+import { useEffect, useState } from 'react';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Layout from '@/components/Layout';
+import api from '@/api';
+import ChannelCard from './ChannelCard';
 
 export default function HomePage() {
-  const [channels, setChannels] = useState<any[]>([])
+  const [channels, setChannels] = useState<any[]>([]);
 
   const fetchChannelList = async () => {
     try {
-      const res = await api.listChannels()
+      const res = await api.listChannels();
 
-      setChannels(res.data)
+      setChannels(res.data);
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchChannelList()
-  }, [])
+    fetchChannelList();
+  }, []);
   return (
     <Layout>
       <Box
@@ -59,10 +59,10 @@ export default function HomePage() {
                 thumbnails={channel.thumbnails.default.url}
                 description={channel.description}
               />
-            )
+            );
           })}
         </Box>
       </Box>
     </Layout>
-  )
+  );
 }

@@ -1,33 +1,33 @@
-import Dialog from '@mui/material/Dialog'
-import DialogContent from '@mui/material/DialogContent'
-import TextField from '@mui/material/TextField'
-import DialogActions from '@mui/material/DialogActions'
-import Button from '@mui/material/Button'
-import DialogTitle from '@mui/material/DialogTitle'
-import { useForm } from 'react-hook-form'
+import Dialog from '@mui/material/Dialog';
+import DialogContent from '@mui/material/DialogContent';
+import TextField from '@mui/material/TextField';
+import DialogActions from '@mui/material/DialogActions';
+import Button from '@mui/material/Button';
+import DialogTitle from '@mui/material/DialogTitle';
+import { useForm } from 'react-hook-form';
 
 export interface ChannelGroupFormData {
-  name: string
-  channelIds?: string[]
+  name: string;
+  channelIds?: string[];
 }
 
 export interface CreateChannelGroupDialogProps {
-  open: boolean
-  onOk?: (data: ChannelGroupFormData) => void
-  onCancel?: () => void
+  open: boolean;
+  onOk?: (data: ChannelGroupFormData) => void;
+  onCancel?: () => void;
 }
 
 export default function CreateChannelGroupDialog(
-  props: CreateChannelGroupDialogProps
+  props: CreateChannelGroupDialogProps,
 ) {
-  const { open, onOk, onCancel } = props
+  const { open, onOk, onCancel } = props;
 
   const {
     reset,
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ChannelGroupFormData>()
+  } = useForm<ChannelGroupFormData>();
 
   return (
     <Dialog
@@ -48,11 +48,11 @@ export default function CreateChannelGroupDialog(
         onExited: () => {
           reset({
             name: '',
-          })
+          });
         },
       }}
       onClose={() => {
-        onCancel?.()
+        onCancel?.();
       }}
     >
       <DialogTitle>Create Channel Group</DialogTitle>
@@ -75,12 +75,12 @@ export default function CreateChannelGroupDialog(
           variant="text"
           color="primary"
           onClick={handleSubmit((formData) => {
-            onOk?.(formData)
+            onOk?.(formData);
           })}
         >
           Ok
         </Button>
       </DialogActions>
     </Dialog>
-  )
+  );
 }

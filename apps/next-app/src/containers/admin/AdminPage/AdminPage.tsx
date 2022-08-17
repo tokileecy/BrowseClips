@@ -1,65 +1,65 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react'
-import { io, Socket } from 'socket.io-client'
-import getConfig from 'next/config'
-import Box from '@mui/material/Box'
-import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
-import Typography from '@mui/material/Typography'
-import { Paper } from '@mui/material'
-import api from '@/api'
-import Layout from '@/components/Layout'
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { io, Socket } from 'socket.io-client';
+import getConfig from 'next/config';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { Paper } from '@mui/material';
+import api from '@/api';
+import Layout from '@/components/Layout';
 
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
 const runtimeConfig =
-  typeof document === 'undefined' ? serverRuntimeConfig : publicRuntimeConfig
+  typeof document === 'undefined' ? serverRuntimeConfig : publicRuntimeConfig;
 
-const { NEST_WS_URL, APP_ENV } = runtimeConfig
+const { NEST_WS_URL, APP_ENV } = runtimeConfig;
 
-const uri = new URL('', NEST_WS_URL).href
+const uri = new URL('', NEST_WS_URL).href;
 
 export default function AdminPage() {
-  const [channelIds, setChannelIds] = useState('')
-  const [videoId, setVideoId] = useState('')
-  const [socketConnected, setSocketConnected] = useState(false)
-  const socketRef = useRef<Socket>()
+  const [channelIds, setChannelIds] = useState('');
+  const [videoId, setVideoId] = useState('');
+  const [socketConnected, setSocketConnected] = useState(false);
+  const socketRef = useRef<Socket>();
 
   const handleAddChannel = () => {
-    api.addChannelByIds(channelIds.split(','))
-  }
+    api.addChannelByIds(channelIds.split(','));
+  };
 
   const handleAddVideo = () => {
-    api.addVideoByIds([videoId])
-  }
+    api.addVideoByIds([videoId]);
+  };
 
   const handleSync = () => {
     if (socketConnected) {
-      socketRef.current?.emit('crawl-videos')
+      socketRef.current?.emit('crawl-videos');
     }
-  }
+  };
 
   const handleChannelIdChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setChannelIds(e.target.value)
-  }
+    setChannelIds(e.target.value);
+  };
 
   const handleVideoIdChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setVideoId(e.target.value)
-  }
+    setVideoId(e.target.value);
+  };
 
   useEffect(() => {
     if (APP_ENV === 'development') {
-      localStorage.debug = '*'
+      localStorage.debug = '*';
     }
 
     socketRef.current = io(uri, {
       reconnectionDelayMax: 10000,
-    })
+    });
 
     socketRef.current?.on('connect', () => {
-      console.log(`socket.io is connected`)
-      setSocketConnected(true)
-    })
-  }, [])
+      console.log(`socket.io is connected`);
+      setSocketConnected(true);
+    });
+  }, []);
 
   return (
     <Layout>
@@ -151,5 +151,5 @@ export default function AdminPage() {
         </Box>
       </Box>
     </Layout>
-  )
+  );
 }

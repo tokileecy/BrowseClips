@@ -18,6 +18,7 @@ export class VideosService {
 
     while (id.length > 0) {
       const ids = id.splice(0, 50);
+
       const res = await service.videos.list({
         auth: GOOGLE_API_KEY,
         part: [

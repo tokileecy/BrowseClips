@@ -1,3 +1,3 @@
-import AdminPage from '@/containers/admin/AdminPage'
+import AdminPage from '@/containers/admin/AdminPage';
 
-export default AdminPage
+export default AdminPage;

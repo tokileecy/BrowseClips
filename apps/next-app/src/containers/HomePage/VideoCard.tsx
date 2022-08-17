@@ -1,18 +1,18 @@
-import Card from '@mui/material/Card'
-import Typography from '@mui/material/Typography'
-import CardMedia from '@mui/material/CardMedia'
-import CardContent from '@mui/material/CardContent'
-import Avatar from '@mui/material/Avatar'
+import Card from '@mui/material/Card';
+import Typography from '@mui/material/Typography';
+import CardMedia from '@mui/material/CardMedia';
+import CardContent from '@mui/material/CardContent';
+import Avatar from '@mui/material/Avatar';
 
 export interface VideoCardProps {
-  imgUrl: string
-  userName: string
-  name: string
-  description: string
+  imgUrl: string;
+  userName: string;
+  name: string;
+  description: string;
 }
 
 export default function VideoCard(props: VideoCardProps) {
-  const { imgUrl, name, userName, description } = props
+  const { imgUrl, name, userName, description } = props;
 
   return (
     <Card
@@ -56,5 +56,5 @@ export default function VideoCard(props: VideoCardProps) {
         </Typography>
       </CardContent>
     </Card>
-  )
+  );
 }

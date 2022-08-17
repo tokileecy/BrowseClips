@@ -1,12 +1,12 @@
-import Card from '@mui/material/Card'
-import Box from '@mui/material/Box'
+import Card from '@mui/material/Card';
+import Box from '@mui/material/Box';
 
 export interface ChannelGroupCardProps {
-  name: string
+  name: string;
 }
 
 export default function ChannelGroupCard(props: ChannelGroupCardProps) {
-  const { name } = props
+  const { name } = props;
 
   return (
     <Card
@@ -24,5 +24,5 @@ export default function ChannelGroupCard(props: ChannelGroupCardProps) {
         {name}
       </Box>
     </Card>
-  )
+  );
 }
