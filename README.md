@@ -40,6 +40,8 @@ if Docker is Running on MacOS, Enable **VirtioFS accelerated directory sharing**
 
 ## Dev
 
+1. [Nest App (apps/nest-app/README.md)](apps/nest-app/README.md)
+
 ### Refresh VSCode TypeScript Path IntelliSense
 
 VSCode intelliSense might lost when remove and reisntall node_modules, restart TS server for get IntelliSense back.
@@ -48,4 +50,14 @@ VSCode intelliSense might lost when remove and reisntall node_modules, restart T
 # Selected a Ts file.
 # vscode commend(cmd + p)
 > TypeScript: Restart TS server
+```
+
+## Scripts
+
+```sh
+  # clean node_modules, dist, .next
+  ./scripts/clean
+
+  # also clean yarn cache
+  ./scripts/clean --cache
 ```

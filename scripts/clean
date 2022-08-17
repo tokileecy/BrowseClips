@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+# paths
+PROJECT_ROOT="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; cd ..; pwd -P )"
+YARN_CACHE_DIRECTORY="$(cd -- "$PROJECT_ROOT" >/dev/null 2>&1; cd .cache/yarn; pwd -P)"
+
+# flags
+yarn_cache_flag=''
+
+docker compose down && \
+rm -rf apps/**/node_modules && \
+rm -rf apps/**/.next && \
+rm -rf apps/**/dist
+
+while [ $# -gt 0 ] ; do
+  case $1 in
+    -c | --cache) yarn_cache_flag='true' ;;
+    *) echo "invalid argument $1" 
+  esac
+  shift
+done
+
+if [ "$yarn_cache_flag" = 'true' ]; then 
+  find "$YARN_CACHE_DIRECTORY" -type f -not -name '.gitkeep' -print0 | xargs -0  -I {} rm {}
+fi
