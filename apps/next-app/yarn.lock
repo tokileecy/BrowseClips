@@ -957,7 +957,7 @@ __metadata:
     "@types/react-redux": ^7.1.24
     "@typescript-eslint/eslint-plugin": ^5.33.1
     "@typescript-eslint/parser": ^5.33.1
-    "@vtuber_clip/api": ../libs/api/dist
+    "@vtuber_clip/api": "link:../libs/api/dist"
     axios: ^0.27.2
     dayjs: ^1.11.5
     eslint: ^7.32.0
@@ -984,15 +984,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtuber_clip/api@file:../libs/api/dist::locator=%40vtuber-clips%2Fnext-app%40workspace%3A.":
-  version: 0.1.0
-  resolution: "@vtuber_clip/api@file:../libs/api/dist#../libs/api/dist::hash=d86ee9&locator=%40vtuber-clips%2Fnext-app%40workspace%3A."
-  dependencies:
-    axios: ^0.27.2
-    qs: ^6.11.0
-  checksum: 59b2fed88db7e9f26a8404f36092d7bc974627288495a63e5a02a978d5af979ad663d98fec82befc5a514a9ad22552e4bcda681f14bb37b1fbaa2256dce0ed3d
+"@vtuber_clip/api@link:../libs/api/dist::locator=%40vtuber-clips%2Fnext-app%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@vtuber_clip/api@link:../libs/api/dist::locator=%40vtuber-clips%2Fnext-app%40workspace%3A."
   languageName: node
-  linkType: hard
+  linkType: soft
 
 "acorn-jsx@npm:^5.3.1":
   version: 5.3.2
