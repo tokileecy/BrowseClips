@@ -10,7 +10,7 @@
     "eslint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@vtuber_clip/api": "link:../libs/api/dist::locator=%40vtuber-clips%2Fcrawler-app%40workspace%3A.",
+    "@vtuber_clip/api": "link:../../libs/api/dist::locator=%40vtuber-clips%2Fcrawler-app%40workspace%3A.",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "express": "^4.18.1",

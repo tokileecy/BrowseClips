@@ -28,11 +28,11 @@ services:
       - NEST_URL=http://nest-app:4000/
       - PORT=5000
     volumes:
-      - ./apps/libs:/srv/libs
-      - ./apps/crawler-app:/srv/app
+      - ./libs:$WORKSPACE_PATH/libs
+      - ./apps/crawler-app:$WORKSPACE_PATH/apps/crawler-app
       - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./.cache/yarn:/home/pwuser/.yarn/berry/cache
-    working_dir: /srv/app
+    working_dir: $WORKSPACE_PATH/apps/crawler-app
     command: >
       /bin/sh -c "
         yarn install
@@ -53,11 +53,11 @@ services:
       - NODE_ENV=${APP_ENV:-development}
       - DATABASE_URL=postgresql://${DATABASE_USERNAME:-nest}:${DATABASE_PASSWORD:-nest}@postgres:5432/${DATABASE_NAME:-nest}?connect_timeout=300
     volumes:
-      - ./apps/libs:/srv/libs
-      - ./apps/nest-app:/srv/app
+      - ./libs:$WORKSPACE_PATH/libs
+      - ./apps/nest-app:$WORKSPACE_PATH/apps/nest-app
       - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./.cache/yarn:/home/node/.yarn/berry/cache
-    working_dir: /srv/app
+    working_dir: $WORKSPACE_PATH/apps/nest-app
     command: >
       /bin/sh -c "
         yarn prisma migrate dev
@@ -86,11 +86,11 @@ services:
       - PUBLIC_NEST_WS_URL=${PUBLIC_NEST_WS_URL:-ws://127.0.0.1:5000}
       - BRAND_NAME=${NEXT_BRAND_NAME:-NEXT_BRAND_NAME}
     volumes:
-      - ./apps/libs:/srv/libs
-      - ./apps/next-app:/srv/app
+      - ./libs:$WORKSPACE_PATH/libs
+      - ./apps/next-app:$WORKSPACE_PATH/apps/next-app
       - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./.cache/yarn:/home/node/.yarn/berry/cache
-    working_dir: /srv/app
+    working_dir: $WORKSPACE_PATH/apps/next-app
     command: >
       /bin/sh -c "if [ ${APP_ENV:-development} == \"production\" ]; then yarn start; else yarn dev; fi"
 networks:

@@ -2464,7 +2464,7 @@ __metadata:
     "@types/react-redux": ^7.1.24
     "@typescript-eslint/eslint-plugin": ^5.33.1
     "@typescript-eslint/parser": ^5.33.1
-    "@vtuber_clip/api": "link:../libs/api/dist::locator=%40vtuber-clips%2Fnext-app%40workspace%3A."
+    "@vtuber_clip/api": "link:../../libs/api/dist::locator=%40vtuber-clips%2Fnext-app%40workspace%3A."
     axios: ^0.27.2
     dayjs: ^1.11.5
     eslint: ^7.32.0
@@ -2487,9 +2487,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtuber_clip/api@link:../libs/api/dist::locator=%40vtuber-clips%2Fnext-app%40workspace%3A.":
+"@vtuber_clip/api@link:../../libs/api/dist::locator=%40vtuber-clips%2Fnext-app%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "@vtuber_clip/api@link:../libs/api/dist::locator=%40vtuber-clips%2Fnext-app%40workspace%3A."
+  resolution: "@vtuber_clip/api@link:../../libs/api/dist::locator=%40vtuber-clips%2Fnext-app%40workspace%3A."
   languageName: node
   linkType: soft
 

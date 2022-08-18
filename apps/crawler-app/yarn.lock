@@ -606,7 +606,7 @@ __metadata:
     "@types/qs": ^6.9.7
     "@typescript-eslint/eslint-plugin": ^5.33.1
     "@typescript-eslint/parser": ^5.33.1
-    "@vtuber_clip/api": "link:../libs/api/dist::locator=%40vtuber-clips%2Fcrawler-app%40workspace%3A."
+    "@vtuber_clip/api": "link:../../libs/api/dist::locator=%40vtuber-clips%2Fcrawler-app%40workspace%3A."
     axios: ^0.27.2
     cors: ^2.8.5
     dotenv: ^16.0.1
@@ -624,9 +624,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@vtuber_clip/api@link:../libs/api/dist::locator=%40vtuber-clips%2Fcrawler-app%40workspace%3A.":
+"@vtuber_clip/api@link:../../libs/api/dist::locator=%40vtuber-clips%2Fcrawler-app%40workspace%3A.":
   version: 0.0.0-use.local
-  resolution: "@vtuber_clip/api@link:../libs/api/dist::locator=%40vtuber-clips%2Fcrawler-app%40workspace%3A."
+  resolution: "@vtuber_clip/api@link:../../libs/api/dist::locator=%40vtuber-clips%2Fcrawler-app%40workspace%3A."
   languageName: node
   linkType: soft
 

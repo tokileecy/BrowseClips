@@ -13,13 +13,14 @@ const nextConfig = {
     BRAND_NAME: process.env?.BRAND_NAME ?? 'BRAND_NAME',
   },
   webpack: (config) => {
+    config.resolve.preferRelative = true;
     config.module.rules.push({
       test: /\.svg$/,
       use: ['@svgr/webpack'],
-    })
+    });
 
-    return config
+    return config;
   },
-}
+};
 
-export default nextConfig
+export default nextConfig;
