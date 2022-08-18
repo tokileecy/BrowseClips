@@ -37,18 +37,22 @@ export async function listVideoIdsByChannelIds(ids: string[]) {
       currentIds.map(
         (id) =>
           new Promise((resolve) => {
-            const page = await context.newPage();
+            const fetchVideoIds = async () => {
+              const page = await context.newPage();
 
-            try {
-              const videoIds = await getVideos(page, id);
+              try {
+                const videoIds = await getVideos(page, id);
 
-              videosIdsByChannelId[id] = videoIds;
+                videosIdsByChannelId[id] = videoIds;
 
-              resolve(videoIds);
-            } catch (error) {
-              console.error(`get channel ${id} videos failed.`, error);
-              resolve([]);
-            }
+                resolve(videoIds);
+              } catch (error) {
+                console.error(`get channel ${id} videos failed.`, error);
+                resolve([]);
+              }
+            };
+
+            fetchVideoIds();
           }),
       ),
     );
