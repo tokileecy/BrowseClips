@@ -10,6 +10,7 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
+    "rootDir": "./src",
     "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
@@ -23,6 +24,7 @@
   "include": [
     "./src/**/*",
   ],
+  "exclude": ["node_modules"],
   "ts-node": {
     "swc": true
   }
