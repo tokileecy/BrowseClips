@@ -7,7 +7,7 @@ if [ -f "package.json" ]; then
 
   if [ -f "yarn.lock" ]; then
 
-    yarn install
+    YARN_CHECKSUM_BEHAVIOR=update yarn install
 
   else
 

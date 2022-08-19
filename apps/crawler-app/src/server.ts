@@ -44,8 +44,8 @@ io.on('connection', (socket) => {
   ioCommends(io, socket);
 });
 
-server.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+server.listen(5000, () => {
+  console.log(`Server running on port 5000`);
 });
 
 writeFileSync(path.resolve(__dirname, '../tmp/pid'), process.pid.toString());

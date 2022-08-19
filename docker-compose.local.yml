@@ -3,68 +3,65 @@ version: '3'
 services:
   postgres:
     image: postgres
-    env_file: .env
     networks:
       - browser_clips_default
     container_name: browser_clips-postgres
     environment:
-      POSTGRES_DB: ${DATABASE_NAME:-nest}
-      POSTGRES_USER: ${DATABASE_USERNAME:-nest}
-      POSTGRES_PASSWORD: ${DATABASE_PASSWORD:-nest}
-    ports:
-      - '5432:5432'
+      POSTGRES_DB: $DATABASE_NAME
+      POSTGRES_USER: $DATABASE_USERNAME
+      POSTGRES_PASSWORD: DATABASE_PASSWORD
     volumes:
       - ./volumes/postgres:/var/lib/postgresql/data
   crawler-app:
     image: browser_clips-crawler-app:latest
     user: '1000:1000'
     restart: unless-stopped
-    env_file: .env
     networks:
       - browser_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
-      - NODE_ENV=production
-      - NEST_URL=http://nest-app:4000/
-      - PORT=5000
+      - APP_ENV=$APP_ENV
+      - NEST_REPL=$NEST_REPL
+      - JWT_WECRET=$NEST_JWT_WECRET
+      - DATABASE_URL=postgresql://$DATABASE_USERNAME:$DATABASE_PASSWORD@postgres:5432/$DATABASE_NAME?connect_timeout=300
     volumes:
       - ./.cache/yarn:/home/pwuser/.yarn/berry/cache
     ports:
-      - '5000:5000'
+      - $CRAWLER_PORT:5000
   nest-app:
     image: browser_clips-nest-app:latest
     user: '1000:1000'
     restart: unless-stopped
-    env_file: .env
     networks:
       - browser_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
-      - NODE_ENV=production
-      - DATABASE_URL=postgresql://${DATABASE_USERNAME:-nest}:${DATABASE_PASSWORD:-nest}@postgres:5432/${DATABASE_NAME:-nest}?connect_timeout=300
+      - APP_ENV=$APP_ENV
+      - NEST_REPL=$NEST_REPL
+      - NEST_JWT_WECRET=$NEST_JWT_WECRET
+      - DATABASE_URL=postgresql://$DATABASE_USERNAME:$DATABASE_PASSWORD@postgres:5432/$DATABASE_NAME?connect_timeout=300
     volumes:
       - ./.cache/yarn:/home/node/.yarn/berry/cache
     ports:
-      - '5555:5555'
-      - '4000:4000'
+      - $PRISMA_STUDIO_PORT:5555
+      - $NEST_PORT:4000
     depends_on:
       - postgres
   next-app:
     image: browser_clips-next-app:latest
     user: '1000:1000'
-    env_file: .env
     networks:
       - browser_clips_default
     ports:
-      - '3000:3000'
+      - $NEXT_PORT:3000
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
-      - NODE_ENV=production
+      - APP_ENV=$APP_ENV
       - SERVER_NEST_URL=http://nest-app:4000/
-      - PUBLIC_NEST_URL=${PUBLIC_NEST_URL:-http://127.0.0.1:4000}
+      - PUBLIC_NEST_URL=$PUBLIC_NEST_URL
       - SERVER_NEST_WS_URL=ws://nest-app:5000/
-      - PUBLIC_NEST_WS_URL=${PUBLIC_NEST_WS_URL:-ws://127.0.0.1:5000}
-      - BRAND_NAME=${NEXT_BRAND_NAME:-NEXT_BRAND_NAME}
+      - PUBLIC_NEST_WS_URL=$PUBLIC_NEST_WS_URL
+      - BRAND_NAME=$BRAND_NAME
     volumes:
       - ./.cache/yarn:/home/node/.yarn/berry/cache
 networks:
