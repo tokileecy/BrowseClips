@@ -12,6 +12,7 @@
     "eslint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@browse_clips/api": "link:../../libs/api/dist",
     "@emotion/cache": "^11.10.1",
     "@emotion/css": "^11.10.0",
     "@emotion/react": "^11.10.0",
@@ -21,7 +22,6 @@
     "@mui/material": "^5.10.1",
     "@reduxjs/toolkit": "^1.8.4",
     "@svgr/webpack": "^6.3.1",
-    "@browse_clips/api": "link:../../libs/api/dist",
     "axios": "^0.27.2",
     "dayjs": "^1.11.5",
     "next": "12.2.5",

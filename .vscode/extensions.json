@@ -12,6 +12,9 @@
         "redhat.vscode-yaml",
         "formulahendry.auto-complete-tag",
         "pkief.material-icon-theme",
+        "mikestead.dotenv",
+        "formulahendry.auto-close-tag",
+        "formulahendry.auto-rename-tag",
         "aaron-bond.better-comments"
     ]
 }

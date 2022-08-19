@@ -477,6 +477,60 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@browse_clips/nest-app@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@browse_clips/nest-app@workspace:."
+  dependencies:
+    "@nestjs/cli": ^8.2.8
+    "@nestjs/common": ^9.0.11
+    "@nestjs/core": ^9.0.11
+    "@nestjs/jwt": ^9.0.0
+    "@nestjs/mapped-types": ^1.1.0
+    "@nestjs/passport": ^9.0.0
+    "@nestjs/platform-express": ^9.0.11
+    "@nestjs/schematics": ^8.0.11
+    "@nestjs/serve-static": ^3.0.0
+    "@nestjs/swagger": ^6.0.5
+    "@nestjs/testing": ^8.4.7
+    "@prisma/client": 4.2.1
+    "@types/express": ^4.17.13
+    "@types/jest": ^28.1.7
+    "@types/node": ^16.11.49
+    "@types/passport-jwt": ^3.0.6
+    "@types/passport-local": ^1.0.34
+    "@types/supertest": ^2.0.12
+    "@typescript-eslint/eslint-plugin": ^5.33.1
+    "@typescript-eslint/parser": ^5.33.1
+    class-transformer: ^0.5.1
+    class-validator: ^0.13.2
+    eslint: ^8.22.0
+    eslint-config-prettier: ^8.5.0
+    eslint-plugin-prettier: ^4.2.1
+    express: ^4.18.1
+    google-auth-library: ^8.2.0
+    googleapis: ^105.0.0
+    jest: ^27.5.1
+    passport: ^0.6.0
+    passport-jwt: ^4.0.0
+    passport-local: ^1.0.0
+    prettier: ^2.7.1
+    prisma: 4.2.1
+    prisma-dbml-generator: ^0.9.1
+    prisma-docs-generator: ^0.5.0
+    prisma-json-schema-generator: ^3.0.1
+    reflect-metadata: ^0.1.13
+    rimraf: ^3.0.2
+    rxjs: ^7.5.6
+    source-map-support: ^0.5.21
+    supertest: ^6.2.4
+    ts-jest: ^27.1.5
+    ts-loader: ^9.3.1
+    ts-node: ^10.9.1
+    tsconfig-paths: ^3.14.1
+    typescript: ^4.7.4
+  languageName: unknown
+  linkType: soft
+
 "@colors/colors@npm:1.5.0":
   version: 1.5.0
   resolution: "@colors/colors@npm:1.5.0"
@@ -1638,7 +1692,7 @@ __metadata:
     terminal-link: 2.1.1
     tmp: 0.2.1
     ts-pattern: ^4.0.1
-  checksum: ebf2804f35f1208bf250ec18562494c8ac61368b7b182031e9cb9ef73217afd7d3e8999abf67c96ffcc6610d7523da7b9a7651b4c66d6434411c47417521b6bb
+  checksum: 0944ec05131b2da875481bd0f1f82323a174fcc3fee3bc54be7d04f0e3dc0c055a9a9a31d5e346209fe64d127cae35f870d308217390aca4e76eb7c2fde09030
   languageName: node
   linkType: hard
 
@@ -2241,60 +2295,6 @@ __metadata:
   checksum: 0d32a433450f61e97b5fa6b1e167f06ed395c200b16b4dbd4490a1c4941de420689b622f8a2486f5398806fb24f57b9fab901b4cbc8fdb8853f568264b3a182a
   languageName: node
   linkType: hard
-
-"@vtuber-clips/nest-app@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@vtuber-clips/nest-app@workspace:."
-  dependencies:
-    "@nestjs/cli": ^8.2.8
-    "@nestjs/common": ^9.0.11
-    "@nestjs/core": ^9.0.11
-    "@nestjs/jwt": ^9.0.0
-    "@nestjs/mapped-types": ^1.1.0
-    "@nestjs/passport": ^9.0.0
-    "@nestjs/platform-express": ^9.0.11
-    "@nestjs/schematics": ^8.0.11
-    "@nestjs/serve-static": ^3.0.0
-    "@nestjs/swagger": ^6.0.5
-    "@nestjs/testing": ^8.4.7
-    "@prisma/client": 4.2.1
-    "@types/express": ^4.17.13
-    "@types/jest": ^28.1.7
-    "@types/node": ^16.11.49
-    "@types/passport-jwt": ^3.0.6
-    "@types/passport-local": ^1.0.34
-    "@types/supertest": ^2.0.12
-    "@typescript-eslint/eslint-plugin": ^5.33.1
-    "@typescript-eslint/parser": ^5.33.1
-    class-transformer: ^0.5.1
-    class-validator: ^0.13.2
-    eslint: ^8.22.0
-    eslint-config-prettier: ^8.5.0
-    eslint-plugin-prettier: ^4.2.1
-    express: ^4.18.1
-    google-auth-library: ^8.2.0
-    googleapis: ^105.0.0
-    jest: ^27.5.1
-    passport: ^0.6.0
-    passport-jwt: ^4.0.0
-    passport-local: ^1.0.0
-    prettier: ^2.7.1
-    prisma: 4.2.1
-    prisma-dbml-generator: ^0.9.1
-    prisma-docs-generator: ^0.5.0
-    prisma-json-schema-generator: ^3.0.1
-    reflect-metadata: ^0.1.13
-    rimraf: ^3.0.2
-    rxjs: ^7.5.6
-    source-map-support: ^0.5.21
-    supertest: ^6.2.4
-    ts-jest: ^27.1.5
-    ts-loader: ^9.3.1
-    ts-node: ^10.9.1
-    tsconfig-paths: ^3.14.1
-    typescript: ^4.7.4
-  languageName: unknown
-  linkType: soft
 
 "@webassemblyjs/ast@npm:1.11.1":
   version: 1.11.1
