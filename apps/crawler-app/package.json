@@ -6,11 +6,13 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon --watch 'src/**/*' -e ts --exec 'ts-node' ./src/server.ts",
+    "build": "tsc",
+    "start": "node ./dist/server.js",
     "eslint:check": "eslint .",
     "eslint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@vtuber_clip/api": "link:../../libs/api/dist::locator=%40vtuber-clips%2Fcrawler-app%40workspace%3A.",
+    "@vtuber_clip/api": "link:../../libs/api/dist",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "express": "^4.18.1",
@@ -22,8 +24,8 @@
   "packageManager": "yarn@3.2.2",
   "devDependencies": {
     "@playwright/test": "^1.25.0",
-    "@swc/core": "^1.2.237",
-    "@swc/wasm": "^1.2.237",
+    "@swc/core": "^1.2.239",
+    "@swc/wasm": "^1.2.239",
     "@types/express": "^4.17.13",
     "@types/node": "^18.7.6",
     "@types/qs": "^6.9.7",

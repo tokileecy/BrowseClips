@@ -16,62 +16,42 @@ services:
     volumes:
       - ./volumes/postgres:/var/lib/postgresql/data
   crawler-app:
-    image: mcr.microsoft.com/playwright:v1.24.2-focal
+    image: vtuber_clips-crawler-app:latest
     user: '1000:1000'
-    container_name: vtuber_clips-crawler-app
     restart: unless-stopped
     env_file: .env
     networks:
       - vtuber_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
+      - NODE_ENV=production
       - NEST_URL=http://nest-app:4000/
       - PORT=5000
     volumes:
-      - ./libs:/srv/wrokspace/libs
-      - ./apps/crawler-app:/srv/wrokspace/apps/crawler-app
-      - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./.cache/yarn:/home/pwuser/.yarn/berry/cache
-    working_dir: /srv/wrokspace/apps/crawler-app
-    command: >
-      /bin/sh -c "
-        yarn install
-        if [ ${APP_ENV:-development} == \"production\" ]; then yarn start; else yarn dev; fi
-      "
     ports:
       - '5000:5000'
   nest-app:
-    image: node:16
+    image: vtuber_clips-nest-app:latest
     user: '1000:1000'
-    container_name: vtuber_clips-nest-app
     restart: unless-stopped
     env_file: .env
     networks:
       - vtuber_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
-      - NODE_ENV=${APP_ENV:-development}
+      - NODE_ENV=production
       - DATABASE_URL=postgresql://${DATABASE_USERNAME:-nest}:${DATABASE_PASSWORD:-nest}@postgres:5432/${DATABASE_NAME:-nest}?connect_timeout=300
     volumes:
-      - ./libs:/srv/wrokspace/libs
-      - ./apps/nest-app:/srv/wrokspace/apps/nest-app
-      - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./.cache/yarn:/home/node/.yarn/berry/cache
-    working_dir: /srv/wrokspace/apps/nest-app
-    command: >
-      /bin/sh -c "
-        yarn prisma migrate dev
-        if [ ${APP_ENV:-development} == \"production\" ]; then yarn start:prod; else yarn start:dev; fi
-      "
     ports:
       - '5555:5555'
       - '4000:4000'
     depends_on:
       - postgres
   next-app:
-    image: node:16
+    image: vtuber_clips-next-app:latest
     user: '1000:1000'
-    container_name: vtuber_clips-next-app
     env_file: .env
     networks:
       - vtuber_clips_default
@@ -79,20 +59,14 @@ services:
       - '3000:3000'
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
-      - NODE_ENV=${APP_ENV:-development}
+      - NODE_ENV=production
       - SERVER_NEST_URL=http://nest-app:4000/
       - PUBLIC_NEST_URL=${PUBLIC_NEST_URL:-http://127.0.0.1:4000}
       - SERVER_NEST_WS_URL=ws://nest-app:5000/
       - PUBLIC_NEST_WS_URL=${PUBLIC_NEST_WS_URL:-ws://127.0.0.1:5000}
       - BRAND_NAME=${NEXT_BRAND_NAME:-NEXT_BRAND_NAME}
     volumes:
-      - ./libs:/srv/wrokspace/libs
-      - ./apps/next-app:/srv/wrokspace/apps/next-app
-      - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./.cache/yarn:/home/node/.yarn/berry/cache
-    working_dir: /srv/wrokspace/apps/next-app
-    command: >
-      /bin/sh -c "if [ ${APP_ENV:-development} == \"production\" ]; then yarn start; else yarn dev; fi"
 networks:
   vtuber_clips_default:
     driver: bridge

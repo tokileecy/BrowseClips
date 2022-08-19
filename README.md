@@ -55,8 +55,11 @@ VSCode intelliSense might lost when remove and reisntall node_modules, restart T
 ## Scripts
 
 ```sh
-  # clean node_modules, dist, .next
-  ./scripts/clean
+  # build all local docker images
+  ./script/build-docker -a
+
+  # specify app build
+  ./script/build-docker <app-name>
 
   # also clean yarn cache
   ./scripts/clean --cache
