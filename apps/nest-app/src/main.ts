@@ -27,8 +27,8 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
     .addBearerAuth()
-    .setTitle('VtuberClips API')
-    .setDescription('VtuberClips API description')
+    .setTitle('BrowseClips API')
+    .setDescription('BrowseClips API description')
     .setVersion(PACKAGE_VERSION)
     .build();
 

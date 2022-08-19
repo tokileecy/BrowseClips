@@ -1,5 +1,5 @@
 {
-  "name": "@vtuber-clips/crawler-app",
+  "name": "@browse_clips/crawler-app",
   "version": "0.1.0",
   "author": "tokileecy",
   "private": true,
@@ -12,7 +12,7 @@
     "eslint:fix": "eslint . --fix"
   },
   "dependencies": {
-    "@vtuber_clip/api": "link:../../libs/api/dist",
+    "@browse_clips/api": "link:../../libs/api/dist",
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "express": "^4.18.1",

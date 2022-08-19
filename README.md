@@ -1,4 +1,4 @@
-# Vtuber_Clips
+# BrowseClips
 
 ## Site
 

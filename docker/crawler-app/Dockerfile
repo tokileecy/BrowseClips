@@ -12,6 +12,8 @@ WORKDIR /srv/wrokspace/apps/crawler-app
 
 RUN YARN_CHECKSUM_BEHAVIOR=update yarn
 
-RUN yarn build
+CMD ["tail", "-f"]
 
-CMD ["yarn", "start"]
+# RUN yarn build
+
+# CMD ["yarn", "start"]

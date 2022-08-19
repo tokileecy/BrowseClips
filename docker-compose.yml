@@ -5,8 +5,8 @@ services:
     image: postgres
     env_file: .env
     networks:
-      - vtuber_clips_default
-    container_name: vtuber_clips-postgres
+      - browse_clips_default
+    container_name: browse_clips-postgres
     environment:
       POSTGRES_DB: ${DATABASE_NAME:-nest}
       POSTGRES_USER: ${DATABASE_USERNAME:-nest}
@@ -18,11 +18,11 @@ services:
   crawler-app:
     image: mcr.microsoft.com/playwright:v1.24.2-focal
     user: '1000:1000'
-    container_name: vtuber_clips-crawler-app
+    container_name: browse_clips-crawler-app
     restart: unless-stopped
     env_file: .env
     networks:
-      - vtuber_clips_default
+      - browse_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
       - NEST_URL=http://nest-app:4000/
@@ -43,11 +43,11 @@ services:
   nest-app:
     image: node:16
     user: '1000:1000'
-    container_name: vtuber_clips-nest-app
+    container_name: browse_clips-nest-app
     restart: unless-stopped
     env_file: .env
     networks:
-      - vtuber_clips_default
+      - browse_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
       - NODE_ENV=${APP_ENV:-development}
@@ -71,10 +71,10 @@ services:
   next-app:
     image: node:16
     user: '1000:1000'
-    container_name: vtuber_clips-next-app
+    container_name: browse_clips-next-app
     env_file: .env
     networks:
-      - vtuber_clips_default
+      - browse_clips_default
     ports:
       - '3000:3000'
     environment:
@@ -94,5 +94,5 @@ services:
     command: >
       /bin/sh -c "if [ ${APP_ENV:-development} == \"production\" ]; then yarn start; else yarn dev; fi"
 networks:
-  vtuber_clips_default:
+  browse_clips_default:
     driver: bridge

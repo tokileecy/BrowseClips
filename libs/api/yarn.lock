@@ -5,6 +5,28 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"@browse_clips/api@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@browse_clips/api@workspace:."
+  dependencies:
+    "@types/node": ^18.7.6
+    "@types/qs": ^6.9.7
+    "@typescript-eslint/eslint-plugin": ^5.33.1
+    "@typescript-eslint/parser": ^5.33.1
+    axios: ^0.27.2
+    eslint: ^8.22.0
+    eslint-config-prettier: ^8.5.0
+    eslint-import-resolver-typescript: ^2.7.1
+    eslint-plugin-import: ^2.26.0
+    eslint-plugin-prettier: ^4.2.1
+    eslint-plugin-react: ^7.30.1
+    prettier: ^2.7.1
+    qs: ^6.11.0
+    ts-node: ^10.9.1
+    typescript: ^4.7.4
+  languageName: unknown
+  linkType: soft
+
 "@cspotcode/source-map-support@npm:^0.8.0":
   version: 0.8.1
   resolution: "@cspotcode/source-map-support@npm:0.8.1"
@@ -279,28 +301,6 @@ __metadata:
   checksum: 0d32a433450f61e97b5fa6b1e167f06ed395c200b16b4dbd4490a1c4941de420689b622f8a2486f5398806fb24f57b9fab901b4cbc8fdb8853f568264b3a182a
   languageName: node
   linkType: hard
-
-"@vtuber-clips/api@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@vtuber-clips/api@workspace:."
-  dependencies:
-    "@types/node": ^18.7.6
-    "@types/qs": ^6.9.7
-    "@typescript-eslint/eslint-plugin": ^5.33.1
-    "@typescript-eslint/parser": ^5.33.1
-    axios: ^0.27.2
-    eslint: ^8.22.0
-    eslint-config-prettier: ^8.5.0
-    eslint-import-resolver-typescript: ^2.7.1
-    eslint-plugin-import: ^2.26.0
-    eslint-plugin-prettier: ^4.2.1
-    eslint-plugin-react: ^7.30.1
-    prettier: ^2.7.1
-    qs: ^6.11.0
-    ts-node: ^10.9.1
-    typescript: ^4.7.4
-  languageName: unknown
-  linkType: soft
 
 "acorn-jsx@npm:^5.3.2":
   version: 5.3.2

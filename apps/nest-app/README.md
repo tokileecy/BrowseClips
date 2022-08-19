@@ -1,4 +1,4 @@
-# VtuberClips - nest-app
+# BrowseClips - nest-app
 
 ## site:
 ```

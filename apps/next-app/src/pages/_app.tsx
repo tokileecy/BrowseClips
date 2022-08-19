@@ -4,7 +4,7 @@ import Head from 'next/head';
 import getConfig from 'next/config';
 import { Provider } from 'react-redux';
 import CssBaseline from '@mui/material/CssBaseline';
-import { Api } from '@vtuber_clip/api';
+import { Api } from '@browse_clips/api';
 import AppThemeProvider from '@/styles/AppThemeProvider';
 import store from '@/redux/store';
 import '@/styles/globals.css';

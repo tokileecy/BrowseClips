@@ -26,7 +26,7 @@ build_docker () {
   if [ -d $directory_name ]; then
     target=$(cd -- $1; pwd -P)
     targetDirname="$(basename $target)"
-    image_name="vtuber_clips-$targetDirname"
+    image_name="browse_clips-$targetDirname"
     dockerfile_path="$target/Dockerfile"
     /usr/bin/env sh -c "
       cd -- $target

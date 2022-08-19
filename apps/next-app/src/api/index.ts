@@ -1,4 +1,4 @@
-import { Api } from '@vtuber_clip/api';
+import { Api } from '@browse_clips/api';
 import getConfig from 'next/config';
 
 const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();

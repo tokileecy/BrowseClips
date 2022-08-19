@@ -5,8 +5,8 @@ services:
     image: postgres
     env_file: .env
     networks:
-      - vtuber_clips_default
-    container_name: vtuber_clips-postgres
+      - browser_clips_default
+    container_name: browser_clips-postgres
     environment:
       POSTGRES_DB: ${DATABASE_NAME:-nest}
       POSTGRES_USER: ${DATABASE_USERNAME:-nest}
@@ -16,12 +16,12 @@ services:
     volumes:
       - ./volumes/postgres:/var/lib/postgresql/data
   crawler-app:
-    image: vtuber_clips-crawler-app:latest
+    image: browser_clips-crawler-app:latest
     user: '1000:1000'
     restart: unless-stopped
     env_file: .env
     networks:
-      - vtuber_clips_default
+      - browser_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
       - NODE_ENV=production
@@ -32,12 +32,12 @@ services:
     ports:
       - '5000:5000'
   nest-app:
-    image: vtuber_clips-nest-app:latest
+    image: browser_clips-nest-app:latest
     user: '1000:1000'
     restart: unless-stopped
     env_file: .env
     networks:
-      - vtuber_clips_default
+      - browser_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
       - NODE_ENV=production
@@ -50,11 +50,11 @@ services:
     depends_on:
       - postgres
   next-app:
-    image: vtuber_clips-next-app:latest
+    image: browser_clips-next-app:latest
     user: '1000:1000'
     env_file: .env
     networks:
-      - vtuber_clips_default
+      - browser_clips_default
     ports:
       - '3000:3000'
     environment:
@@ -68,5 +68,5 @@ services:
     volumes:
       - ./.cache/yarn:/home/node/.yarn/berry/cache
 networks:
-  vtuber_clips_default:
+  browser_clips_default:
     driver: bridge

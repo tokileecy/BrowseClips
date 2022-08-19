@@ -1,5 +1,5 @@
 {
-  "name": "@vtuber-clips/next-app",
+  "name": "@browse_clips/next-app",
   "version": "0.1.0",
   "author": "tokileecy",
   "private": true,
@@ -21,7 +21,7 @@
     "@mui/material": "^5.10.1",
     "@reduxjs/toolkit": "^1.8.4",
     "@svgr/webpack": "^6.3.1",
-    "@vtuber_clip/api": "link:../../libs/api/dist",
+    "@browse_clips/api": "link:../../libs/api/dist",
     "axios": "^0.27.2",
     "dayjs": "^1.11.5",
     "next": "12.2.5",

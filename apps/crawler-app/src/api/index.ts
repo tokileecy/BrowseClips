@@ -1,4 +1,4 @@
-import { Api } from '@vtuber_clip/api';
+import { Api } from '@browse_clips/api';
 
 const NEST_URL = process.env.NEST_URL;
 const uri = new URL('', NEST_URL).href;
