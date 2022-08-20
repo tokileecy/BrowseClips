@@ -5,7 +5,7 @@ import { Channel } from '@prisma/client';
 export class CreateChannelGroupDto {
   @IsString()
   @ApiProperty()
-  public readonly name?: string;
+  public readonly name: string;
 
   @IsOptional()
   @IsString({ each: true })

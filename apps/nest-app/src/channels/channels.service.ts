@@ -20,7 +20,7 @@ export class ChannelsService {
     });
   }
 
-  async addChannelById(id: string[]) {
+  async addChannelById(id: string[], groupName?: string) {
     const service = google.youtube('v3');
 
     const res = await service.channels.list({
@@ -42,8 +42,42 @@ export class ChannelsService {
       channels.map((data) =>
         this.prisma.channel.upsert({
           where: { id: data.id },
-          update: { ...data },
-          create: { ...data },
+          update: {
+            ...data,
+            channelGroups:
+              groupName !== undefined
+                ? {
+                    create: [
+                      {
+                        assignedAt: new Date(),
+                        channelGroup: {
+                          connect: {
+                            name: groupName,
+                          },
+                        },
+                      },
+                    ],
+                  }
+                : undefined,
+          },
+          create: {
+            ...data,
+            channelGroups:
+              groupName !== undefined
+                ? {
+                    create: [
+                      {
+                        assignedAt: new Date(),
+                        channelGroup: {
+                          connect: {
+                            name: groupName,
+                          },
+                        },
+                      },
+                    ],
+                  }
+                : undefined,
+          },
         }),
       ),
     );
