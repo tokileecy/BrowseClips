@@ -10,7 +10,6 @@ import * as path from 'path';
 
 dotenv.config();
 
-const PORT = Number(process.env.PORT);
 const APP_ENV = process.env.APP_ENV;
 
 const corsOrigin = APP_ENV === 'development' ? '*' : '';
