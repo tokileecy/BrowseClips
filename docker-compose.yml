@@ -1,5 +1,7 @@
 version: '3'
 
+volumes:
+  postgres-store:
 services:
   postgres:
     image: postgres
@@ -9,11 +11,11 @@ services:
     environment:
       POSTGRES_DB: $DATABASE_NAME
       POSTGRES_USER: $DATABASE_USERNAME
-      POSTGRES_PASSWORD: DATABASE_PASSWORD
+      POSTGRES_PASSWORD: $DATABASE_PASSWORD
     ports:
       - $DB_PORT:5432
     volumes:
-      - ./volumes/postgres:/var/lib/postgresql/data
+      - postgres-store:/var/lib/postgresql/data
   crawler-app:
     image: mcr.microsoft.com/playwright:v1.24.2-focal
     user: '1000:1000'
