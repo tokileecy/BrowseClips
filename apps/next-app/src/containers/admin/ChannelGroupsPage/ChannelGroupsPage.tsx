@@ -9,6 +9,7 @@ import api from '@/api';
 import ChannelGroupCard from './ChannelCard';
 import ChannelCard from '../ChannelPage/ChannelCard';
 import CreateGroupDialog, { ChannelGroupFormData } from './CreateGroupDialog';
+import CreateChannelDialog, { ChannelFormData } from './CreateChannelDialog';
 import { useRouter } from 'next/router';
 
 export interface ChannelGroupsPageProps {
@@ -18,6 +19,7 @@ export interface ChannelGroupsPageProps {
 export default function ChannelGroupsPage(props: ChannelGroupsPageProps) {
   const { groupName } = props;
   const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
   const [channels, setChannels] = useState<any[]>([]);
 
   const [channelGroups, setChannelGroups] = useState<
@@ -72,8 +74,22 @@ export default function ChannelGroupsPage(props: ChannelGroupsPageProps) {
     }
   };
 
+  const handleOk1 = async (form: ChannelFormData) => {
+    try {
+      await api.addChannelByIds(form.channelIds?.split(','));
+      await fetchChannelGroups();
+      setOpen(false);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const handleCancel = () => {
     setOpen(false);
+  };
+
+  const handleCancel1 = () => {
+    setOpen1(false);
   };
 
   useEffect(() => {
@@ -176,7 +192,16 @@ export default function ChannelGroupsPage(props: ChannelGroupsPageProps) {
         {title}
         {isGroupView ? channelsNode : channelGroupsNode}
       </Box>
-      <CreateGroupDialog open={open} onOk={handleOk} onCancel={handleCancel} />
+      <CreateGroupDialog
+        open={open1}
+        onOk={handleOk1}
+        onCancel={handleCancel1}
+      />
+      <CreateChannelDialog
+        open={open}
+        onOk={handleOk}
+        onCancel={handleCancel}
+      />
     </Layout>
   );
 }

@@ -1,12 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit';
-import videos from './features/videos/videoSlice';
 import auth from './features/auth/authSlice';
 
 const store = configureStore({
   devTools: process.env.APP_ENV === 'development',
   reducer: {
     auth,
-    videos,
   },
 });
 
