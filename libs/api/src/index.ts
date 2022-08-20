@@ -56,9 +56,10 @@ export class Api {
     >('/channels');
   };
 
-  addChannelByIds = (ids: string[]) => {
+  addChannelByIds = (ids: string[], groupName?: string) => {
     return this.apiInstance.post('/channels', {
       ids,
+      groupName,
     });
   };
 
