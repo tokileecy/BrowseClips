@@ -18,8 +18,8 @@ export interface ChannelGroupsPageProps {
 
 export default function ChannelGroupsPage(props: ChannelGroupsPageProps) {
   const { groupName } = props;
-  const [open, setOpen] = useState(false);
-  const [open1, setOpen1] = useState(false);
+  const [groupDialogOpen, setGroupDialogOpen] = useState(false);
+  const [channelDialogOpen, setChannelDialogOpen] = useState(false);
   const [channels, setChannels] = useState<any[]>([]);
 
   const [channelGroups, setChannelGroups] = useState<
@@ -56,40 +56,40 @@ export default function ChannelGroupsPage(props: ChannelGroupsPageProps) {
     }
   };
 
-  const handleCreateChannelGroup = () => {
-    setOpen(true);
-  };
-
   const handleCreateChannel = () => {
-    setOpen(true);
+    setChannelDialogOpen(true);
   };
 
-  const handleOk = async (form: ChannelGroupFormData) => {
+  const handleCreateGroup = () => {
+    setGroupDialogOpen(true);
+  };
+
+  const handleGroupDialogOk = async (form: ChannelGroupFormData) => {
     try {
       await api.createChannelGroup(form);
       await fetchChannelGroups();
-      setOpen(false);
+      setGroupDialogOpen(false);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleOk1 = async (form: ChannelFormData) => {
+  const handleChannelDialogOk = async (form: ChannelFormData) => {
     try {
-      await api.addChannelByIds(form.channelIds?.split(','));
-      await fetchChannelGroups();
-      setOpen(false);
+      await api.addChannelByIds(form.channelIds?.split(','), groupName);
+      await fetchChannelGroup();
+      setChannelDialogOpen(false);
     } catch (error) {
       console.error(error);
     }
   };
 
-  const handleCancel = () => {
-    setOpen(false);
+  const handleChannelDialogCancel = () => {
+    setChannelDialogOpen(false);
   };
 
-  const handleCancel1 = () => {
-    setOpen1(false);
+  const handleGroupDialogCancel = () => {
+    setGroupDialogOpen(false);
   };
 
   useEffect(() => {
@@ -102,7 +102,7 @@ export default function ChannelGroupsPage(props: ChannelGroupsPageProps) {
     }
   }, [groupName]);
 
-  const isGroupView = groupName !== undefined;
+  const isChannelListView = groupName !== undefined;
 
   const title = (
     <Box
@@ -118,10 +118,10 @@ export default function ChannelGroupsPage(props: ChannelGroupsPageProps) {
           color: 'white',
         }}
       >
-        {isGroupView ? groupName : 'ChannelGroups'}
+        {isChannelListView ? groupName : 'ChannelGroups'}
       </Typography>
       <IconButton
-        onClick={isGroupView ? handleCreateChannel : handleCreateChannelGroup}
+        onClick={isChannelListView ? handleCreateChannel : handleCreateGroup}
       >
         <SvgIcon
           component={CircleAdd}
@@ -190,17 +190,17 @@ export default function ChannelGroupsPage(props: ChannelGroupsPageProps) {
         }}
       >
         {title}
-        {isGroupView ? channelsNode : channelGroupsNode}
+        {isChannelListView ? channelsNode : channelGroupsNode}
       </Box>
       <CreateGroupDialog
-        open={open1}
-        onOk={handleOk1}
-        onCancel={handleCancel1}
+        open={groupDialogOpen}
+        onOk={handleGroupDialogOk}
+        onCancel={handleGroupDialogCancel}
       />
       <CreateChannelDialog
-        open={open}
-        onOk={handleOk}
-        onCancel={handleCancel}
+        open={channelDialogOpen}
+        onOk={handleChannelDialogOk}
+        onCancel={handleChannelDialogCancel}
       />
     </Layout>
   );
