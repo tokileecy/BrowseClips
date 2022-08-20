@@ -91,6 +91,27 @@ export class Api {
     );
   };
 
+  getChannelGroupByName = (name: string) => {
+    return this.apiInstance.get<{
+      id: number;
+      name: string;
+      channels: {
+        channel: {
+          id: string;
+          title?: string;
+          description?: string;
+          country?: string;
+          publishedAt: string;
+          thumbnails: {
+            height: number;
+            width: number;
+            url: string;
+          }[];
+        };
+      }[];
+    }>(`/channels/groups/${name}`);
+  };
+
   listChannelGroups = () => {
     return this.apiInstance.get<
       {
