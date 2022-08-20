@@ -19,6 +19,7 @@ __metadata:
     "@playwright/test": ^1.25.0
     "@swc/core": ^1.2.239
     "@swc/wasm": ^1.2.239
+    "@types/cors": ^2.8.12
     "@types/express": ^4.17.13
     "@types/node": ^18.7.6
     "@types/qs": ^6.9.7
