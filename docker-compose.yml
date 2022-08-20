@@ -17,7 +17,7 @@ services:
     volumes:
       - postgres-store:/var/lib/postgresql/data
   crawler-app:
-    image: mcr.microsoft.com/playwright:v1.24.2-focal
+    image: mcr.microsoft.com/playwright:latest
     user: '1000:1000'
     container_name: browse_clips-crawler-app
     restart: unless-stopped
