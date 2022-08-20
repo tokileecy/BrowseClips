@@ -5,6 +5,7 @@ import { NestFactory } from '@nestjs/core';
 import { repl } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import 'src/global';
 
 const packageFile = fs
   .readFileSync(path.resolve(__dirname, '../package.json'))
