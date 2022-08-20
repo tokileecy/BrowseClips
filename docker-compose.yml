@@ -52,6 +52,7 @@ services:
       - APP_ENV=$APP_ENV
       - NEST_REPL=$NEST_REPL
       - JWT_WECRET=$NEST_JWT_WECRET
+      - GOOGLE_API_KEY=$GOOGLE_API_KEY
       - DATABASE_URL=postgresql://$DATABASE_USERNAME:$DATABASE_PASSWORD@postgres:5432/$DATABASE_NAME?connect_timeout=300
     volumes:
       - ./libs:/srv/wrokspace/libs
