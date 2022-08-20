@@ -23,7 +23,7 @@ Table Channel {
 
 Table ChannelGroup {
   id Int [pk, increment]
-  name String
+  name String [unique, not null]
   channels ChannelGroupsOnChannels [not null]
 }
 

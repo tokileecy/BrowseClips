@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Channel, Prisma } from '@prisma/client';
+import { Channel, ChannelGroup, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { google } from 'googleapis';
 
@@ -10,7 +10,7 @@ export class ChannelsService {
   constructor(private prisma: PrismaService) {}
   private readonly logger = new Logger('HTTP');
 
-  async channels(): Promise<Channel[]> {
+  async listChannels(): Promise<Channel[]> {
     return this.prisma.channel.findMany();
   }
 
@@ -127,8 +127,31 @@ export class ChannelsService {
     );
   }
 
-  async listAllGroups() {
+  async listChannelGroups() {
     return this.prisma.channelGroup.findMany();
+  }
+
+  async getChannelGroupByName(name: string): Promise<ChannelGroup> {
+    return this.prisma.channelGroup.findUnique({
+      where: {
+        name,
+      },
+      include: {
+        channels: {
+          select: {
+            channel: {
+              select: {
+                id: true,
+                title: true,
+                description: true,
+                publishedAt: true,
+                thumbnails: true,
+              },
+            },
+          },
+        },
+      },
+    });
   }
 
   async createGroup(data: Prisma.ChannelGroupCreateInput) {

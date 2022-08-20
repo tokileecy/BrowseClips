@@ -89,10 +89,7 @@
           "type": "integer"
         },
         "name": {
-          "type": [
-            "string",
-            "null"
-          ]
+          "type": "string"
         },
         "channels": {
           "type": "array",
