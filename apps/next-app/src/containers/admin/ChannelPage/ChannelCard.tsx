@@ -18,6 +18,10 @@ export default function ChannelCard(props: ChannelCardProps) {
     <Card
       sx={{
         width: '320px',
+        whiteSpace: 'pre-wrap',
+        lineBreak: 'anywhere',
+        maxHeight: '400px',
+        overflow: 'auto',
       }}
     >
       <CardContent

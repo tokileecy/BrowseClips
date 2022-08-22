@@ -75,7 +75,7 @@ theme = createTheme(theme, {
         root: {
           margin: 'auto',
           maxWidth: 'initial',
-          minHeight: '100%',
+          minHeight: `calc(100% -${theme.custom.headerHeight})`,
           paddingTop: theme.spacing(4),
           [theme.breakpoints.up('mobile')]: {
             paddingLeft: 36,

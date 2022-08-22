@@ -35,6 +35,7 @@ export default function VideoPage() {
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
+          pb: 3,
         }}
       >
         <Box sx={{ pb: 3 }}>
@@ -67,13 +68,19 @@ export default function VideoPage() {
               ).url ?? '';
 
             return (
-              <VideoCard
+              <Box
                 key={video.id}
-                id={video.id}
-                title={video.title}
-                thumbnails={thumbnails}
-                description={video.description}
-              />
+                sx={{
+                  justifySelf: 'center',
+                }}
+              >
+                <VideoCard
+                  id={video.id}
+                  title={video.title}
+                  thumbnails={thumbnails}
+                  description={video.description}
+                />
+              </Box>
             );
           })}
         </Box>

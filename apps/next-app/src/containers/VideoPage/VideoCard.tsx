@@ -19,15 +19,16 @@ export default function VideoCard(props: VideoCardProps) {
     <Card
       data-vedio-id={id}
       sx={{
-        width: '300px',
+        width: '250px',
+        height: '100%',
       }}
     >
       <Link href={`/video/${id}`}>
         <Box component="a" sx={{ cursor: 'pointer' }}>
           <CardMedia
             component="img"
-            height="150"
-            width="300"
+            height="120"
+            width="250"
             image={thumbnails}
             alt="vedio"
           />

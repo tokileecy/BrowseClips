@@ -6,6 +6,8 @@ import { RootState } from '@/redux/store';
 import api from '@/api';
 import Header from './Header';
 import Main from './Main';
+import Aside from './Aside';
+import Box from '@mui/material/Box';
 
 export interface LayoutProps {
   variant?: 'common' | 'login';
@@ -62,7 +64,15 @@ export default function Layout(props: LayoutProps) {
   return (
     <>
       <Header />
-      <Main>{children}</Main>
+      <Box
+        sx={{
+          display: 'flex',
+          height: '100%',
+        }}
+      >
+        <Aside />
+        <Main>{children}</Main>
+      </Box>
     </>
   );
 }
