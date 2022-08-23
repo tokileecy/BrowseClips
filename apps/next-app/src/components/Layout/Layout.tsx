@@ -70,8 +70,20 @@ export default function Layout(props: LayoutProps) {
           height: '100%',
         }}
       >
-        <Aside />
-        <Main>{children}</Main>
+        {variant === 'common' && <Aside />}
+        {variant === 'common' ? (
+          <Main>{children}</Main>
+        ) : (
+          <Box
+            component="main"
+            sx={{
+              margin: 'auto',
+            }}
+          >
+            {children}
+          </Box>
+        )}
+        {/* <Main>{children}</Main> */}
       </Box>
     </>
   );
