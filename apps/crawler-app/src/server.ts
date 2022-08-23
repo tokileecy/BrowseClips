@@ -7,6 +7,7 @@ import routes from './routes';
 import ioCommends from './ioCommends';
 import { writeFileSync } from 'fs';
 import * as path from 'path';
+import './tools/cron';
 
 dotenv.config();
 
