@@ -16,6 +16,7 @@ services:
       - $DB_PORT:5432
     volumes:
       - postgres-store:/var/lib/postgresql/data
+      - ./backups:/backups
   crawler-app:
     image: mcr.microsoft.com/playwright:latest
     user: '1000:1000'

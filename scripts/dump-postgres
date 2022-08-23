@@ -1,0 +1,6 @@
+#!/bin/sh
+
+FILEDIR=$(dirname $(realpath "$0"))
+PROJECT_ROOT=$(cd $FILEDIR; cd ..; pwd)
+
+docker compose exec postgres pg_dump -h 127.0.0.1 -U nest -Fc nest > "$PROJECT_ROOT/backups/postgres_$(date +%Y-%m-%d-%H:%M).dump"

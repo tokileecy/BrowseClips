@@ -147,3 +147,5 @@ volumes/.gitkeep
 .env
 .cache/yarn/*
 !.cache/yarn/.gitkeep
+backups/*
+!backups/.gitkeep
