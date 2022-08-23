@@ -20,6 +20,7 @@ export default function Aside() {
         }),
       }}
       sx={{
+        overflow: 'auto',
         width: drawerWidth,
         flexShrink: 0,
         [`& .MuiDrawer-paper`]: {
@@ -45,34 +46,28 @@ export default function Aside() {
         </List>
         <Divider />
         <List>
-          <ListItem disablePadding>
-            <ListSubheader>
-              <ListItemText primary={'Admin'} />
-            </ListSubheader>
-          </ListItem>
-          <List>
-            {[
-              { href: '/admin', text: 'Admin' },
-              { href: '/admin/channel', text: 'Channel' },
-              { href: '/admin/channel-groups', text: 'Channelgroups' },
-            ].map(({ href, text }) => (
-              <ListItem key={href} disablePadding>
-                <Link href={href}>
-                  <ListItemButton>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </Link>
-              </ListItem>
-            ))}
-          </List>
+          <ListSubheader>
+            <ListItemText primary={'Admin'} />
+          </ListSubheader>
+          {[
+            { href: '/admin', text: 'Admin' },
+            { href: '/admin/channel', text: 'Channel' },
+            { href: '/admin/channel-groups', text: 'Channelgroups' },
+          ].map(({ href, text }) => (
+            <ListItem key={href} disablePadding>
+              <Link href={href}>
+                <ListItemButton>
+                  <ListItemText primary={text} />
+                </ListItemButton>
+              </Link>
+            </ListItem>
+          ))}
         </List>
         <Divider />
         <List>
-          <ListItem disablePadding>
-            <ListSubheader>
-              <ListItemText primary={'ChannelGroups'} />
-            </ListSubheader>
-          </ListItem>
+          <ListSubheader>
+            <ListItemText primary={'ChannelGroups'} />
+          </ListSubheader>
         </List>
       </Box>
     </Drawer>
