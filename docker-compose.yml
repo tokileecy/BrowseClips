@@ -36,7 +36,6 @@ services:
     working_dir: /srv/wrokspace/apps/crawler-app
     command: >
       /bin/sh -c "
-        yarn install
         if [ $APP_ENV == \"production\" ]; then yarn start; else yarn dev; fi
       "
     ports:
@@ -94,7 +93,9 @@ services:
       - ./.cache/yarn:/home/node/.yarn/berry/cache
     working_dir: /srv/wrokspace/apps/next-app
     command: >
-      /bin/sh -c "if [ $APP_ENV == \"production\" ]; then yarn start; else yarn dev; fi"
+      /bin/sh -c "
+        if [ $APP_ENV == \"production\" ]; then yarn start; else yarn dev; fi
+      "
 networks:
   browse_clips_default:
     driver: bridge
