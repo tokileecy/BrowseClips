@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { Channel, ChannelGroup, Prisma } from '@prisma/client';
+import { Channel, ChannelCategory, ChannelGroup, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { google } from 'googleapis';
 
@@ -20,7 +20,12 @@ export class ChannelsService {
     });
   }
 
-  async addChannelById(id: string[], groupName?: string) {
+  async addChannelById(data: {
+    ids: string[];
+    groupName?: string;
+    category?: ChannelCategory;
+  }) {
+    const { ids: id, groupName, category } = data;
     const service = google.youtube('v3');
 
     const res = await service.channels.list({
@@ -44,6 +49,7 @@ export class ChannelsService {
           where: { id: data.id },
           update: {
             ...data,
+            category,
             channelGroups:
               groupName !== undefined
                 ? {
@@ -62,6 +68,7 @@ export class ChannelsService {
           },
           create: {
             ...data,
+            category,
             channelGroups:
               groupName !== undefined
                 ? {

@@ -17,6 +17,7 @@ Table Channel {
   country String [default: '']
   publishedAt DateTime
   thumbnails Json
+  category ChannelCategory [not null, default: 'Streamer']
   videos Video [not null]
   channelGroups ChannelGroupsOnChannels [not null]
 }
@@ -77,6 +78,11 @@ Table playlist {
   ownerId Int [not null]
   name String
   owner user [not null]
+}
+
+Enum ChannelCategory {
+  Streamer
+  Clipper
 }
 
 Ref: ChannelGroupsOnChannels.channelId > Channel.id

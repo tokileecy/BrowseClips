@@ -37,6 +37,7 @@ model Channel {
   country     String?   @default("")
   publishedAt DateTime?
   thumbnails  Json?
+  category  ChannelCategory @default(Streamer)
   videos      Video[]
   channelGroups ChannelGroupsOnChannels[]
 }
@@ -45,6 +46,11 @@ model ChannelGroup {
   id        Int        @id @default(autoincrement())
   name      String     @unique
   channels ChannelGroupsOnChannels[]
+}
+
+enum ChannelCategory {
+  Streamer
+  Clipper
 }
 
 model ChannelGroupsOnChannels {

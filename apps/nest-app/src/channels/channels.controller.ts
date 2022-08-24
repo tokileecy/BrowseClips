@@ -18,7 +18,7 @@ export class ChannelsController {
 
   @Post()
   async create(@Body() data: CreateTodoDto): Promise<ChannelsModule> {
-    return this.channelsService.addChannelById(data.ids, data.groupName);
+    return this.channelsService.addChannelById(data);
   }
 
   @Get('sync')

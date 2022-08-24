@@ -68,6 +68,14 @@
             "null"
           ]
         },
+        "category": {
+          "type": "string",
+          "default": "Streamer",
+          "enum": [
+            "Streamer",
+            "Clipper"
+          ]
+        },
         "videos": {
           "type": "array",
           "items": {

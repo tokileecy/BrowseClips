@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { google } from 'googleapis';
 import { PrismaService } from 'src/prisma.service';
+import { ChannelCategory } from '@prisma/client';
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
@@ -8,8 +9,14 @@ const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 export class VideosService {
   constructor(private prisma: PrismaService) {}
 
-  async listVideos() {
-    return this.prisma.video.findMany();
+  async listVideos(category?: ChannelCategory) {
+    return this.prisma.video.findMany({
+      where: {
+        channel: {
+          category,
+        },
+      },
+    });
   }
 
   async addVideoById(id: string[]) {
