@@ -1,5 +1,6 @@
 import { Api } from '@browse_clips/api';
 import getConfig from 'next/config';
+export * as API from '@browse_clips/api';
 
 const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 

@@ -2,16 +2,22 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import api from '@/api';
+import api, { API } from '@/api';
 import Layout from '@/components/Layout';
 import VideoCard from './VideoCard';
 
-export default function VideoPage() {
+export interface VideoPageProps {
+  category?: API.ChannelCategory;
+}
+
+export default function VideoPage(props: VideoPageProps) {
+  const { category } = props;
+
   const [videos, setVedios] = useState<any[]>([]);
 
   const fetchVideos = async () => {
     try {
-      const res = await api.listVideos();
+      const res = await api.listVideos(category);
 
       const sortVideos = res.data.sort(
         (a, b) => dayjs(b.publishedAt).unix() - dayjs(a.publishedAt).unix(),
@@ -25,7 +31,7 @@ export default function VideoPage() {
 
   useEffect(() => {
     fetchVideos();
-  }, []);
+  }, [category]);
 
   return (
     <Layout>
@@ -46,7 +52,7 @@ export default function VideoPage() {
               color: 'white',
             }}
           >
-            Vedios
+            {category === 'Streamer' ? 'Videos' : 'Clips'}
           </Typography>
         </Box>
         <Box

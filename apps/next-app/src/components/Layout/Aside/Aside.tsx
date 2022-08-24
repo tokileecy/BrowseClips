@@ -33,7 +33,8 @@ export default function Aside() {
         <List>
           {[
             { href: '/', text: 'Home' },
-            { href: '/video', text: 'Videos' },
+            { href: '/video?category=Streamer', text: 'Videos' },
+            { href: '/video?category=Clipper', text: 'Clips' },
           ].map(({ href, text }) => (
             <ListItem key={href} disablePadding>
               <Link href={href}>

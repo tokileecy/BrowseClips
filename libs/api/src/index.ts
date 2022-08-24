@@ -1,7 +1,8 @@
 import axios, { AxiosInstance } from 'axios';
 import qs from 'qs';
 
-interface ApiOtiopns {
+export type ChannelCategory = 'Streamer' | 'Clipper';
+export interface ApiOtiopns {
   baseURL?: string;
 }
 
@@ -56,14 +57,15 @@ export class Api {
     >('/channels');
   };
 
-  addChannelByIds = (ids: string[], groupName?: string) => {
-    return this.apiInstance.post('/channels', {
-      ids,
-      groupName,
-    });
+  addChannelByIds = (data: {
+    ids: string[];
+    groupName?: string;
+    category?: ChannelCategory;
+  }) => {
+    return this.apiInstance.post('/channels', data);
   };
 
-  listVideos = () => {
+  listVideos = (category?: ChannelCategory) => {
     return this.apiInstance.get<
       {
         id: string;
@@ -77,7 +79,11 @@ export class Api {
           url: string;
         }[];
       }[]
-    >('/videos');
+    >('/videos', {
+      params: {
+        category,
+      },
+    });
   };
 
   addVideoByIds = (ids: string[]) => {
