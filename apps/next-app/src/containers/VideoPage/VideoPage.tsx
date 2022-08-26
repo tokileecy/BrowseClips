@@ -17,13 +17,13 @@ export default function VideoPage(props: VideoPageProps) {
 
   const fetchVideos = async () => {
     try {
-      const res = await api.listVideos(category);
+      const res = await api.listVideos({
+        category,
+        sortBy: 'publishedAt',
+        orderBy: 'desc',
+      });
 
-      const sortVideos = res.data.sort(
-        (a, b) => dayjs(b.publishedAt).unix() - dayjs(a.publishedAt).unix(),
-      );
-
-      setVedios(sortVideos);
+      setVedios(res.data);
     } catch (error) {
       console.error(error);
     }

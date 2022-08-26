@@ -9,13 +9,42 @@ const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 export class VideosService {
   constructor(private prisma: PrismaService) {}
 
-  async listVideos(category?: ChannelCategory) {
+  async listVideos(
+    params: {
+      category?: ChannelCategory;
+      size?: number;
+      page?: number;
+      cursor?: string;
+      sortBy?: string;
+      orderBy?: 'asc' | 'desc';
+    } = {},
+  ) {
+    const { size = 60, page = 0, category, cursor, sortBy, orderBy } = params;
+
+    const orderByData =
+      sortBy !== undefined && orderBy !== undefined
+        ? {
+            [sortBy]: orderBy,
+          }
+        : undefined;
+
+    const cursorData =
+      cursor !== undefined
+        ? {
+            id: cursor,
+          }
+        : undefined;
+
     return this.prisma.video.findMany({
+      skip: page * size,
+      take: size,
+      cursor: cursorData,
       where: {
         channel: {
           category,
         },
       },
+      orderBy: orderByData,
     });
   }
 

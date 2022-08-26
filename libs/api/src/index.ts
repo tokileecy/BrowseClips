@@ -65,7 +65,16 @@ export class Api {
     return this.apiInstance.post('/channels', data);
   };
 
-  listVideos = (category?: ChannelCategory) => {
+  listVideos = (data: {
+    category?: ChannelCategory;
+    size?: number;
+    page?: number;
+    cursor?: string;
+    sortBy?: string;
+    orderBy?: 'asc' | 'desc';
+  }) => {
+    const { category, size, page, cursor, sortBy, orderBy } = data;
+
     return this.apiInstance.get<
       {
         id: string;
@@ -82,6 +91,11 @@ export class Api {
     >('/videos', {
       params: {
         category,
+        size,
+        page,
+        cursor,
+        sortBy,
+        orderBy,
       },
     });
   };
