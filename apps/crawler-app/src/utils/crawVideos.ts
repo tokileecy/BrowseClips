@@ -10,11 +10,10 @@ export default async function crawVideos() {
     const videoIds = await listVideoIdsByChannelIds(channelIds);
 
     console.log('add videos');
-    api.addVideoByIds(
+    await api.addVideoByIds(
       Object.values(videoIds).reduce((acc, curr) => [...acc, ...curr], []),
     );
   } catch (error) {
     console.error(`addVideos failed`);
-    console.error(error);
   }
 }

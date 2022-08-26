@@ -56,14 +56,18 @@ export class VideosService {
       );
     }
 
-    return this.prisma.$transaction(
-      videoDatas.map((data) =>
-        this.prisma.video.upsert({
+    for (let i = 0; i < videoDatas.length; i++) {
+      const data = videoDatas[i];
+
+      try {
+        await this.prisma.video.upsert({
           where: { id: data.id },
           update: { ...data },
           create: { ...data },
-        }),
-      ),
-    );
+        });
+      } catch (error) {
+        console.error(`add video failed with id: ${data.id}`, error, data);
+      }
+    }
   }
 }
