@@ -38,7 +38,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             href="image"
             sizes="32x32"
           /> */}
-          {/* <title></title> */}
+          <title>{publicRuntimeConfig.BRAND_NAME}</title>
         </Head>
         <CssBaseline />
         <Component {...pageProps} />
