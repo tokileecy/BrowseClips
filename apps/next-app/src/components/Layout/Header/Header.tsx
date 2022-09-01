@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
-import { logout } from '@/redux/features/auth/authSlice';
+import { logout } from '@/redux/features/auth';
 import { RootState } from '@/redux/store';
 import LoginDialog from '../LoginDialog';
 

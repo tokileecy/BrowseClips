@@ -13,7 +13,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Dialog from '@mui/material/Dialog';
 import TextField from '@mui/material/TextField';
 import api from '@/api';
-import { setAuth } from '@/redux/features/auth/authSlice';
+import { setAuth } from '@/redux/features/auth';
 
 interface LoginFormFieldData {
   username: string;

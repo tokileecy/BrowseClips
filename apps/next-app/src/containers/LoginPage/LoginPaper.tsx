@@ -11,7 +11,7 @@ import Checkbox, { CheckboxProps } from '@mui/material/Checkbox';
 import { useForm } from 'react-hook-form';
 import { AxiosError } from 'axios';
 import api from '@/api';
-import { setAuth, setRememberJwt } from '@/redux/features/auth/authSlice';
+import { setAuth, setRememberJwt } from '@/redux/features/auth';
 import { RootState } from '@/redux/store';
 
 interface LoginFormFieldData {
