@@ -7,13 +7,21 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
+import MenuIcon from '@mui/icons-material/Menu';
+import IconButton from '@mui/material/IconButton';
 import { logout } from '@/redux/features/auth';
 import { RootState } from '@/redux/store';
 import LoginDialog from '../LoginDialog';
 
 const { publicRuntimeConfig } = getConfig();
 
-export default function Header() {
+export interface HeaderProps {
+  asideOpen: boolean;
+  onAsideOpen?: () => void;
+}
+
+export default function Header(props: HeaderProps) {
+  const { asideOpen, onAsideOpen } = props;
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const jwt = useSelector((state: RootState) => state.auth.jwt);
@@ -36,6 +44,11 @@ export default function Header() {
   return (
     <AppBar
       sx={(theme) => ({
+        marginLeft: asideOpen ? theme.custom.asideWidth : 'initail',
+        transition: theme.transitions.create(['width', 'margin'], {
+          easing: theme.transitions.easing.sharp,
+          duration: theme.transitions.duration.enteringScreen,
+        }),
         justifyContent: 'space-between',
         height: theme.custom.headerHeight,
       })}
@@ -57,6 +70,18 @@ export default function Header() {
             width: 254,
           }}
         >
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={onAsideOpen}
+            edge="start"
+            sx={{
+              marginRight: 5,
+              ...(open && { display: 'none' }),
+            }}
+          >
+            <MenuIcon />
+          </IconButton>
           {publicRuntimeConfig.BRAND_NAME}
         </Box>
         {!jwt ? (

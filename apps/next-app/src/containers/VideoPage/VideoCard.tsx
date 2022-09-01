@@ -8,12 +8,11 @@ import CardContent from '@mui/material/CardContent';
 export interface VideoCardProps {
   id: string;
   thumbnails: string;
-  title: string;
-  description: string;
+  title?: string;
 }
 
 export default function VideoCard(props: VideoCardProps) {
-  const { id, thumbnails, title } = props;
+  const { id, thumbnails, title = '' } = props;
 
   return (
     <Card

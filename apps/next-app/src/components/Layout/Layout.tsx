@@ -12,16 +12,26 @@ import Box from '@mui/material/Box';
 export interface LayoutProps {
   variant?: 'common' | 'login';
   children?: ReactNode;
+  onScrollTopBottom?: () => void;
 }
 
 export default function Layout(props: LayoutProps) {
-  const { children, variant = 'common' } = props;
+  const {
+    children,
+    variant = 'common',
+    onScrollTopBottom: onScrollToBottom,
+  } = props;
 
+  const [asideOpen, setAsideOpen] = useState(true);
   const [isStartup, setIsStartup] = useState(false);
   const rememberMe = useSelector((state: RootState) => state.auth.rememberJwt);
   const jwt = useSelector((state: RootState) => state.auth.jwt);
   const router = useRouter();
   const dispatch = useDispatch();
+
+  const handleAsideOpen = () => {
+    setAsideOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     const localJwt = localStorage.getItem('jwt');
@@ -63,16 +73,16 @@ export default function Layout(props: LayoutProps) {
 
   return (
     <>
-      <Header />
+      <Header asideOpen={asideOpen} onAsideOpen={handleAsideOpen} />
       <Box
         sx={{
           display: 'flex',
           height: '100%',
         }}
       >
-        {variant === 'common' && <Aside />}
+        {variant === 'common' && <Aside asideOpen={asideOpen} />}
         {variant === 'common' ? (
-          <Main>{children}</Main>
+          <Main onScrollToBottom={onScrollToBottom}>{children}</Main>
         ) : (
           <Box
             component="main"
@@ -83,7 +93,6 @@ export default function Layout(props: LayoutProps) {
             {children}
           </Box>
         )}
-        {/* <Main>{children}</Main> */}
       </Box>
     </>
   );

@@ -1,5 +1,14 @@
 import axios, { AxiosInstance } from 'axios';
 import qs from 'qs';
+import {
+  AuthTokenData,
+  Channel,
+  ChannelGroupWithChannelIds,
+  ChannelGroupWithChannel,
+  Video,
+} from './type';
+
+export * from './type';
 
 export type ChannelCategory = 'Streamer' | 'Clipper';
 export interface ApiOtiopns {
@@ -31,30 +40,11 @@ export class Api {
   };
 
   login = (data: { username: string; password: string }) => {
-    return this.apiInstance.post<
-      {
-        username: string;
-        password: string;
-      },
-      { data: { accessToken: string } }
-    >('/auth/login', data);
+    return this.apiInstance.post<AuthTokenData>('/auth/login', data);
   };
 
   listChannels = () => {
-    return this.apiInstance.get<
-      {
-        id: string;
-        title?: string;
-        description?: string;
-        country?: string;
-        publishedAt: string;
-        thumbnails: {
-          height: number;
-          width: number;
-          url: string;
-        }[];
-      }[]
-    >('/channels');
+    return this.apiInstance.get<Channel[]>('/channels');
   };
 
   addChannelByIds = (data: {
@@ -75,20 +65,7 @@ export class Api {
   }) => {
     const { category, size, page, cursor, sortBy, orderBy } = data;
 
-    return this.apiInstance.get<
-      {
-        id: string;
-        title?: string;
-        description?: string;
-        country?: string;
-        publishedAt: string;
-        thumbnails: {
-          height: number;
-          width: number;
-          url: string;
-        }[];
-      }[]
-    >('/videos', {
+    return this.apiInstance.get<Video[]>('/videos', {
       params: {
         category,
         size,
@@ -107,40 +84,19 @@ export class Api {
   };
 
   getUserProfile = () => {
-    return this.apiInstance.get<{ data: { accessToken: string } }>(
-      '/user/profile',
-    );
+    return this.apiInstance.get('/user/profile');
   };
 
   getChannelGroupByName = (name: string) => {
-    return this.apiInstance.get<{
-      id: number;
-      name: string;
-      channels: {
-        channel: {
-          id: string;
-          title?: string;
-          description?: string;
-          country?: string;
-          publishedAt: string;
-          thumbnails: {
-            height: number;
-            width: number;
-            url: string;
-          }[];
-        };
-      }[];
-    }>(`/channels/groups/${name}`);
+    return this.apiInstance.get<ChannelGroupWithChannel>(
+      `/channels/groups/${name}`,
+    );
   };
 
   listChannelGroups = () => {
-    return this.apiInstance.get<
-      {
-        id: number;
-        name: string;
-        channelIds?: string[];
-      }[]
-    >('/channels/groups');
+    return this.apiInstance.get<ChannelGroupWithChannelIds[]>(
+      '/channels/groups',
+    );
   };
 
   createChannelGroup = (data: { name: string; channelIds?: string[] }) => {

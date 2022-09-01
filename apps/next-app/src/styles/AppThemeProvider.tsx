@@ -7,6 +7,7 @@ declare module '@mui/material/styles' {
 
   interface Theme {
     custom: {
+      asideWidth: string;
       headerHeight: string;
       headerPaddingLeft: string;
       headerPaddingRight: string;
@@ -18,6 +19,7 @@ declare module '@mui/material/styles' {
 
   interface ThemeOptions {
     custom?: {
+      asideWidth?: string;
       headerHeight?: string;
       headerPaddingLeft?: string;
       headerPaddingRight?: string;
@@ -42,6 +44,7 @@ declare module '@mui/material/styles' {
 
 let theme = createTheme({
   custom: {
+    asideWidth: '240px',
     headerHeight: '64px',
     headerPaddingLeft: '36px',
     headerPaddingRight: '36px',
@@ -78,20 +81,20 @@ theme = createTheme(theme, {
           minHeight: `calc(100% -${theme.custom.headerHeight})`,
           paddingTop: theme.spacing(4),
           [theme.breakpoints.up('mobile')]: {
-            paddingLeft: 36,
-            paddingRight: 36,
+            paddingLeft: 16,
+            paddingRight: 16,
             width: '100%',
+            maxWidth: '540px',
           },
           [theme.breakpoints.up('tablet')]: {
             paddingLeft: 0,
             paddingRight: 0,
-            width: '600px',
           },
           [theme.breakpoints.up('laptop')]: {
-            width: '900px',
+            maxWidth: '800px',
           },
           [theme.breakpoints.up('desktop')]: {
-            width: '1200px',
+            maxWidth: '1100px',
           },
         },
       },

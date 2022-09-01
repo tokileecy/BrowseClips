@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Drawer from '@mui/material/Drawer';
 import ListSubheader from '@mui/material/ListSubheader';
 import Box from '@mui/material/Box';
@@ -6,28 +7,34 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
-import Link from 'next/link';
 
-const drawerWidth = 240;
+export interface AsideProps {
+  asideOpen: boolean;
+}
 
-export default function Aside() {
+export default function Aside(props: AsideProps) {
+  const { asideOpen } = props;
+
   return (
     <Drawer
       variant="permanent"
+      open={asideOpen}
       PaperProps={{
         sx: (theme) => ({
+          transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+          }),
+          width: asideOpen ? theme.custom.asideWidth : 0,
+          boxSizing: 'border-box',
           marginTop: theme.custom.headerHeight,
         }),
       }}
-      sx={{
+      sx={(theme) => ({
+        width: asideOpen ? theme.custom.asideWidth : 0,
         overflow: 'auto',
-        width: drawerWidth,
         flexShrink: 0,
-        [`& .MuiDrawer-paper`]: {
-          width: drawerWidth,
-          boxSizing: 'border-box',
-        },
-      }}
+      })}
     >
       <Box sx={{ overflow: 'auto' }}>
         <List>

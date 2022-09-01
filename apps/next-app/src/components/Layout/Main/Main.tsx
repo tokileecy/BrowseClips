@@ -1,13 +1,33 @@
-import { ReactNode } from 'react';
+import { ReactNode, useCallback, useRef } from 'react';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
 
 export interface MainProps {
   children?: ReactNode;
+  onScrollToBottom?: () => void;
 }
 
 export default function Main(props: MainProps) {
-  const { children } = props;
+  const { children, onScrollToBottom } = props;
+
+  const handleScrollToBottomRef = useRef<() => void>();
+
+  const mainRef = useRef<HTMLDivElement>();
+
+  handleScrollToBottomRef.current = onScrollToBottom;
+
+  const mainEndRefCallback = useCallback((element: HTMLDivElement) => {
+    if (!mainRef.current) {
+      mainRef.current = element;
+
+      const intersectionObserver = new IntersectionObserver(function (entries) {
+        if (entries[0].intersectionRatio <= 0) return;
+        handleScrollToBottomRef.current?.();
+      });
+
+      intersectionObserver.observe(mainRef.current);
+    }
+  }, []);
 
   return (
     <Box
@@ -26,6 +46,13 @@ export default function Main(props: MainProps) {
         })}
       >
         {children}
+        <Box
+          sx={{
+            width: '100%',
+            transform: 'translateY(-50vh)',
+          }}
+          ref={mainEndRefCallback}
+        ></Box>
       </Container>
     </Box>
   );

@@ -1,10 +1,13 @@
-import { useEffect, useState } from 'react';
-import dayjs from 'dayjs';
+import { useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import api, { API } from '@/api';
 import Layout from '@/components/Layout';
 import VideoCard from './VideoCard';
+import { useDispatch } from 'react-redux';
+import { updateVideos, setVideos } from '@/redux/features/videos';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 export interface VideoPageProps {
   category?: API.ChannelCategory;
@@ -12,20 +15,44 @@ export interface VideoPageProps {
 
 export default function VideoPage(props: VideoPageProps) {
   const { category } = props;
+  const videoCursorRef = useRef<string>();
 
-  const [videos, setVedios] = useState<any[]>([]);
+  const videos = useSelector((state: RootState) => state.videos);
+  const dispatch = useDispatch();
 
-  const fetchVideos = async () => {
+  const fetchVideos = async (cursor?: string) => {
     try {
       const res = await api.listVideos({
         category,
         sortBy: 'publishedAt',
         orderBy: 'desc',
+        cursor,
       });
 
-      setVedios(res.data);
+      videoCursorRef.current = res.data[res.data.length - 1].id;
+
+      if (cursor) {
+        dispatch(
+          updateVideos({
+            ids: [...videos.ids, ...res.data.map(({ id }) => id)],
+            videos: res.data,
+          }),
+        );
+      } else {
+        dispatch(
+          setVideos({
+            videos: res.data,
+          }),
+        );
+      }
     } catch (error) {
       console.error(error);
+    }
+  };
+
+  const handleScrollTopBottom = () => {
+    if (videos.ids.length !== 0) {
+      fetchVideos(videoCursorRef.current);
     }
   };
 
@@ -34,7 +61,7 @@ export default function VideoPage(props: VideoPageProps) {
   }, [category]);
 
   return (
-    <Layout>
+    <Layout onScrollTopBottom={handleScrollTopBottom}>
       <Box
         sx={{
           width: '100%',
@@ -56,15 +83,27 @@ export default function VideoPage(props: VideoPageProps) {
           </Typography>
         </Box>
         <Box
-          sx={{
+          sx={(theme) => ({
             display: 'grid',
             margin: 'atuo',
             columnGap: 2,
             rowGap: 2,
-            gridTemplateColumns: '1fr 1fr 1fr 1fr',
-          }}
+            gridTemplateColumns: '1fr',
+            [theme.breakpoints.up('mobile')]: {},
+            [theme.breakpoints.up('tablet')]: {
+              gridTemplateColumns: '1fr 1fr',
+            },
+            [theme.breakpoints.up('laptop')]: {
+              gridTemplateColumns: '1fr 1fr 1fr',
+            },
+            [theme.breakpoints.up('desktop')]: {
+              gridTemplateColumns: '1fr 1fr 1fr 1fr',
+            },
+          })}
         >
-          {videos.map((video) => {
+          {videos.ids.map((id) => {
+            const video = videos.videoMap[id];
+
             const thumbnails =
               (
                 video.thumbnails?.standard ??
@@ -84,7 +123,6 @@ export default function VideoPage(props: VideoPageProps) {
                   id={video.id}
                   title={video.title}
                   thumbnails={thumbnails}
-                  description={video.description}
                 />
               </Box>
             );
