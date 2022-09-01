@@ -21,6 +21,8 @@ export class VideosService {
   ) {
     const { size = 60, page = 0, category, cursor, sortBy, orderBy } = params;
 
+    const skipCursor = cursor !== undefined ? 1 : 0;
+
     const orderByData =
       sortBy !== undefined && orderBy !== undefined
         ? {
@@ -36,7 +38,7 @@ export class VideosService {
         : undefined;
 
     return this.prisma.video.findMany({
-      skip: page * size,
+      skip: page * size + skipCursor,
       take: size,
       cursor: cursorData,
       where: {
