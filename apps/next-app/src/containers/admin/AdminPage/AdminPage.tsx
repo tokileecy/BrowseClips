@@ -25,7 +25,7 @@ export default function AdminPage() {
   const socketRef = useRef<Socket>();
 
   const handleAddChannel = () => {
-    api.addChannelByIds(channelIds.split(','));
+    api.addChannelByIds({ ids: channelIds.split(',') });
   };
 
   const handleAddVideo = () => {
