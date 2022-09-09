@@ -26,7 +26,7 @@ services:
       - browse_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
-      - APP_ENV=$APP_ENV
+      - NODE_ENV=development
       - NEST_URL=http://nest-app:4000/
     volumes:
       - ./libs:/srv/wrokspace/libs
@@ -36,7 +36,7 @@ services:
     working_dir: /srv/wrokspace/apps/crawler-app
     command: >
       /bin/sh -c "
-        if [ $APP_ENV == \"production\" ]; then yarn start; else yarn dev; fi
+        yarn dev
       "
     ports:
       - $CRAWLER_PORT:5000
@@ -49,7 +49,7 @@ services:
       - browse_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
-      - APP_ENV=$APP_ENV
+      - NODE_ENV=development
       - NEST_REPL=$NEST_REPL
       - JWT_WECRET=$NEST_JWT_WECRET
       - GOOGLE_API_KEY=$GOOGLE_API_KEY
@@ -63,7 +63,7 @@ services:
     command: >
       /bin/sh -c "
         yarn prisma migrate dev
-        if [ $APP_ENV == \"production\" ]; then yarn start:prod; else yarn start:dev; fi
+        yarn start:dev
       "
     ports:
       - $PRISMA_STUDIO_PORT:5555
@@ -80,7 +80,7 @@ services:
       - $NEXT_PORT:3000
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
-      - APP_ENV=$APP_ENV
+      - NODE_ENV=development
       - SERVER_NEST_URL=http://nest-app:4000/
       - PUBLIC_NEST_URL=$PUBLIC_NEST_URL
       - SERVER_NEST_WS_URL=ws://nest-app:5000/
@@ -94,7 +94,7 @@ services:
     working_dir: /srv/wrokspace/apps/next-app
     command: >
       /bin/sh -c "
-        if [ $APP_ENV == \"production\" ]; then yarn start; else yarn dev; fi
+        yarn dev
       "
 networks:
   browse_clips_default:

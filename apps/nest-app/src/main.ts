@@ -22,7 +22,7 @@ async function bootstrap() {
     await repl(AppModule);
   }
 
-  if (process.env.APP_ENV === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     app.enableCors();
   }
 

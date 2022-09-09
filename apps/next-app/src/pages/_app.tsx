@@ -21,7 +21,7 @@ const { publicRuntimeConfig } = getConfig();
 const MyApp = ({ Component, pageProps }: AppProps) => {
   useEffect(() => {
     if (
-      publicRuntimeConfig.APP_ENV === 'development' &&
+      publicRuntimeConfig.NODE_ENV === 'development' &&
       typeof document !== 'undefined'
     ) {
       window.api = api;

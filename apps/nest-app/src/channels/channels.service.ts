@@ -118,7 +118,7 @@ export class ChannelsService {
       });
     }
 
-    if (process.env.APP_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development') {
       this.logger.log(`video length: ${videoIds.length}`);
     }
 

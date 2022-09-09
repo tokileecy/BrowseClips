@@ -20,7 +20,7 @@ services:
       - browser_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
-      - APP_ENV=$APP_ENV
+      - NODE_ENV=production
       - NEST_REPL=$NEST_REPL
       - JWT_WECRET=$NEST_JWT_WECRET
       - DATABASE_URL=postgresql://$DATABASE_USERNAME:$DATABASE_PASSWORD@postgres:5432/$DATABASE_NAME?connect_timeout=300
@@ -36,7 +36,7 @@ services:
       - browser_clips_default
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
-      - APP_ENV=$APP_ENV
+      - NODE_ENV=production
       - NEST_REPL=$NEST_REPL
       - NEST_JWT_WECRET=$NEST_JWT_WECRET
       - DATABASE_URL=postgresql://$DATABASE_USERNAME:$DATABASE_PASSWORD@postgres:5432/$DATABASE_NAME?connect_timeout=300
@@ -56,7 +56,7 @@ services:
       - $NEXT_PORT:3000
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
-      - APP_ENV=$APP_ENV
+      - NODE_ENV=production
       - SERVER_NEST_URL=http://nest-app:4000/
       - PUBLIC_NEST_URL=$PUBLIC_NEST_URL
       - SERVER_NEST_WS_URL=ws://nest-app:5000/

@@ -3,7 +3,7 @@ import auth from './features/auth';
 import videos from './features/videos';
 
 const store = configureStore({
-  devTools: process.env.APP_ENV === 'development',
+  devTools: process.env.NODE_ENV === 'development',
   reducer: {
     auth,
     videos,

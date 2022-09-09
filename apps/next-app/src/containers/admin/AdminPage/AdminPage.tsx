@@ -14,7 +14,7 @@ const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 const runtimeConfig =
   typeof document === 'undefined' ? serverRuntimeConfig : publicRuntimeConfig;
 
-const { NEST_WS_URL, APP_ENV } = runtimeConfig;
+const { NEST_WS_URL, NODE_ENV } = runtimeConfig;
 
 const uri = new URL('', NEST_WS_URL).href;
 
@@ -47,7 +47,7 @@ export default function AdminPage() {
   };
 
   useEffect(() => {
-    if (APP_ENV === 'development') {
+    if (NODE_ENV === 'development') {
       localStorage.debug = '*';
     }
 

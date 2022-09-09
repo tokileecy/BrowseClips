@@ -11,9 +11,9 @@ import './tools/cron';
 
 dotenv.config();
 
-const APP_ENV = process.env.APP_ENV;
+const NODE_ENV = process.env.NODE_ENV;
 
-const corsOrigin = APP_ENV === 'development' ? '*' : '';
+const corsOrigin = NODE_ENV === 'development' ? '*' : '';
 
 const app = express();
 const server = http.createServer(app);

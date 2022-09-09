@@ -30,7 +30,6 @@ if Docker is Running on MacOS, Enable **VirtioFS accelerated directory sharing**
   * docker version above 20.10.14
   * docker compose version above v2.4.1
 2. add `.env` file to project root.
-  * APP_ENV: runing mode, 'production' or 'development'
 3. run apps
 ```sh
   sudo chmod +x docker-entrypoint.sh
