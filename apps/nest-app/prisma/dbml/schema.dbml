@@ -11,7 +11,7 @@ Table user {
 }
 
 Table Channel {
-  id String [unique, not null]
+  id String [pk]
   title String [default: '']
   description String [default: '']
   country String [default: '']
@@ -47,7 +47,7 @@ Table Subject {
 }
 
 Table Video {
-  id String [unique, not null]
+  id String [pk]
   channelId String [not null]
   title String [default: '']
   description String [default: '']
