@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
-import api from '@/api';
 import Title from '../Title';
 import ChannelGroupCard from '../ChannelCard';
 import CreateChannelGroupDialog, {
@@ -11,6 +10,11 @@ import CreateChannelDialog, {
   ChannelFormData,
 } from '../Dialogs/CreateChannelDialog';
 import { ChannelCategory } from '@browse_clips/api';
+import {
+  useAddChannelByIdsMutation,
+  useCreateChannelGroupMutation,
+  useListChannelGroupsQuery,
+} from '@/redux/services/nestApi';
 
 export default function ChannelSubPage() {
   const [groupDialogOpen, setGroupDialogOpen] = useState(false);
@@ -18,23 +22,15 @@ export default function ChannelSubPage() {
 
   const router = useRouter();
 
-  const [channelGroups, setChannelGroups] = useState<
-    {
-      id: number;
-      name: string;
-      channelIds?: string[];
-    }[]
-  >([]);
+  const {
+    data: channelGroups,
+    error,
+    isLoading,
+    refetch: refetchChannelGroups,
+  } = useListChannelGroupsQuery();
 
-  const fetchChannelGroups = async () => {
-    try {
-      const res = await api.listChannelGroups();
-
-      setChannelGroups(res.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const [createChannelGroup] = useCreateChannelGroupMutation();
+  const [addChannelById] = useAddChannelByIdsMutation();
 
   const handleCreateGroup = () => {
     setGroupDialogOpen(true);
@@ -42,8 +38,8 @@ export default function ChannelSubPage() {
 
   const handleGroupDialogOk = async (form: ChannelGroupFormData) => {
     try {
-      await api.createChannelGroup(form);
-      await fetchChannelGroups();
+      await createChannelGroup(form);
+      await refetchChannelGroups();
       setGroupDialogOpen(false);
     } catch (error) {
       console.error(error);
@@ -68,7 +64,7 @@ export default function ChannelSubPage() {
 
   const handleChannelDialogOk = async (form: ChannelFormData) => {
     try {
-      await api.addChannelByIds({ ids: form.channelIds?.split(','), category });
+      await addChannelById({ ids: form.channelIds?.split(','), category });
       setChannelDialogOpen(false);
     } catch (error) {
       console.error(error);
@@ -78,10 +74,6 @@ export default function ChannelSubPage() {
   const handleChannelDialogCancel = () => {
     setChannelDialogOpen(false);
   };
-
-  useEffect(() => {
-    fetchChannelGroups();
-  }, []);
 
   return (
     <>
@@ -97,17 +89,20 @@ export default function ChannelSubPage() {
           gridTemplateColumns: '1fr 1fr 1fr 1fr',
         }}
       >
-        {channelGroups.map((channelGroups) => {
-          return (
-            <ChannelGroupCard
-              key={channelGroups.id}
-              name={channelGroups.name}
-              onClick={() => {
-                router.push(`/admin/channel-groups/${channelGroups.name}`);
-              }}
-            />
-          );
-        })}
+        {!isLoading &&
+          !error &&
+          channelGroups !== undefined &&
+          channelGroups.map((channelGroups) => {
+            return (
+              <ChannelGroupCard
+                key={channelGroups.id}
+                name={channelGroups.name}
+                onClick={() => {
+                  router.push(`/admin/channel-groups/${channelGroups.name}`);
+                }}
+              />
+            );
+          })}
       </Box>
 
       <CreateChannelGroupDialog

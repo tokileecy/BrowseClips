@@ -1,26 +1,12 @@
-import { useEffect, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Layout from '@/components/Layout';
-import api from '@/api';
 import ChannelCard from './ChannelCard';
+import { useListChannelsQuery } from '@/redux/services/nestApi';
 
 export default function HomePage() {
-  const [channels, setChannels] = useState<any[]>([]);
+  const { data: channels, error, isLoading } = useListChannelsQuery();
 
-  const fetchChannelList = async () => {
-    try {
-      const res = await api.listChannels();
-
-      setChannels(res.data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    fetchChannelList();
-  }, []);
   return (
     <Layout>
       <Box
@@ -50,17 +36,20 @@ export default function HomePage() {
             gridTemplateColumns: '1fr 1fr 1fr',
           }}
         >
-          {channels.map((channel) => {
-            return (
-              <ChannelCard
-                key={channel.id}
-                id={channel.id}
-                title={channel.title}
-                thumbnails={channel.thumbnails.default.url}
-                description={channel.description}
-              />
-            );
-          })}
+          {!isLoading &&
+            !error &&
+            channels &&
+            channels.map((channel) => {
+              return (
+                <ChannelCard
+                  key={channel.id}
+                  id={channel.id}
+                  title={channel.title}
+                  thumbnails={channel.thumbnails.default.url}
+                  description={channel.description}
+                />
+              );
+            })}
         </Box>
       </Box>
     </Layout>

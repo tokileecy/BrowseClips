@@ -20,11 +20,14 @@ export interface Channel {
   description?: string;
   country?: string;
   publishedAt: string;
-  // thumbnails: {
-  //   height: number;
-  //   width: number;
-  //   url: string;
-  // }[];
+  thumbnails: Record<
+    'standard' | 'high' | 'medium' | 'default',
+    {
+      height: number;
+      width: number;
+      url: string;
+    }
+  >;
 }
 
 export interface ChannelGroupWithChannelIds {

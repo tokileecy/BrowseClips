@@ -6,13 +6,13 @@ import Avatar from '@mui/material/Avatar';
 
 export interface ChannelCardProps {
   thumbnails: string;
-  title: string;
+  title?: string;
   id: string;
-  description: string;
+  description?: string;
 }
 
 export default function ChannelCard(props: ChannelCardProps) {
-  const { thumbnails, id, title, description } = props;
+  const { thumbnails, id, title = '', description = '' } = props;
 
   return (
     <Card

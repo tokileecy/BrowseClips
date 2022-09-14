@@ -1,11 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Box from '@mui/material/Box';
-import api from '@/api';
 import ChannelCard from '../../ChannelPage/ChannelCard';
 import Title from '../Title';
 import CreateChannelDialog, {
   ChannelFormData,
 } from '../Dialogs/CreateChannelDialog';
+import {
+  useAddChannelByIdsMutation,
+  useGetChannelGroupByNameQuery,
+} from '@/redux/services/nestApi';
 
 export interface ChannelSubPageProps {
   groupName?: string;
@@ -14,22 +17,16 @@ export interface ChannelSubPageProps {
 export default function ChannelSubPage(props: ChannelSubPageProps) {
   const { groupName } = props;
 
-  const [channels, setChannels] = useState<any[]>([]);
   const [channelDialogOpen, setChannelDialogOpen] = useState(false);
 
-  const fetchChannelGroup = async () => {
-    if (groupName === undefined) {
-      return;
-    }
+  const {
+    data: channelGroup,
+    isLoading,
+    error,
+    refetch,
+  } = useGetChannelGroupByNameQuery(groupName);
 
-    try {
-      const res = await api.getChannelGroupByName(groupName);
-
-      setChannels(res.data.channels.map((data) => data.channel));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const [addChannelByIds] = useAddChannelByIdsMutation();
 
   const handleCreateChannel = () => {
     setChannelDialogOpen(true);
@@ -37,11 +34,11 @@ export default function ChannelSubPage(props: ChannelSubPageProps) {
 
   const handleChannelDialogOk = async (form: ChannelFormData) => {
     try {
-      await api.addChannelByIds({
+      await addChannelByIds({
         ids: form.channelIds?.split(','),
         groupName,
       });
-      await fetchChannelGroup();
+      await refetch();
       setChannelDialogOpen(false);
     } catch (error) {
       console.error(error);
@@ -51,12 +48,6 @@ export default function ChannelSubPage(props: ChannelSubPageProps) {
   const handleChannelDialogCancel = () => {
     setChannelDialogOpen(false);
   };
-
-  useEffect(() => {
-    if (groupName !== undefined) {
-      fetchChannelGroup();
-    }
-  }, [groupName]);
 
   const isChannelListView = groupName !== undefined;
 
@@ -75,17 +66,22 @@ export default function ChannelSubPage(props: ChannelSubPageProps) {
           gridTemplateColumns: '1fr 1fr 1fr',
         }}
       >
-        {channels.map((channel) => {
-          return (
-            <ChannelCard
-              key={channel.id}
-              id={channel.id}
-              title={channel.title}
-              thumbnails={channel.thumbnails.default.url}
-              description={channel.description}
-            />
-          );
-        })}
+        {!isLoading &&
+          !error &&
+          channelGroup !== undefined &&
+          channelGroup.channels.map((channelData) => {
+            const channel = channelData.channel;
+
+            return (
+              <ChannelCard
+                key={channel.id}
+                id={channel.id}
+                title={channel.title}
+                thumbnails={channel.thumbnails.default.url}
+                description={channel.description}
+              />
+            );
+          })}
       </Box>
       <CreateChannelDialog
         open={channelDialogOpen}
