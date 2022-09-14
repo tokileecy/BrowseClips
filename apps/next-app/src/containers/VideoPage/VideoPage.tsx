@@ -1,6 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
 import api, { API } from '@/api';
 import Layout from '@/components/Layout';
 import VideoCard from './VideoCard';
@@ -8,30 +10,49 @@ import { useDispatch } from 'react-redux';
 import { updateVideos, setVideos } from '@/redux/features/videos';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
+import { useListChannelGroupsQuery } from '@/redux/services/nestApi';
 
 export interface VideoPageProps {
-  category?: API.ChannelCategory;
+  category: API.ChannelCategory | null;
 }
 
 export default function VideoPage(props: VideoPageProps) {
   const { category } = props;
   const videoCursorRef = useRef<string>();
 
+  const [selectedChannelGroupIdMap, setSelectedChannelGroupIdMap] = useState<
+    Record<number, boolean>
+  >({});
+
+  const { data: channelGroups, isLoading, error } = useListChannelGroupsQuery();
   const videos = useSelector((state: RootState) => state.videos);
   const dispatch = useDispatch();
 
-  const fetchVideos = async (cursor?: string) => {
+  const fetchVideos = async (
+    option: {
+      reset?: boolean;
+      cursor?: string;
+      channelGroupIds?: number[];
+    } = {},
+  ) => {
+    const { reset, cursor, channelGroupIds } = option;
+
     try {
       const res = await api.listVideos({
-        category,
+        channelGroupIds,
+        category: category ?? 'Streamer',
         sortBy: 'publishedAt',
         orderBy: 'desc',
-        cursor,
+        cursor: reset ? undefined : cursor,
       });
 
-      videoCursorRef.current = res.data[res.data.length - 1].id;
+      if (res.data.length > 0) {
+        videoCursorRef.current = res.data[res.data.length - 1].id;
+      } else {
+        videoCursorRef.current = undefined;
+      }
 
-      if (cursor) {
+      if (cursor && !reset) {
         dispatch(
           updateVideos({
             ids: [...videos.ids, ...res.data.map(({ id }) => id)],
@@ -50,11 +71,35 @@ export default function VideoPage(props: VideoPageProps) {
     }
   };
 
+  const getIdsFromIdMap = () => {
+    return Object.entries(selectedChannelGroupIdMap).reduce<number[]>(
+      (prev, [id, selected]) => {
+        if (selected) {
+          prev.push(Number(id));
+        }
+
+        return prev;
+      },
+      [],
+    );
+  };
+
   const handleScrollTopBottom = () => {
     if (videos.ids.length !== 0) {
-      fetchVideos(videoCursorRef.current);
+      fetchVideos({
+        cursor: videoCursorRef.current,
+        channelGroupIds: getIdsFromIdMap(),
+      });
     }
   };
+
+  useEffect(() => {
+    fetchVideos({
+      cursor: videoCursorRef.current,
+      reset: true,
+      channelGroupIds: getIdsFromIdMap(),
+    });
+  }, [selectedChannelGroupIdMap]);
 
   useEffect(() => {
     fetchVideos();
@@ -82,6 +127,45 @@ export default function VideoPage(props: VideoPageProps) {
             {category === 'Streamer' ? 'Videos' : 'Clips'}
           </Typography>
         </Box>
+        <Stack
+          direction="row"
+          sx={{
+            mb: 3,
+            gap: 1,
+            flexWrap: 'wrap',
+          }}
+        >
+          {!isLoading &&
+            !error &&
+            channelGroups !== undefined &&
+            channelGroups.map((channelGroup) => (
+              <Chip
+                sx={{
+                  'fontWeight': 'bold',
+                  'cursor': 'pointer',
+                  'color': 'white',
+                  '&.MuiChip-clickable:hover': {
+                    backgroundColor: '#6f6f6f',
+                  },
+                  '&.MuiChip-clickable:active': {
+                    backgroundColor: '#969696',
+                  },
+                  ...(selectedChannelGroupIdMap[channelGroup.id] && {
+                    'backgroundColor': '#969696',
+                  }),
+                }}
+                key={channelGroup.id}
+                label={channelGroup.name}
+                variant="outlined"
+                onClick={() => {
+                  setSelectedChannelGroupIdMap((prev) => ({
+                    ...prev,
+                    [channelGroup.id]: !prev[channelGroup.id],
+                  }));
+                }}
+              />
+            ))}
+        </Stack>
         <Box
           sx={(theme) => ({
             display: 'grid',

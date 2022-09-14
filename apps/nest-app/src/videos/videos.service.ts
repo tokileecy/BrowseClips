@@ -12,6 +12,7 @@ export class VideosService {
   async listVideos(
     params: {
       category?: ChannelCategory;
+      channelGroupIds?: number[];
       size?: number;
       page?: number;
       cursor?: string;
@@ -19,7 +20,15 @@ export class VideosService {
       orderBy?: 'asc' | 'desc';
     } = {},
   ) {
-    const { size = 60, page = 0, category, cursor, sortBy, orderBy } = params;
+    const {
+      size = 60,
+      page = 0,
+      category,
+      cursor,
+      sortBy,
+      orderBy,
+      channelGroupIds = [],
+    } = params;
 
     const skipCursor = cursor !== undefined ? 1 : 0;
 
@@ -37,17 +46,38 @@ export class VideosService {
           }
         : undefined;
 
-    return this.prisma.video.findMany({
-      skip: page * size + skipCursor,
-      take: size,
-      cursor: cursorData,
-      where: {
-        channel: {
-          category,
+    if (channelGroupIds && channelGroupIds.length > 0) {
+      return this.prisma.video.findMany({
+        skip: page * size + skipCursor,
+        take: size,
+        cursor: cursorData,
+        where: {
+          channel: {
+            channelGroups: {
+              some: {
+                channelGroupId: {
+                  in: channelGroupIds,
+                },
+              },
+            },
+            category,
+          },
         },
-      },
-      orderBy: orderByData,
-    });
+        orderBy: orderByData,
+      });
+    } else {
+      return this.prisma.video.findMany({
+        skip: page * size + skipCursor,
+        take: size,
+        cursor: cursorData,
+        where: {
+          channel: {
+            category,
+          },
+        },
+        orderBy: orderByData,
+      });
+    }
   }
 
   async addVideoById(id: string[]) {

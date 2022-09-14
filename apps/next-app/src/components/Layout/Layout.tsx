@@ -71,7 +71,7 @@ export default function Layout(props: LayoutProps) {
     }
   }, [isStartup, variant]);
 
-  return (
+  return isStartup ? (
     <>
       <Header asideOpen={asideOpen} onAsideOpen={handleAsideOpen} />
       <Box
@@ -95,5 +95,5 @@ export default function Layout(props: LayoutProps) {
         )}
       </Box>
     </>
-  );
+  ) : null;
 }

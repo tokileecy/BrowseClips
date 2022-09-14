@@ -56,6 +56,7 @@ export class Api {
   };
 
   listVideos = (data: {
+    channelGroupIds?: number[];
     category?: ChannelCategory;
     size?: number;
     page?: number;
@@ -63,10 +64,12 @@ export class Api {
     sortBy?: string;
     orderBy?: 'asc' | 'desc';
   }) => {
-    const { category, size, page, cursor, sortBy, orderBy } = data;
+    const { channelGroupIds, category, size, page, cursor, sortBy, orderBy } =
+      data;
 
     return this.apiInstance.get<Video[]>('/videos', {
       params: {
+        channelGroupIds,
         category,
         size,
         page,

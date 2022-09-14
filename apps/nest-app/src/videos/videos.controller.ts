@@ -10,6 +10,7 @@ export class VideosController {
   async listVideos(
     @Query()
     query: {
+      channelGroupIds?: string[];
       category?: ChannelCategory;
       size?: number;
       page?: number;
@@ -19,6 +20,7 @@ export class VideosController {
     },
   ) {
     return this.videosService.listVideos({
+      channelGroupIds: query.channelGroupIds?.map((id) => Number(id)),
       category: query.category,
       size: query.size,
       page: query.page,

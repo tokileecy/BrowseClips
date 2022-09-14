@@ -7,6 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
+import { useListChannelGroupsQuery } from '@/redux/services/nestApi';
 
 export interface AsideProps {
   asideOpen: boolean;
@@ -14,6 +15,8 @@ export interface AsideProps {
 
 export default function Aside(props: AsideProps) {
   const { asideOpen } = props;
+
+  const { data: channelGroups, isLoading, error } = useListChannelGroupsQuery();
 
   return (
     <Drawer
@@ -52,6 +55,30 @@ export default function Aside(props: AsideProps) {
             </ListItem>
           ))}
         </List>
+        {!isLoading && !error && channelGroups !== undefined && (
+          <>
+            <Divider />
+            <List>
+              <ListSubheader>
+                <ListItemText primary={'ChannelGroups'} />
+              </ListSubheader>
+              {channelGroups
+                .map((channelGroup) => ({
+                  href: `/channel-groups/${channelGroup.id}`,
+                  text: channelGroup.name,
+                }))
+                .map(({ href, text }) => (
+                  <ListItem key={href} disablePadding>
+                    <Link href={href}>
+                      <ListItemButton>
+                        <ListItemText primary={text} />
+                      </ListItemButton>
+                    </Link>
+                  </ListItem>
+                ))}
+            </List>
+          </>
+        )}
         <Divider />
         <List>
           <ListSubheader>
@@ -70,12 +97,6 @@ export default function Aside(props: AsideProps) {
               </Link>
             </ListItem>
           ))}
-        </List>
-        <Divider />
-        <List>
-          <ListSubheader>
-            <ListItemText primary={'ChannelGroups'} />
-          </ListSubheader>
         </List>
       </Box>
     </Drawer>
