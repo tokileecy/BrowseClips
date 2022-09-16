@@ -30,13 +30,14 @@ export default function Aside(props: AsideProps) {
           }),
           width: asideOpen ? theme.custom.asideWidth : 0,
           boxSizing: 'border-box',
-          marginTop: theme.custom.headerHeight,
+          paddingTop: theme.custom.headerHeight,
         }),
       }}
       sx={(theme) => ({
         width: asideOpen ? theme.custom.asideWidth : 0,
         overflow: 'auto',
         flexShrink: 0,
+        zIndex: 900,
       })}
     >
       <Box sx={{ overflow: 'auto' }}>

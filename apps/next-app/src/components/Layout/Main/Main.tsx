@@ -35,15 +35,16 @@ export default function Main(props: MainProps) {
         flexGrow: 1,
         display: 'flex',
         alignItems: 'center',
-        height: `calc(100% -${theme.custom.headerHeight})`,
+        marginTop: theme.custom.headerHeight,
+        height: `calc(100% - ${theme.custom.headerHeight})`,
         overflow: 'auto',
       })}
     >
       <Container
         component="main"
-        sx={(theme) => ({
-          marginTop: theme.custom.headerHeight,
-        })}
+        sx={{
+          marginTop: 0,
+        }}
       >
         {children}
         <Box
