@@ -13,6 +13,7 @@ export class VideosService {
     params: {
       category?: ChannelCategory;
       channelGroupIds?: number[];
+      channelGroupNames?: string[];
       size?: number;
       page?: number;
       cursor?: string;
@@ -28,6 +29,7 @@ export class VideosService {
       sortBy,
       orderBy,
       channelGroupIds = [],
+      channelGroupNames = [],
     } = params;
 
     const skipCursor = cursor !== undefined ? 1 : 0;
@@ -57,6 +59,27 @@ export class VideosService {
               some: {
                 channelGroupId: {
                   in: channelGroupIds,
+                },
+              },
+            },
+            category,
+          },
+        },
+        orderBy: orderByData,
+      });
+    } else if (channelGroupNames && channelGroupNames.length > 0) {
+      return this.prisma.video.findMany({
+        skip: page * size + skipCursor,
+        take: size,
+        cursor: cursorData,
+        where: {
+          channel: {
+            channelGroups: {
+              some: {
+                channelGroup: {
+                  name: {
+                    in: channelGroupNames,
+                  },
                 },
               },
             },

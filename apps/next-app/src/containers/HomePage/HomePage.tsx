@@ -13,7 +13,7 @@ export default function HomePage() {
           flexDirection: 'column',
         }}
       >
-        <Box sx={{ pl: 3, pb: 3 }}>
+        <Box sx={{ pb: 3 }}>
           <Typography
             sx={{
               fontSize: '24px',

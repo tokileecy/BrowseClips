@@ -65,7 +65,7 @@ export default function Aside(props: AsideProps) {
               </ListSubheader>
               {channelGroups
                 .map((channelGroup) => ({
-                  href: `/channel-groups/${channelGroup.id}`,
+                  href: `/channel-groups/${channelGroup.name}`,
                   text: channelGroup.name,
                 }))
                 .map(({ href, text }) => (

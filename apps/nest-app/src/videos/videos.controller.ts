@@ -11,6 +11,7 @@ export class VideosController {
     @Query()
     query: {
       channelGroupIds?: string[];
+      channelGroupNames?: string[];
       category?: ChannelCategory;
       size?: number;
       page?: number;
@@ -21,6 +22,7 @@ export class VideosController {
   ) {
     return this.videosService.listVideos({
       channelGroupIds: query.channelGroupIds?.map((id) => Number(id)),
+      channelGroupNames: query.channelGroupNames ?? [],
       category: query.category,
       size: query.size,
       page: query.page,
