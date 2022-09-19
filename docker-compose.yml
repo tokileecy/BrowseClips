@@ -28,6 +28,9 @@ services:
       - NODE_OPTIONS=--max_old_space_size=2048
       - NODE_ENV=development
       - NEST_URL=http://nest-app:4000/
+      - HTTP_PROXY_URL=$HTTP_PROXY_URL
+      - HTTP_PROXY_USERNAME=$HTTP_PROXY_USERNAME
+      - HTTP_PROXY_PASSWORD=$HTTP_PROXY_PASSWORD
     volumes:
       - ./libs:/srv/wrokspace/libs
       - ./apps/crawler-app:/srv/wrokspace/apps/crawler-app

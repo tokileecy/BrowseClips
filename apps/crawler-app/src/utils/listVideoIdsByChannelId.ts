@@ -1,5 +1,15 @@
 import playwright, { Page } from 'playwright';
 
+const HTTP_PROXY_URL = process.env.HTTP_PROXY_URL;
+const HTTP_PROXY_USERNAME = process.env.HTTP_PROXY_USERNAME;
+const HTTP_PROXY_PASSWORD = process.env.HTTP_PROXY_PASSWORD;
+
+const proxyConfig = {
+  server: HTTP_PROXY_URL,
+  username: HTTP_PROXY_USERNAME,
+  password: HTTP_PROXY_PASSWORD,
+};
+
 const getVideos = async (page: Page, id: string) => {
   console.log(`${id} channel videos crawl starting.`);
 
@@ -25,6 +35,7 @@ const getVideos = async (page: Page, id: string) => {
 export async function listVideoIdsByChannelIds(ids: string[]) {
   const browser = await playwright.firefox.launch({
     headless: true, // setting this to true will not run the UI
+    proxy: proxyConfig,
   });
 
   const context = await browser.newContext();
@@ -66,6 +77,7 @@ export async function listVideoIdsByChannelIds(ids: string[]) {
 export default async function listVideoIdsByChannelId(id: string) {
   const browser = await playwright.firefox.launch({
     headless: true, // setting this to true will not run the UI
+    proxy: proxyConfig,
   });
 
   const context = await browser.newContext();
