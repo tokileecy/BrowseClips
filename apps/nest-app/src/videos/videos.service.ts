@@ -136,6 +136,7 @@ export class VideosService {
           statistics: item.statistics as any,
           liveStreamingDetails: item.liveStreamingDetails as any,
           contentDetails: item.contentDetails as any,
+          youtubeData: item,
         })),
       );
     }

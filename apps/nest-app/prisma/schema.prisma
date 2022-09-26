@@ -67,7 +67,8 @@ model Video {
   statistics           Json?
   liveStreamingDetails Json?
   contentDetails       Json?
-  tags                 String[]
+  tags                 String[]           @default([])
+  youtubeData          Json?
   channel              Channel            @relation(fields: [channelId], references: [id])
   subjects             SubjectsOnVideos[]
 }
