@@ -149,3 +149,5 @@ volumes/.gitkeep
 !.cache/yarn/.gitkeep
 backups/*
 !backups/.gitkeep
+tmp/*
+!tmp/.gitkeep

@@ -17,6 +17,7 @@ services:
     volumes:
       - postgres-store:/var/lib/postgresql/data
       - ./backups:/backups
+      - ./tmp:/srv/tmp
   crawler-app:
     image: mcr.microsoft.com/playwright:latest
     user: '1000:1000'
@@ -36,6 +37,7 @@ services:
       - ./apps/crawler-app:/srv/wrokspace/apps/crawler-app
       - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./.cache/yarn:/home/pwuser/.yarn/berry/cache
+      - ./tmp:/srv/tmp
     working_dir: /srv/wrokspace/apps/crawler-app
     command: >
       /bin/sh -c "
@@ -62,6 +64,7 @@ services:
       - ./apps/nest-app:/srv/wrokspace/apps/nest-app
       - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./.cache/yarn:/home/node/.yarn/berry/cache
+      - ./tmp:/srv/tmp
     working_dir: /srv/wrokspace/apps/nest-app
     command: >
       /bin/sh -c "
@@ -94,6 +97,7 @@ services:
       - ./apps/next-app:/srv/wrokspace/apps/next-app
       - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
       - ./.cache/yarn:/home/node/.yarn/berry/cache
+      - ./tmp:/srv/tmp
     working_dir: /srv/wrokspace/apps/next-app
     command: >
       /bin/sh -c "
