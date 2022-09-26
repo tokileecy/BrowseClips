@@ -2,10 +2,10 @@ import { getIsCrawing, setIsCrawing } from '../global';
 import api from '../api';
 import { listVideoIdsByChannelIds } from './listVideoIdsByChannelId';
 
-export default async function crawVideos() {
+export default async function crawChannelDatas() {
   if (!getIsCrawing()) {
     try {
-      console.log('start crawing Videos');
+      console.log('start crawing Channel Datas');
       setIsCrawing(true);
 
       const channelIds = (await api.listChannels()).data.map(
