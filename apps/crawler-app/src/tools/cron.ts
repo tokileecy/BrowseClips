@@ -1,10 +1,10 @@
 import { CronJob } from 'cron';
-import crawVideos from '../utils/crawVideos';
+import { crawChannels } from '../socket';
 
 const job = new CronJob(
   '0 * * * *',
   function () {
-    crawVideos();
+    crawChannels();
     console.log(`${new Date().toISOString()} crawVideos...`);
   },
   null,

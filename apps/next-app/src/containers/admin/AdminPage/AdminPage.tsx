@@ -1,5 +1,5 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { ChangeEvent, useEffect, useState } from 'react';
+
 import getConfig from 'next/config';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
@@ -14,15 +14,11 @@ const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 const runtimeConfig =
   typeof document === 'undefined' ? serverRuntimeConfig : publicRuntimeConfig;
 
-const { NEST_WS_URL, NODE_ENV } = runtimeConfig;
-
-const uri = new URL('', NEST_WS_URL).href;
+const { NODE_ENV } = runtimeConfig;
 
 export default function AdminPage() {
   const [channelIds, setChannelIds] = useState('');
   const [videoId, setVideoId] = useState('');
-  const [socketConnected, setSocketConnected] = useState(false);
-  const socketRef = useRef<Socket>();
 
   const handleAddChannel = () => {
     api.addChannelByIds({ ids: channelIds.split(',') });
@@ -33,9 +29,7 @@ export default function AdminPage() {
   };
 
   const handleSync = () => {
-    if (socketConnected) {
-      socketRef.current?.emit('crawl-videos');
-    }
+    api.syncChannels();
   };
 
   const handleChannelIdChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -50,15 +44,6 @@ export default function AdminPage() {
     if (NODE_ENV === 'development') {
       localStorage.debug = '*';
     }
-
-    socketRef.current = io(uri, {
-      reconnectionDelayMax: 10000,
-    });
-
-    socketRef.current?.on('connect', () => {
-      console.log(`socket.io is connected`);
-      setSocketConnected(true);
-    });
   }, []);
 
   return (

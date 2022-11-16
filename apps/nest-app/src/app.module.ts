@@ -13,6 +13,7 @@ import { VideosModule } from './videos/videos.module';
 import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
+import { CrawlerChatModule } from './crawlerChat/crawlerChat.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { LoggerMiddleware } from './common/middleware/logger.middleware';
     UsersModule,
     VideosModule,
     AuthModule,
+    CrawlerChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],

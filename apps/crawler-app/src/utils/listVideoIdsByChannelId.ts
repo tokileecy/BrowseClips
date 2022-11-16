@@ -4,11 +4,16 @@ const HTTP_PROXY_URL = process.env.HTTP_PROXY_URL;
 const HTTP_PROXY_USERNAME = process.env.HTTP_PROXY_USERNAME;
 const HTTP_PROXY_PASSWORD = process.env.HTTP_PROXY_PASSWORD;
 
-const proxyConfig = {
-  server: HTTP_PROXY_URL,
-  username: HTTP_PROXY_USERNAME,
-  password: HTTP_PROXY_PASSWORD,
-};
+console.log(HTTP_PROXY_URL === '', '???');
+
+const proxyConfig =
+  HTTP_PROXY_URL !== ''
+    ? {
+        server: HTTP_PROXY_URL,
+        username: HTTP_PROXY_USERNAME,
+        password: HTTP_PROXY_PASSWORD,
+      }
+    : undefined;
 
 const getVideos = async (page: Page, id: string) => {
   console.log(`${id} channel videos crawl starting.`);

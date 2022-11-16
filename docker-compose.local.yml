@@ -59,8 +59,6 @@ services:
       - NODE_ENV=production
       - SERVER_NEST_URL=http://nest-app:4000/
       - PUBLIC_NEST_URL=$PUBLIC_NEST_URL
-      - SERVER_NEST_WS_URL=ws://nest-app:5000/
-      - PUBLIC_NEST_WS_URL=$PUBLIC_NEST_WS_URL
       - BRAND_NAME=$BRAND_NAME
     volumes:
       - ./.cache/yarn:/home/node/.yarn/berry/cache

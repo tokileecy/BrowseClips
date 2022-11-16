@@ -29,9 +29,11 @@ services:
       - NODE_OPTIONS=--max_old_space_size=2048
       - NODE_ENV=development
       - NEST_URL=http://nest-app:4000/
+      - IS_PROXY=$CRAWLER_IS_PROXY
       - HTTP_PROXY_URL=$HTTP_PROXY_URL
       - HTTP_PROXY_USERNAME=$HTTP_PROXY_USERNAME
       - HTTP_PROXY_PASSWORD=$HTTP_PROXY_PASSWORD
+      - GOOGLE_API_KEY=$GOOGLE_API_KEY
     volumes:
       - ./libs:/srv/wrokspace/libs
       - ./apps/crawler-app:/srv/wrokspace/apps/crawler-app
@@ -89,8 +91,6 @@ services:
       - NODE_ENV=development
       - SERVER_NEST_URL=http://nest-app:4000/
       - PUBLIC_NEST_URL=$PUBLIC_NEST_URL
-      - SERVER_NEST_WS_URL=ws://nest-app:5000/
-      - PUBLIC_NEST_WS_URL=$PUBLIC_NEST_WS_URL
       - BRAND_NAME=$BRAND_NAME
     volumes:
       - ./libs:/srv/wrokspace/libs

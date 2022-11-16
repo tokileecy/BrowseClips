@@ -106,6 +106,10 @@ export class Api {
     );
   };
 
+  syncChannels = () => {
+    return this.apiInstance.get('/crawler-chat/sync-channels');
+  };
+
   listChannelGroups = () => {
     return this.apiInstance.get<ChannelGroupWithChannelIds[]>(
       '/channels/groups',

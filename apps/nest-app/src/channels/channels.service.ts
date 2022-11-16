@@ -14,6 +14,14 @@ export class ChannelsService {
     return this.prisma.channel.findMany();
   }
 
+  async listChannelIds(): Promise<{ id: string }[]> {
+    return this.prisma.channel.findMany({
+      select: {
+        id: true,
+      },
+    });
+  }
+
   async addChannel(data: Prisma.ChannelCreateInput): Promise<Channel> {
     return this.prisma.channel.create({
       data,

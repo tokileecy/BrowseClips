@@ -4,12 +4,10 @@ const nextConfig = {
   serverRuntimeConfig: {
     NODE_ENV: process.env?.NODE_ENV ?? 'development',
     NEST_URL: process.env?.SERVER_NEST_URL ?? 'http://127.0.0.1:4000/',
-    NEST_WS_URL: process.env?.SERVER_NEST_WS_URL ?? 'http://127.0.0.1:4000/',
   },
   publicRuntimeConfig: {
     NODE_ENV: process.env?.NODE_ENV ?? 'development',
     NEST_URL: process.env?.PUBLIC_NEST_URL ?? 'http://127.0.0.1:4000/',
-    NEST_WS_URL: process.env?.PUBLIC_NEST_WS_URL ?? 'http://127.0.0.1:4000/',
     BRAND_NAME: process.env?.BRAND_NAME ?? 'BRAND_NAME',
   },
   webpack: (config) => {

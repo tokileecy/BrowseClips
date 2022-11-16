@@ -2,12 +2,13 @@ import dotenv from 'dotenv';
 import http from 'http';
 import express from 'express';
 import { Server } from 'socket.io';
+import './socket';
 import cors from 'cors';
 import routes from './routes';
 import ioCommends from './ioCommends';
 import { writeFileSync } from 'fs';
 import * as path from 'path';
-import './tools/cron';
+// import './tools/cron';
 
 dotenv.config();
 
