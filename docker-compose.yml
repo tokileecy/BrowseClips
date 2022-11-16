@@ -43,6 +43,8 @@ services:
     working_dir: /srv/wrokspace/apps/crawler-app
     command: >
       /bin/sh -c "
+        yarn install
+        yarn playwright install
         yarn dev
       "
     ports:
