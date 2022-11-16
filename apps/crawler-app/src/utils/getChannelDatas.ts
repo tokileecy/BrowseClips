@@ -1,7 +1,7 @@
 import { Page } from 'playwright';
 
 export default async function getChannelDatas(page: Page, id: string) {
-  console.log(` channel videos crawl starting.`);
+  console.log(`channel ${id} videos crawl starting.`);
 
   await page.goto(`https://www.youtube.com/channel/${id}/videos?sort=dd`);
 
@@ -16,7 +16,7 @@ export default async function getChannelDatas(page: Page, id: string) {
       const vedioId = vedioLink.replace('/watch?v=', '');
 
       const timeStatusElement = node.querySelector(
-        '#thumbnail ytd-thumbnail-overlay-time-status-renderer',
+        'ytd-thumbnail-overlay-time-status-renderer',
       );
 
       const title = node.querySelector('#details #video-title').textContent;
@@ -27,7 +27,7 @@ export default async function getChannelDatas(page: Page, id: string) {
 
       return {
         id: vedioId,
-        liveState: timeStatusElement.getAttribute('overlay-style'),
+        liveState: timeStatusElement?.getAttribute('overlay-style'),
         title,
         metadataLine,
       };
@@ -65,8 +65,7 @@ export default async function getChannelDatas(page: Page, id: string) {
     }),
   );
 
-  await page.close();
-  console.log(`channel videos crawl finished`);
+  console.log(`channel ${id} videos crawl finished`);
   return {
     id,
     videoDatas,

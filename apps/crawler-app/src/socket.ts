@@ -3,12 +3,10 @@ import { writeFileSync } from 'fs';
 import * as path from 'path';
 import { io, Socket } from 'socket.io-client';
 import { getIsCrawing, setIsCrawing } from './global';
-import {
-  listVideoIdsByChannelIds,
-  listStreamIdsByChannelIds,
-} from './utils/listVideoIdsByChannelId';
+import getChannelDatas from './utils/getChannelDatas';
 import { google } from 'googleapis';
 import { Video } from './types';
+import { context } from './crawler';
 
 dotenv.config();
 
@@ -35,27 +33,53 @@ export const crawChannels = async (channels: { id: string }[]) => {
       console.log('start crawing Videos');
       setIsCrawing(true);
 
-      const videoIdsByChannelId = await listVideoIdsByChannelIds(
-        channels.map((channel) => channel.id),
-      );
+      const page = await context.newPage();
 
-      const streamIdsByChannelId = await listStreamIdsByChannelIds(
-        channels.map((channel) => channel.id),
-      );
+      const channelIds = channels.map((channel) => channel.id);
+
+      const channelDataById: Record<
+        string,
+        {
+          id: string;
+          videoDatas: {
+            id: string;
+            liveState: string;
+            title: string;
+            metadataLine: string;
+          }[];
+          streamDatas: {
+            id: string;
+            liveState: string;
+            title: string;
+            metadataLine: string;
+          }[];
+        }
+      > = {};
+
+      for (let i = 0; i < channelIds.length; i++) {
+        channelDataById[channelIds[i]] = await getChannelDatas(
+          page,
+          channelIds[i],
+        );
+      }
+
+      await page.close();
 
       console.log('get videos by yt api');
 
       const service = google.youtube('v3');
 
-      const vediosByChanneld = Object.entries(videoIdsByChannelId).concat(
-        Object.entries(streamIdsByChannelId),
-      );
+      const vediosByChannelEntries = Object.entries(channelDataById);
 
       const videosByChannelId: Record<string, Video[]> = {};
 
-      for (let i = 0; i < vediosByChanneld.length; i++) {
-        const channelId = vediosByChanneld[i][0];
-        const videoIds = vediosByChanneld[i][1];
+      for (let i = 0; i < vediosByChannelEntries.length; i++) {
+        const channelId = vediosByChannelEntries[i][0];
+
+        const videoIds = vediosByChannelEntries[i][1].videoDatas
+          .map((d) => d.id)
+          .concat(vediosByChannelEntries[i][1].streamDatas.map((d) => d.id));
+
         const videoDatas = [];
 
         while (videoIds.length > 0) {
@@ -96,6 +120,7 @@ export const crawChannels = async (channels: { id: string }[]) => {
       }
 
       console.log('get videos by yt api -- fininshed');
+
       return videosByChannelId;
     } catch (error) {
       console.error(`addVideos failed`);
