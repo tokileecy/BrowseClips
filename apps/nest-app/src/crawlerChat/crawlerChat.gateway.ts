@@ -7,9 +7,12 @@ import { ChannelsService } from 'src/channels/channels.service';
 import type { Server, Socket } from 'socket.io';
 import { Video } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
+import { Logger } from '@nestjs/common';
 //WebSocket listen  port 81
 @WebSocketGateway(81)
 export class CrawlerChatGateway {
+  private readonly logger = new Logger('HTTP');
+
   @WebSocketServer() server: Server;
   // crawlerStates: Record<string, 'IDLE'>
   constructor(
@@ -97,6 +100,7 @@ export class CrawlerChatGateway {
   async joinRoom(client: Socket, roomName: string) {
     if (roomName === 'crawler') {
       client.join('crawler');
+      this.logger.log(`${client.id} join crawler room`);
       return `join crawler room`;
     }
 

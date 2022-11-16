@@ -4,8 +4,6 @@ const HTTP_PROXY_URL = process.env.HTTP_PROXY_URL;
 const HTTP_PROXY_USERNAME = process.env.HTTP_PROXY_USERNAME;
 const HTTP_PROXY_PASSWORD = process.env.HTTP_PROXY_PASSWORD;
 
-console.log(HTTP_PROXY_URL === '', '???');
-
 const proxyConfig =
   HTTP_PROXY_URL !== ''
     ? {
