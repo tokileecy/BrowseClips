@@ -1,8 +1,8 @@
 import * as repl from 'node:repl';
-import server from './server';
+import socket from './socket';
 
 async function bootstrap() {
-  repl.start('crawler-app:> ').context.server = server;
+  repl.start('crawler-app:> ').context.server = socket;
 }
 
 bootstrap();

@@ -47,15 +47,14 @@ export class CrawlerChatGateway {
       console.log(`dispatch to ${crawlerId}`);
       this.server.sockets.sockets
         .get(crawlerId)
-        .emit('craw-channels', chunk, (res: Record<string, Video[]>) => {
-          crawlers.add(crawlerId);
-          crawingClients.delete(crawlerId);
-
+        .emit('crawChannels', chunk, (res: Record<string, Video[]>) => {
           if (res === null) {
             console.warn(`${crawlerId} craw failed.`);
             chunks.push(chunk);
             return;
           } else {
+            crawlers.add(crawlerId);
+            crawingClients.delete(crawlerId);
             console.log(`${crawlerId} fininshed crawlering`);
           }
 

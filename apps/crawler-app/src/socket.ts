@@ -1,16 +1,33 @@
-import { io } from 'socket.io-client';
+import dotenv from 'dotenv';
+import { writeFileSync } from 'fs';
+import * as path from 'path';
+import { io, Socket } from 'socket.io-client';
 import { getIsCrawing, setIsCrawing } from './global';
 import {
   listVideoIdsByChannelIds,
   listStreamIdsByChannelIds,
 } from './utils/listVideoIdsByChannelId';
 import { google } from 'googleapis';
-import { Video } from '@browse_clips/api';
+import { Video } from './types';
+
+dotenv.config();
 
 const PUBLIC_NEST_WS_URL = process.env.PUBLIC_NEST_WS_URL;
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
-const socket = io(PUBLIC_NEST_WS_URL);
+interface ServerToClientEvents {
+  crawChannels: (
+    channels: any,
+    cb: (channelDatas: Record<string, Video[]>) => void,
+  ) => void;
+}
+
+interface ClientToServerEvents {
+  join: (roomName: string, callback: (res: any) => void) => void;
+}
+
+const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
+  io(PUBLIC_NEST_WS_URL);
 
 export const crawChannels = async (channels: { id: string }[]) => {
   if (!getIsCrawing()) {
@@ -98,17 +115,24 @@ socket.on('connect', function () {
     console.log(res);
   });
 
-  socket.on('craw-channels', async (channels, cb) => {
+  socket.on('crawChannels', async (channels, cb) => {
     const channelDatas = await crawChannels(channels);
 
     cb(channelDatas);
   });
 });
 
-socket.on('exception', function (data) {
-  console.log(data);
+socket.on('connect_error', function (data) {
+  console.error(data);
+  setTimeout(() => {
+    socket.connect();
+  }, 5000);
 });
 
 socket.on('disconnect', function () {
   console.log('Disconnected');
 });
+
+writeFileSync(path.resolve(__dirname, '../tmp/pid'), process.pid.toString());
+
+export default socket;
