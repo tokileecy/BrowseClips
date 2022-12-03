@@ -7,7 +7,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import Divider from '@mui/material/Divider';
 import ListItemText from '@mui/material/ListItemText';
-import { useListChannelGroupsQuery } from '@/redux/services/nestApi';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/redux/store';
 
 export interface AsideProps {
   asideOpen: boolean;
@@ -16,7 +17,9 @@ export interface AsideProps {
 export default function Aside(props: AsideProps) {
   const { asideOpen } = props;
 
-  const { data: channelGroups, isLoading, error } = useListChannelGroupsQuery();
+  const jwt = useSelector((state: RootState) => state.auth.jwt);
+
+  const isLogin = jwt !== undefined;
 
   return (
     <Drawer
@@ -44,8 +47,9 @@ export default function Aside(props: AsideProps) {
         <List>
           {[
             { href: '/', text: 'Home' },
-            { href: '/video?category=Streamer', text: 'Videos' },
-            { href: '/video?category=Clipper', text: 'Clips' },
+            // { href: '/video?category=Streamer', text: 'Videos' },
+            // { href: '/video?category=Clipper', text: 'Clips' },
+            { href: '/channel-groups', text: 'Channelgroups' },
           ].map(({ href, text }) => (
             <ListItem key={href} disablePadding>
               <Link href={href}>
@@ -56,49 +60,26 @@ export default function Aside(props: AsideProps) {
             </ListItem>
           ))}
         </List>
-        {!isLoading && !error && channelGroups !== undefined && (
-          <>
-            <Divider />
-            <List>
-              <ListSubheader>
-                <ListItemText primary={'ChannelGroups'} />
-              </ListSubheader>
-              {channelGroups
-                .map((channelGroup) => ({
-                  href: `/channel-groups/${channelGroup.name}`,
-                  text: channelGroup.name,
-                }))
-                .map(({ href, text }) => (
-                  <ListItem key={href} disablePadding>
-                    <Link href={href}>
-                      <ListItemButton>
-                        <ListItemText primary={text} />
-                      </ListItemButton>
-                    </Link>
-                  </ListItem>
-                ))}
-            </List>
-          </>
-        )}
         <Divider />
-        <List>
-          <ListSubheader>
-            <ListItemText primary={'Admin'} />
-          </ListSubheader>
-          {[
-            { href: '/admin', text: 'Admin' },
-            { href: '/admin/channel', text: 'Channel' },
-            { href: '/admin/channel-groups', text: 'Channelgroups' },
-          ].map(({ href, text }) => (
-            <ListItem key={href} disablePadding>
-              <Link href={href}>
-                <ListItemButton>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-          ))}
-        </List>
+        {isLogin && (
+          <List>
+            <ListSubheader>
+              <ListItemText primary={'Admin'} />
+            </ListSubheader>
+            {[
+              { href: '/admin', text: 'Admin' },
+              { href: '/admin/channel', text: 'Channel' },
+            ].map(({ href, text }) => (
+              <ListItem key={href} disablePadding>
+                <Link href={href}>
+                  <ListItemButton>
+                    <ListItemText primary={text} />
+                  </ListItemButton>
+                </Link>
+              </ListItem>
+            ))}
+          </List>
+        )}
       </Box>
     </Drawer>
   );

@@ -26,7 +26,8 @@ export default function Layout(props: LayoutProps) {
   const [isStartup, setIsStartup] = useState(false);
   const rememberMe = useSelector((state: RootState) => state.auth.rememberJwt);
   const jwt = useSelector((state: RootState) => state.auth.jwt);
-  const router = useRouter();
+
+  // const router = useRouter();
   const dispatch = useDispatch();
 
   const handleAsideOpen = () => {
@@ -54,22 +55,23 @@ export default function Layout(props: LayoutProps) {
     }
   }, [jwt]);
 
-  useEffect(() => {
-    const getUserProfile = async () => {
-      if (variant === 'common') {
-        try {
-          await api.getUserProfile();
-        } catch {
-          localStorage.removeItem('jwt');
-          router.push('/login');
-        }
-      }
-    };
+  // !WIP
+  // useEffect(() => {
+  //   const getUserProfile = async () => {
+  //     if (variant === 'common') {
+  //       try {
+  //         await api.getUserProfile();
+  //       } catch {
+  //         localStorage.removeItem('jwt');
+  //         router.push('/login');
+  //       }
+  //     }
+  //   };
 
-    if (isStartup) {
-      getUserProfile();
-    }
-  }, [isStartup, variant]);
+  //   if (isStartup) {
+  //     getUserProfile();
+  //   }
+  // }, [isStartup, variant]);
 
   return isStartup ? (
     <>

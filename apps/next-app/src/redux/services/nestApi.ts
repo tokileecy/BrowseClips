@@ -34,8 +34,13 @@ export const nestApi = createApi({
     >({
       query: (data) => ({ url: '/channels', method: 'post', data }),
     }),
-    listChannelGroups: builder.query<API.ChannelGroupWithChannelIds[], void>({
-      query: () => ({ url: '/channels/groups', method: 'get' }),
+    listChannelGroups: builder.query<
+      API.ChannelGroupWithChannel[],
+      {
+        withVideos?: '1' | '0';
+      }
+    >({
+      query: (params) => ({ url: '/channels/groups', method: 'get', params }),
     }),
     getChannelGroupByName: builder.query<
       API.ChannelGroupWithChannel,

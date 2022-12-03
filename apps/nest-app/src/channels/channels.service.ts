@@ -180,8 +180,28 @@ export class ChannelsService {
     }
   }
 
-  async listChannelGroups() {
-    return this.prisma.channelGroup.findMany();
+  async listChannelGroups(withVideos = false) {
+    const options = withVideos
+      ? {
+          include: {
+            channels: {
+              select: {
+                channel: {
+                  select: {
+                    id: true,
+                    title: true,
+                    description: true,
+                    publishedAt: true,
+                    thumbnails: true,
+                  },
+                },
+              },
+            },
+          },
+        }
+      : undefined;
+
+    return this.prisma.channelGroup.findMany(options);
   }
 
   async getChannelGroupByName(name: string): Promise<ChannelGroup> {
