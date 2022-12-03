@@ -27,48 +27,71 @@ export class CrawlerChatGateway {
   }
 
   async sycnChannels() {
-    const crawlers = new Set(await this.server.allSockets());
-    const channels = await this.channelsService.listChannelIds();
+    const crawlers = Array.from(
+      this.server.sockets.adapter.rooms.get('crawler'),
+    );
 
-    const crawingClients = new Set();
+    const channels = await this.channelsService.listChannelIds();
 
     const chunks = [];
 
     while (channels.length > 0) {
-      chunks.push(channels.splice(0, 5));
+      chunks.push(channels.splice(0, 2));
     }
 
-    const dispatch = (crawlerId: string) => {
-      const chunk = chunks.pop();
+    console.log('start dispatch craw task');
 
-      crawlers.delete(crawlerId);
-      crawingClients.add(crawlerId);
+    const intervalId = setInterval(async () => {
+      if (chunks.length === 0) {
+        clearInterval(intervalId);
+      }
 
-      console.log(`dispatch to ${crawlerId}`);
-      this.server.sockets.sockets
-        .get(crawlerId)
-        .emit('crawChannels', chunk, (res: Record<string, Video[]>) => {
-          if (res === null) {
-            console.warn(`${crawlerId} craw failed.`);
-            chunks.push(chunk);
-            return;
-          } else {
-            crawlers.add(crawlerId);
-            crawingClients.delete(crawlerId);
-            console.log(`${crawlerId} fininshed crawlering`);
-          }
+      const idleCrawler = [];
 
-          this.addVideos(res);
+      const promisies: Promise<string>[] = [];
 
-          if (chunks.length > 0) {
-            dispatch(crawlerId);
-          }
-        });
-    };
+      for (let i = 0; i < crawlers.length; i++) {
+        const crawlerId = crawlers[i];
 
-    Array.from(crawlers).forEach((crawlerId) => {
-      dispatch(crawlerId);
-    });
+        promisies.push(
+          new Promise((resolve, reject) => {
+            setTimeout(() => {
+              reject();
+            }, 2000);
+            this.server.sockets.sockets
+              .get(crawlerId)
+              ?.emit('isIdle', async (isIdle) => {
+                if (isIdle) {
+                  idleCrawler.push(crawlerId);
+                }
+
+                resolve(isIdle);
+              });
+          }),
+        );
+      }
+
+      await Promise.all(promisies);
+
+      idleCrawler.forEach((crawlerId) => {
+        const chunk = chunks.pop();
+
+        console.log(
+          `dispatch to ${crawlerId}`,
+          `remain ${chunks.length} chunks`,
+        );
+        this.server.sockets.sockets
+          .get(crawlerId)
+          .emit('crawChannels', chunk, async (res: Record<string, Video[]>) => {
+            if (res === null) {
+              console.warn(`${crawlerId} craw failed.`);
+            } else {
+              this.addVideos(res);
+              console.log(`${crawlerId} fininshed crawlering`);
+            }
+          });
+      });
+    }, 3000);
   }
 
   async addVideos(channelMap: Record<string, Video[]>) {
@@ -93,6 +116,14 @@ export class CrawlerChatGateway {
         }
       }
     }
+  }
+
+  handleConnection(client: Socket) {
+    console.log(`client ${client.id} is connected`);
+  }
+
+  handleDisconnect(client: Socket) {
+    console.log(`client ${client.id} is disConnected`);
   }
 
   @SubscribeMessage('join')

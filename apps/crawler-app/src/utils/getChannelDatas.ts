@@ -1,6 +1,27 @@
-import { Page } from 'playwright';
+import playwright from 'playwright';
 
-export default async function getChannelDatas(page: Page, id: string) {
+const HTTP_PROXY_URL = process.env.HTTP_PROXY_URL;
+const HTTP_PROXY_USERNAME = process.env.HTTP_PROXY_USERNAME;
+const HTTP_PROXY_PASSWORD = process.env.HTTP_PROXY_PASSWORD;
+
+const proxyConfig =
+  HTTP_PROXY_URL !== ''
+    ? {
+        server: HTTP_PROXY_URL,
+        username: HTTP_PROXY_USERNAME,
+        password: HTTP_PROXY_PASSWORD,
+      }
+    : undefined;
+
+export default async function getChannelDatas(id: string) {
+  const browser = await playwright.firefox.launch({
+    headless: true, // setting this to true will not run the UI
+    proxy: proxyConfig,
+  });
+
+  const context = await browser.newContext();
+  const page = await context.newPage();
+
   console.log(`channel ${id} videos crawl starting.`);
 
   await page.goto(`https://www.youtube.com/channel/${id}/videos?sort=dd`);
@@ -58,12 +79,14 @@ export default async function getChannelDatas(page: Page, id: string) {
 
       return {
         id: streamId,
-        liveState: timeStatusElement.getAttribute('overlay-style'),
+        liveState: timeStatusElement?.getAttribute('overlay-style'),
         title,
         metadataLine,
       };
     }),
   );
+
+  await browser.close();
 
   console.log(`channel ${id} videos crawl finished`);
   return {

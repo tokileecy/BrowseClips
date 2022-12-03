@@ -49,6 +49,8 @@ services:
       "
     ports:
       - $CRAWLER_PORT:5000
+    depends_on:
+      - nest-app
   nest-app:
     image: node:16
     user: '1000:1000'
@@ -89,6 +91,8 @@ services:
       - browse_clips_default
     ports:
       - $NEXT_PORT:3000
+    depends_on:
+      - nest-app
     environment:
       - NODE_OPTIONS=--max_old_space_size=2048
       - NODE_ENV=development
