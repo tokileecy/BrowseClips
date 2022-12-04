@@ -20,6 +20,7 @@ interface ServerToClientEvents {
     cb: (channelDatas: Record<string, Video[]>) => void,
   ) => void;
   isIdle: (cb: (isIdle: boolean) => void) => void;
+  askCategory: (cb: (category: string) => void) => void;
 }
 
 interface ClientToServerEvents {
@@ -127,9 +128,13 @@ export const crawChannels = async (channels: { id: string }[]) => {
 
 socket.on('connect', function () {
   console.log('Connected');
-
+  socket.removeAllListeners();
   socket.emit('join', 'crawler', (res) => {
     console.log(res);
+  });
+
+  socket.on('askCategory', async (cb) => {
+    cb('crawler');
   });
 
   socket.on('crawChannels', async (channels, cb) => {
@@ -145,7 +150,9 @@ socket.on('connect', function () {
     await cb(!isCrawingChannels);
   });
 });
-
+// setInterval(() => {
+//   console.log(new Date().toString());
+// }, 300);
 socket.on('connect_error', function (data) {
   console.error(
     '----------------------------- connect_error -----------------------------',

@@ -27,23 +27,29 @@ export class CrawlerChatGateway {
   }
 
   async sycnChannels() {
-    const crawlers = Array.from(
-      this.server.sockets.adapter.rooms.get('crawler'),
-    );
-
     const channels = await this.channelsService.listChannelIds();
 
     const chunks = [];
+    const maxTimeOut = 60000 * 10;
 
     while (channels.length > 0) {
-      chunks.push(channels.splice(0, 2));
+      chunks.push(channels.splice(0, 5));
     }
 
     console.log('start dispatch craw task');
 
+    let crawTime = 0;
+    const originChunkSize = chunks.length;
+
     const intervalId = setInterval(async () => {
+      const crawlers = Array.from(
+        this.server.sockets.adapter.rooms.get('crawler') ?? [],
+      );
+
       if (chunks.length === 0) {
         clearInterval(intervalId);
+      } else if (crawTime > originChunkSize * 2) {
+        console.warn('craw too many times');
       }
 
       const idleCrawler = [];
@@ -55,9 +61,10 @@ export class CrawlerChatGateway {
 
         promisies.push(
           new Promise((resolve, reject) => {
-            setTimeout(() => {
-              reject();
-            }, 2000);
+            const timeoutId = setTimeout(() => {
+              reject('crawing timeout');
+            }, maxTimeOut);
+
             this.server.sockets.sockets
               .get(crawlerId)
               ?.emit('isIdle', async (isIdle) => {
@@ -65,26 +72,42 @@ export class CrawlerChatGateway {
                   idleCrawler.push(crawlerId);
                 }
 
+                clearTimeout(timeoutId);
                 resolve(isIdle);
               });
           }),
         );
       }
 
-      await Promise.all(promisies);
+      try {
+        await Promise.all(promisies);
+      } catch (error) {
+        console.error(error);
+      }
 
       idleCrawler.forEach((crawlerId) => {
+        crawTime++;
+
         const chunk = chunks.pop();
 
         console.log(
           `dispatch to ${crawlerId}`,
           `remain ${chunks.length} chunks`,
         );
+
+        const timeoutId = setTimeout(() => {
+          chunks.unshift(chunk);
+          console.warn('crawChannels timeout');
+        }, maxTimeOut);
+
         this.server.sockets.sockets
           .get(crawlerId)
           .emit('crawChannels', chunk, async (res: Record<string, Video[]>) => {
+            clearTimeout(timeoutId);
+
             if (res === null) {
               console.warn(`${crawlerId} craw failed.`);
+              chunks.unshift(chunk);
             } else {
               this.addVideos(res);
               console.log(`${crawlerId} fininshed crawlering`);
@@ -119,6 +142,11 @@ export class CrawlerChatGateway {
   }
 
   handleConnection(client: Socket) {
+    client.emit('askCategory', async (category) => {
+      if (category === 'crawler') {
+        client.join('crawler');
+      }
+    });
     console.log(`client ${client.id} is connected`);
   }
 
