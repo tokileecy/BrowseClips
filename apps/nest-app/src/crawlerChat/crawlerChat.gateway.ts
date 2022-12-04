@@ -9,7 +9,9 @@ import { Video } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { Logger } from '@nestjs/common';
 //WebSocket listen  port 81
-@WebSocketGateway(81)
+@WebSocketGateway(81, {
+  maxHttpBufferSize: 3e7,
+})
 export class CrawlerChatGateway {
   private readonly logger = new Logger('HTTP');
 
@@ -86,7 +88,7 @@ export class CrawlerChatGateway {
       idleCrawler.forEach((crawlerId) => {
         crawTime++;
 
-        if (crawTime > originChunkSize * 2) {
+        if (crawTime > originChunkSize + 10) {
           console.warn('craw too many times');
           clearInterval(intervalId);
         }
@@ -105,17 +107,21 @@ export class CrawlerChatGateway {
 
         this.server.sockets.sockets
           .get(crawlerId)
-          .emit('crawChannels', chunk, async (res: Record<string, Video[]>) => {
-            clearTimeout(timeoutId);
+          ?.emit(
+            'crawChannels',
+            chunk,
+            async (res: Record<string, Video[]>) => {
+              clearTimeout(timeoutId);
 
-            if (res === null) {
-              console.warn(`${crawlerId} craw failed.`);
-              chunks.unshift(chunk);
-            } else {
-              this.addVideos(res);
-              console.log(`${crawlerId} fininshed crawlering`);
-            }
-          });
+              if (res === null) {
+                console.warn(`${crawlerId} craw failed.`);
+                chunks.unshift(chunk);
+              } else {
+                this.addVideos(res);
+                console.log(`${crawlerId} fininshed crawlering`);
+              }
+            },
+          );
       });
     }, 3000);
   }
