@@ -48,8 +48,6 @@ export class CrawlerChatGateway {
 
       if (chunks.length === 0) {
         clearInterval(intervalId);
-      } else if (crawTime > originChunkSize * 2) {
-        console.warn('craw too many times');
       }
 
       const idleCrawler = [];
@@ -87,6 +85,11 @@ export class CrawlerChatGateway {
 
       idleCrawler.forEach((crawlerId) => {
         crawTime++;
+
+        if (crawTime > originChunkSize * 2) {
+          console.warn('craw too many times');
+          clearInterval(intervalId);
+        }
 
         const chunk = chunks.pop();
 

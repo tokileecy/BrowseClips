@@ -49,8 +49,6 @@ services:
       "
     ports:
       - $CRAWLER_PORT:5000
-    depends_on:
-      - nest-app
   nest-app:
     image: node:16
     user: '1000:1000'
