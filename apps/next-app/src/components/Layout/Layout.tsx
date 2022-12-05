@@ -1,6 +1,5 @@
 import { ReactNode, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRouter } from 'next/router';
 import { setAuth } from '@/redux/features/auth';
 import { RootState } from '@/redux/store';
 import api from '@/api';
