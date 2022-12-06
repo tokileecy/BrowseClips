@@ -1,0 +1,3 @@
+#!/bin/sh
+
+docker compose exec postgres pg_restore -h 127.0.0.1 -U nest -d nest /backups/$1
