@@ -13,6 +13,16 @@ const proxyConfig =
       }
     : undefined;
 
+export type VideoAndStreamHashMap = Record<
+  string,
+  {
+    id: string;
+    liveState: string;
+    title: string;
+    metadataLine: string;
+  }
+>;
+
 export default async function getChannelDatas(id: string) {
   const browser = await playwright.firefox.launch({
     headless: true, // setting this to true will not run the UI
@@ -30,30 +40,35 @@ export default async function getChannelDatas(id: string) {
 
   const vedioLocator = page.locator('ytd-rich-item-renderer');
 
-  const videoDatas = await vedioLocator.evaluateAll((list) =>
-    list.map((node) => {
-      const vedioLink = node.querySelector('#thumbnail').getAttribute('href');
+  const videoDatas = (
+    await vedioLocator.evaluateAll((list) =>
+      list.map((node) => {
+        const vedioLink = node.querySelector('#thumbnail').getAttribute('href');
 
-      const vedioId = vedioLink.replace('/watch?v=', '');
+        const vedioId = vedioLink.replace('/watch?v=', '');
 
-      const timeStatusElement = node.querySelector(
-        'ytd-thumbnail-overlay-time-status-renderer',
-      );
+        const timeStatusElement = node.querySelector(
+          'ytd-thumbnail-overlay-time-status-renderer',
+        );
 
-      const title = node.querySelector('#details #video-title').textContent;
+        const title = node.querySelector('#details #video-title').textContent;
 
-      const metadataLine = node.querySelector(
-        '#details #metadata-line',
-      ).textContent;
+        const metadataLine = node.querySelector(
+          '#details #metadata-line',
+        ).textContent;
 
-      return {
-        id: vedioId,
-        liveState: timeStatusElement?.getAttribute('overlay-style'),
-        title,
-        metadataLine,
-      };
-    }),
-  );
+        return {
+          id: vedioId,
+          liveState: timeStatusElement?.getAttribute('overlay-style'),
+          title,
+          metadataLine,
+        };
+      }),
+    )
+  ).reduce<VideoAndStreamHashMap>((acc, data) => {
+    acc[data.id] = data;
+    return acc;
+  }, {});
 
   await page.goto(`https://www.youtube.com/channel/${id}/streams?sort=dd`);
 
@@ -61,30 +76,37 @@ export default async function getChannelDatas(id: string) {
 
   const streamLocator = page.locator('ytd-rich-item-renderer');
 
-  const streamDatas = await streamLocator.evaluateAll((list) =>
-    list.map((node) => {
-      const streamLink = node.querySelector('#thumbnail').getAttribute('href');
+  const streamDatas = (
+    await streamLocator.evaluateAll((list) =>
+      list.map((node) => {
+        const streamLink = node
+          .querySelector('#thumbnail')
+          .getAttribute('href');
 
-      const streamId = streamLink.replace('/watch?v=', '');
+        const streamId = streamLink.replace('/watch?v=', '');
 
-      const timeStatusElement = node.querySelector(
-        '#thumbnail ytd-thumbnail-overlay-time-status-renderer',
-      );
+        const timeStatusElement = node.querySelector(
+          '#thumbnail ytd-thumbnail-overlay-time-status-renderer',
+        );
 
-      const title = node.querySelector('#details #video-title').textContent;
+        const title = node.querySelector('#details #video-title').textContent;
 
-      const metadataLine = node.querySelector(
-        '#details #metadata-line',
-      ).textContent;
+        const metadataLine = node.querySelector(
+          '#details #metadata-line',
+        ).textContent;
 
-      return {
-        id: streamId,
-        liveState: timeStatusElement?.getAttribute('overlay-style'),
-        title,
-        metadataLine,
-      };
-    }),
-  );
+        return {
+          id: streamId,
+          liveState: timeStatusElement?.getAttribute('overlay-style'),
+          title,
+          metadataLine,
+        };
+      }),
+    )
+  ).reduce<VideoAndStreamHashMap>((acc, data) => {
+    acc[data.id] = data;
+    return acc;
+  }, {});
 
   await browser.close();
 

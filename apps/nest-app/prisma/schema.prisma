@@ -18,34 +18,29 @@ model User {
 }
 
 model Channel {
-  id          String    @id
-  title       String?   @default("")
-  description String?   @default("")
-  country     String?   @default("")
-  publishedAt DateTime?
-  thumbnails  Json?
-  category  ChannelCategory @default(Streamer)
-  videos      Video[]
+  id            String                    @id
+  title         String?                   @default("")
+  description   String?                   @default("")
+  country       String?                   @default("")
+  publishedAt   DateTime?
+  thumbnails    Json?
+  category      ChannelCategory           @default(Streamer)
   channelGroups ChannelGroupsOnChannels[]
+  videos        Video[]
 }
 
 model ChannelGroup {
-  id        Int        @id @default(autoincrement())
-  name      String     @unique
+  id       Int                       @id @default(autoincrement())
+  name     String                    @unique
   channels ChannelGroupsOnChannels[]
 }
 
-enum ChannelCategory {
-  Streamer
-  Clipper
-}
-
 model ChannelGroupsOnChannels {
-  channel Channel @relation(fields: [channelId], references: [id])
-  channelId String
-  channelGroup ChannelGroup @relation(fields: [channelGroupId], references: [id])
+  channelId      String
   channelGroupId Int
-  assignedAt DateTime @default(now())
+  assignedAt     DateTime     @default(now())
+  channelGroup   ChannelGroup @relation(fields: [channelGroupId], references: [id])
+  channel        Channel      @relation(fields: [channelId], references: [id])
 
   @@id([channelGroupId, channelId])
 }
@@ -69,6 +64,7 @@ model Video {
   contentDetails       Json?
   tags                 String[]           @default([])
   youtubeData          Json?
+  liveState            String?            @default("DEFAULT")
   channel              Channel            @relation(fields: [channelId], references: [id])
   subjects             SubjectsOnVideos[]
 }
@@ -89,4 +85,9 @@ model Playlist {
   owner   User    @relation(fields: [ownerId], references: [id])
 
   @@map("playlist")
+}
+
+enum ChannelCategory {
+  Streamer
+  Clipper
 }

@@ -2,7 +2,9 @@ import dotenv from 'dotenv';
 import { writeFileSync, appendFileSync } from 'fs';
 import * as path from 'path';
 import { io, Socket } from 'socket.io-client';
-import getChannelDatas from './utils/getChannelDatas';
+import getChannelDatas, {
+  VideoAndStreamHashMap,
+} from './utils/getChannelDatas';
 import { google } from 'googleapis';
 import { Video } from './types';
 
@@ -40,18 +42,8 @@ export const crawChannels = async (channels: { id: string }[]) => {
       string,
       {
         id: string;
-        videoDatas: {
-          id: string;
-          liveState: string;
-          title: string;
-          metadataLine: string;
-        }[];
-        streamDatas: {
-          id: string;
-          liveState: string;
-          title: string;
-          metadataLine: string;
-        }[];
+        videoDatas: VideoAndStreamHashMap;
+        streamDatas: VideoAndStreamHashMap;
       }
     > = {};
 
@@ -70,14 +62,19 @@ export const crawChannels = async (channels: { id: string }[]) => {
     for (let i = 0; i < vediosByChannelEntries.length; i++) {
       const channelId = vediosByChannelEntries[i][0];
 
-      const videoIds = vediosByChannelEntries[i][1].videoDatas
-        .map((d) => d.id)
-        .concat(vediosByChannelEntries[i][1].streamDatas.map((d) => d.id));
+      const videosAndStreamsDataByVideoId = {
+        ...vediosByChannelEntries[i][1].videoDatas,
+        ...vediosByChannelEntries[i][1].streamDatas,
+      };
 
-      const videoDatas = [];
+      const videosAndStreamsIds = Object.values(
+        videosAndStreamsDataByVideoId,
+      ).map((d) => d.id);
 
-      while (videoIds.length > 0) {
-        const ids = videoIds.splice(0, 50);
+      const videoAndStreamDatas = [];
+
+      while (videosAndStreamsIds.length > 0) {
+        const ids = videosAndStreamsIds.splice(0, 50);
 
         const res = await service.videos.list({
           auth: GOOGLE_API_KEY,
@@ -92,25 +89,30 @@ export const crawChannels = async (channels: { id: string }[]) => {
           id: ids,
         });
 
-        videoDatas.push(
-          ...res.data.items.map((item) => ({
-            id: item.id,
-            channelId: item.snippet.channelId,
-            title: item.snippet.title,
-            description: item.snippet.description,
-            publishedAt: item.snippet.publishedAt,
-            thumbnails: item.snippet.thumbnails as any,
-            tags: item.snippet.tags as string[],
-            status: item.status as any,
-            statistics: item.statistics as any,
-            liveStreamingDetails: item.liveStreamingDetails as any,
-            contentDetails: item.contentDetails as any,
-            youtubeData: item,
-          })),
-        );
+        const videoAndStreamData = [
+          ...res.data.items.map((item) => {
+            return {
+              id: item.id,
+              liveState: videosAndStreamsDataByVideoId[item.id].liveState,
+              channelId: item.snippet.channelId,
+              title: item.snippet.title,
+              description: item.snippet.description,
+              publishedAt: item.snippet.publishedAt,
+              thumbnails: item.snippet.thumbnails as any,
+              tags: item.snippet.tags as string[],
+              status: item.status as any,
+              statistics: item.statistics as any,
+              liveStreamingDetails: item.liveStreamingDetails as any,
+              contentDetails: item.contentDetails as any,
+              youtubeData: item,
+            };
+          }),
+        ];
+
+        videoAndStreamDatas.push(...videoAndStreamData);
       }
 
-      videosByChannelId[channelId] = videoDatas;
+      videosByChannelId[channelId] = videoAndStreamDatas;
     }
 
     console.log('get videos by yt api -- fininshed');
@@ -150,9 +152,7 @@ socket.on('connect', function () {
     await cb(!isCrawingChannels);
   });
 });
-// setInterval(() => {
-//   console.log(new Date().toString());
-// }, 300);
+
 socket.on('connect_error', function (data) {
   console.error(
     '----------------------------- connect_error -----------------------------',

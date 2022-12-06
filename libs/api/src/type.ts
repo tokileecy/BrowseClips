@@ -2,6 +2,7 @@ export interface Video {
   id: string;
   title?: string;
   description?: string;
+  liveState?: string;
   country?: string;
   publishedAt: string;
   thumbnails: Record<

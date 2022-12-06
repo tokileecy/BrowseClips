@@ -8,6 +8,8 @@ import type { Server, Socket } from 'socket.io';
 import { Video } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
 import { Logger } from '@nestjs/common';
+import { appendFileSync } from 'fs';
+import path from 'path';
 //WebSocket listen  port 81
 @WebSocketGateway(81, {
   maxHttpBufferSize: 3e7,
@@ -143,7 +145,14 @@ export class CrawlerChatGateway {
               create: { ...data },
             });
           } catch (error) {
-            console.error(`add video failed with id: ${data.id}`, error, data);
+            appendFileSync(
+              path.resolve(__dirname, '../../tmp/addVideoFailed'),
+              `add video failed with id: ${data.id} \n
+              ${JSON.stringify(error, null, 2)} \n
+              ${JSON.stringify(data, null, 2)} \n
+              `,
+            );
+            console.error(`add video failed with id: ${data.id}`);
           }
         }
       }

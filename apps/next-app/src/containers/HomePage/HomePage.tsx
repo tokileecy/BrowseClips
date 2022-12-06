@@ -212,6 +212,7 @@ export default function VideoPage(props: VideoPageProps) {
                   id={video.id}
                   title={video.title}
                   thumbnails={thumbnails}
+                  isLive={video.liveState === 'LIVE'}
                 />
               </Box>
             );

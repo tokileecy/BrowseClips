@@ -6,13 +6,14 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 
 export interface VideoCardProps {
+  isLive?: boolean;
   id: string;
   thumbnails: string;
   title?: string;
 }
 
 export default function VideoCard(props: VideoCardProps) {
-  const { id, thumbnails, title = '' } = props;
+  const { id, thumbnails, title = '', isLive = false } = props;
 
   return (
     <Card
@@ -23,7 +24,13 @@ export default function VideoCard(props: VideoCardProps) {
       }}
     >
       <Link href={`/video/${id}`}>
-        <Box component="a" sx={{ cursor: 'pointer' }}>
+        <Box
+          component="a"
+          sx={{
+            cursor: 'pointer',
+            position: 'relative',
+          }}
+        >
           <CardMedia
             component="img"
             height="120"
@@ -31,6 +38,29 @@ export default function VideoCard(props: VideoCardProps) {
             image={thumbnails}
             alt="vedio"
           />
+          {isLive && (
+            <Box
+              sx={{
+                fontSize: '14px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                backgroundColor: 'rgba(204, 0, 0, 0.9)',
+                color: 'white',
+                fontWeight: 'bold',
+                borderTopLeftRadius: 4,
+                pt: 0,
+                pb: 0,
+                pl: 1.25,
+                pr: 1.25,
+              }}
+            >
+              Live
+            </Box>
+          )}
         </Box>
       </Link>
       <CardContent
