@@ -1,64 +1,61 @@
 module.exports = {
-  "env": {
-    "browser": true,
-    "es6": true,
-    "node": true,
-    "commonjs": true
+  'env': {
+    'browser': true,
+    'es6': true,
+    'node': true,
+    'commonjs': true,
   },
-  "settings": {
-    "react": {
-      "version": "detect"
+  'settings': {
+    'react': {
+      'version': 'detect',
     },
-    "import/resolver": {
-      "node": {
-        "extensions": [".ts", ".tsx"]
+    'import/resolver': {
+      'node': {
+        'extensions': ['.ts', '.tsx'],
       },
-      "typescript": {}
+      'typescript': {},
     },
-    "import/ignore": ["node_modules/*"]
+    'import/ignore': ['node_modules/*'],
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "plugin:@typescript-eslint/recommended",
+  'extends': [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:storybook/recommended',
   ],
-  "globals": {
-    "globalThis": false,
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+  'globals': {
+    'globalThis': false,
+    'Atomics': 'readonly',
+    'SharedArrayBuffer': 'readonly',
   },
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+  'parser': '@typescript-eslint/parser',
+  'parserOptions': {
+    'ecmaFeatures': {
+      'jsx': true,
     },
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+    'ecmaVersion': 2018,
+    'sourceType': 'module',
   },
-  "plugins": [
-    "react",
-    "prettier",
-    "import"
-  ],
-  "rules": {
-    "prettier/prettier": "error",
-    "react/react-in-jsx-scope": "off",
-    "react/prop-types": [
+  'plugins': ['react', 'prettier', 'import'],
+  'rules': {
+    'prettier/prettier': 'error',
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': [
       2,
       {
-        "ignore": ["children"]
-      }
+        'ignore': ['children'],
+      },
     ],
-    "object-shorthand": "error",
-    "quote-props": ["error", "consistent"],
-    "dot-notation": "off",
-    "template-curly-spacing": "off",
-    "indent": "off",
-    "no-use-before-define": "off",
-    "@typescript-eslint/no-use-before-define": ["error"],
-    "@typescript-eslint/no-explicit-any": "off",
+    'object-shorthand': 'error',
+    'quote-props': ['error', 'consistent'],
+    'dot-notation': 'off',
+    'template-curly-spacing': 'off',
+    'indent': 'off',
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': ['error'],
+    '@typescript-eslint/no-explicit-any': 'off',
     'padding-line-between-statements': [
       'error',
       {
@@ -73,8 +70,8 @@ module.exports = {
           'export',
           'import',
           'let',
-          'var'
-        ]
+          'var',
+        ],
       },
       {
         blankLine: 'always',
@@ -87,35 +84,35 @@ module.exports = {
           'export',
           'import',
           'let',
-          'var'
+          'var',
         ],
-        next: '*'
+        next: '*',
       },
       {
         blankLine: 'any',
         prev: ['const', 'let', 'var'],
-        next: ['const', 'let', 'var']
+        next: ['const', 'let', 'var'],
       },
       {
         blankLine: 'any',
         prev: ['export', 'import'],
-        next: ['export', 'import']
+        next: ['export', 'import'],
       },
       {
         blankLine: 'always',
         prev: ['multiline-let', 'multiline-var', 'multiline-const'],
-        next: ['multiline-let', 'multiline-var', 'multiline-const']
+        next: ['multiline-let', 'multiline-var', 'multiline-const'],
       },
       {
         blankLine: 'always',
         prev: ['const', 'let', 'var'],
-        next: ['multiline-let', 'multiline-var', 'multiline-const']
+        next: ['multiline-let', 'multiline-var', 'multiline-const'],
       },
       {
         blankLine: 'always',
         prev: ['multiline-let', 'multiline-var', 'multiline-const'],
-        next: ['const', 'let', 'var']
-      }
-    ]
+        next: ['const', 'let', 'var'],
+      },
+    ],
   },
-}
+};

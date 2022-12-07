@@ -89,6 +89,7 @@ services:
       - browse_clips_default
     ports:
       - $NEXT_PORT:3000
+      - $DOCS_PORT:6006
     depends_on:
       - nest-app
     environment:
@@ -106,7 +107,7 @@ services:
     working_dir: /srv/wrokspace/apps/next-app
     command: >
       /bin/sh -c "
-        yarn dev
+        yarn dev & yarn storybook
       "
 networks:
   browse_clips_default:
