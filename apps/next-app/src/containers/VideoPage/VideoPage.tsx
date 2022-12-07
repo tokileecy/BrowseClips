@@ -5,7 +5,7 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import api, { API } from '@/api';
 import Layout from '@/components/Layout';
-import VideoCard from './VideoCard';
+import VideoCard from '@/components/Layout/VideoCard';
 import { useDispatch } from 'react-redux';
 import { updateVideos, setVideos } from '@/redux/features/videos';
 import { useSelector } from 'react-redux';
@@ -24,7 +24,12 @@ export default function VideoPage(props: VideoPageProps) {
     Record<number, boolean>
   >({});
 
-  const { data: channelGroups, isLoading, error } = useListChannelGroupsQuery();
+  const {
+    data: channelGroups,
+    isLoading,
+    error,
+  } = useListChannelGroupsQuery({ withVideos: '0' });
+
   const videos = useSelector((state: RootState) => state.videos);
   const dispatch = useDispatch();
 

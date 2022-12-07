@@ -5,7 +5,7 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import api, { API } from '@/api';
 import Layout from '@/components/Layout';
-import VideoCard from '../VideoPage/VideoCard';
+import VideoCard from '@/components/Layout/VideoCard';
 import { useDispatch } from 'react-redux';
 import { updateVideos, setVideos } from '@/redux/features/videos';
 import { useSelector } from 'react-redux';
@@ -129,7 +129,7 @@ export default function VideoPage(props: VideoPageProps) {
               color: 'white',
             }}
           >
-            {category === 'Streamer' ? 'Videos' : 'Clips'}
+            Videos
           </Typography>
         </Box>
         <Stack
