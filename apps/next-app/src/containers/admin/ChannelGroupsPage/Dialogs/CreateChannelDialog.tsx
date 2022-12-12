@@ -1,13 +1,17 @@
+import { SyntheticEvent, useMemo, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Chip from '@mui/material/Chip';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useForm } from 'react-hook-form';
+import { useListChannelsQuery } from '@/redux/services/nestApi';
+import { Channel } from '@browse_clips/api';
 
 export interface ChannelFormData {
-  channelIds: string;
+  channelIds: string[];
 }
 
 export interface CreateChannelDialogProps {
@@ -20,11 +24,26 @@ export default function CreateChannelDialog(props: CreateChannelDialogProps) {
   const { open, onOk, onCancel } = props;
 
   const {
-    reset,
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<ChannelFormData>();
+    data: channels,
+    error: listChannelsError,
+    isLoading: isListChannelsLoading,
+  } = useListChannelsQuery();
+
+  const [selectedChannels, setSelectedChannels] = useState<string[]>([]);
+
+  const handleAutoCompleteChange = (
+    _event: SyntheticEvent<Element, Event>,
+    option: string[],
+  ) => {
+    setSelectedChannels(option);
+  };
+
+  const channelMap = useMemo(() => {
+    return (channels ?? []).reduce<Record<string, Channel>>((acc, channel) => {
+      acc[channel.id] = channel;
+      return acc;
+    }, {} as Record<string, Channel>);
+  }, [channels]);
 
   return (
     <Dialog
@@ -43,26 +62,49 @@ export default function CreateChannelDialog(props: CreateChannelDialogProps) {
       }}
       TransitionProps={{
         onExited: () => {
-          reset({
-            channelIds: '',
-          });
+          setSelectedChannels([]);
         },
       }}
       onClose={() => {
         onCancel?.();
       }}
     >
-      <DialogTitle>Create Channel</DialogTitle>
+      <DialogTitle>Add Channel</DialogTitle>
       <DialogContent>
-        <TextField
-          label="ChannelIds"
-          sx={{
-            width: '100%',
-          }}
-          variant="standard"
-          helperText={errors.channelIds?.message}
-          {...register('channelIds', { required: true })}
-        />
+        {!listChannelsError && !isListChannelsLoading ? (
+          <>
+            <Autocomplete
+              multiple
+              id="tags-filled"
+              options={channels?.map((channel) => channel.id) ?? []}
+              value={selectedChannels}
+              onChange={handleAutoCompleteChange}
+              defaultValue={[]}
+              freeSolo
+              getOptionLabel={(option) => {
+                return channelMap[option]?.title ?? option;
+              }}
+              renderTags={(value: readonly string[], getTagProps) =>
+                value.map((option: string, index: number) => (
+                  // eslint-disable-next-line react/jsx-key
+                  <Chip
+                    variant="outlined"
+                    label={channelMap[option]?.title ?? option}
+                    {...getTagProps({ index })}
+                  />
+                ))
+              }
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="standard"
+                  label="ChannelIds"
+                  placeholder="ChannelIds"
+                />
+              )}
+            />
+          </>
+        ) : null}
       </DialogContent>
       <DialogActions>
         <Button variant="text" color="primary" onClick={onCancel}>
@@ -71,9 +113,11 @@ export default function CreateChannelDialog(props: CreateChannelDialogProps) {
         <Button
           variant="text"
           color="primary"
-          onClick={handleSubmit((formData) => {
-            onOk?.(formData);
-          })}
+          onClick={() => {
+            onOk?.({
+              channelIds: selectedChannels,
+            });
+          }}
         >
           Ok
         </Button>

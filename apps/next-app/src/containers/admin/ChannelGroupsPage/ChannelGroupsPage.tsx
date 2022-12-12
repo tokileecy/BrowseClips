@@ -75,7 +75,7 @@ export default function ChannelGroupsPage() {
   const handleChannelDialogOk = async (form: ChannelFormData) => {
     try {
       await addChannelById({
-        ids: form.channelIds?.split(','),
+        ids: form.channelIds,
         groupName: targetGroupName,
       });
       await refetchChannelGroups();

@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import api from '@/api';
 import { useEffect, useRef } from 'react';
 import { setVideos, updateVideos } from '@/redux/features/videos';
-import VideoCard from '@/components/Layout/VideoCard';
+import VideoCard from '@/components/VideoCard';
 
 export interface ChannelGroupPageProps {
   name: string | null;
