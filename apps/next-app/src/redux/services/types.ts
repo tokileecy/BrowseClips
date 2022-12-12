@@ -1,3 +1,5 @@
+export type ChannelCategory = 'Streamer' | 'Clipper';
+
 export interface Video {
   id: string;
   title?: string;

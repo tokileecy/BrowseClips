@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setAuth } from '@/redux/features/auth';
 import { RootState } from '@/redux/store';
-import api from '@/api';
+import { setJwt } from '@/api';
 import Header from './Header';
 import Main from './Main';
 import Aside from './Aside';
@@ -37,7 +37,7 @@ export default function Layout(props: LayoutProps) {
     const localJwt = localStorage.getItem('jwt');
 
     if (jwt !== undefined) {
-      api.setJwt(jwt);
+      setJwt(jwt);
 
       if (rememberMe && jwt !== localJwt) {
         localStorage.setItem('jwt', jwt);
@@ -45,7 +45,7 @@ export default function Layout(props: LayoutProps) {
     } else {
       if (localJwt) {
         dispatch(setAuth({ jwt: localJwt }));
-        api.setJwt(localJwt);
+        setJwt(localJwt);
       }
     }
 

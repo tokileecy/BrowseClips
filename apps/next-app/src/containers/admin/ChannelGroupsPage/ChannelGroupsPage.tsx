@@ -2,7 +2,7 @@ import {
   useAddChannelByIdsMutation,
   useCreateChannelGroupMutation,
   useListChannelGroupsQuery,
-} from '@/redux/services/nestApi';
+} from '@/redux/services/channels';
 import { Avatar, IconButton, ListItemAvatar } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import Box from '@mui/material/Box';

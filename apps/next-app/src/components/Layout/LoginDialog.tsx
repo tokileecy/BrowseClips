@@ -12,8 +12,8 @@ import Checkbox, { CheckboxProps } from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Dialog from '@mui/material/Dialog';
 import TextField from '@mui/material/TextField';
-import api from '@/api';
 import { setAuth } from '@/redux/features/auth';
+import { useLoginMutation } from '@/redux/services/auth';
 
 interface LoginFormFieldData {
   username: string;
@@ -47,18 +47,20 @@ export default function LoginDialog(props: LoginDialogProps) {
     reset();
   };
 
+  const [login] = useLoginMutation();
+
   const handleLogin = async (data: LoginFormFieldData) => {
     try {
-      const res = await api.login({
+      const res = await login({
         username: data.username,
         password: data.password,
-      });
+      }).unwrap();
 
       if (rememberMe) {
-        localStorage.setItem('jwt', res.data.accessToken);
+        localStorage.setItem('jwt', res.accessToken);
       }
 
-      dispatch(setAuth({ jwt: res.data.accessToken }));
+      dispatch(setAuth({ jwt: res.accessToken }));
 
       handleClose();
     } catch (error) {

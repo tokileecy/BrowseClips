@@ -3,10 +3,10 @@ import Typography from '@mui/material/Typography';
 import Layout from '@/components/Layout';
 import { RootState } from '@/redux/store';
 import { useSelector, useDispatch } from 'react-redux';
-import api from '@/api';
 import { useEffect, useRef } from 'react';
 import { setVideos, updateVideos } from '@/redux/features/videos';
 import VideoCard from '@/components/VideoCard';
+import { useLazyListVideosQuery } from '@/redux/services/videos';
 
 export interface ChannelGroupPageProps {
   name: string | null;
@@ -18,6 +18,7 @@ export default function ChannelGroupPage(props: ChannelGroupPageProps) {
   const videos = useSelector((state: RootState) => state.videos);
   const dispatch = useDispatch();
   const videoCursorRef = useRef<string>();
+  const [listVideos] = useLazyListVideosQuery();
 
   const fetchVideos = async (
     option: {
@@ -29,16 +30,16 @@ export default function ChannelGroupPage(props: ChannelGroupPageProps) {
     const { reset, cursor, channelGroupNames } = option;
 
     try {
-      const res = await api.listVideos({
+      const videosData = await listVideos({
         channelGroupNames,
         category: 'Streamer',
         sortBy: 'publishedAt',
         orderBy: 'desc',
         cursor: reset ? undefined : cursor,
-      });
+      }).unwrap();
 
-      if (res.data.length > 0) {
-        videoCursorRef.current = res.data[res.data.length - 1].id;
+      if (videosData.length > 0) {
+        videoCursorRef.current = videosData[videosData.length - 1].id;
       } else {
         videoCursorRef.current = undefined;
       }
@@ -46,14 +47,14 @@ export default function ChannelGroupPage(props: ChannelGroupPageProps) {
       if (cursor && !reset) {
         dispatch(
           updateVideos({
-            ids: [...videos.ids, ...res.data.map(({ id }) => id)],
-            videos: res.data,
+            ids: [...videos.ids, ...videosData.map(({ id }) => id)],
+            videos: videosData,
           }),
         );
       } else {
         dispatch(
           setVideos({
-            videos: res.data,
+            videos: videosData,
           }),
         );
       }

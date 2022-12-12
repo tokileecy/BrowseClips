@@ -6,8 +6,12 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Paper } from '@mui/material';
-import api from '@/api';
 import Layout from '@/components/Layout';
+import {
+  useAddChannelByIdsMutation,
+  useLazySyncChannelsQuery,
+} from '@/redux/services/channels';
+import { useAddVideoByIdsMutation } from '@/redux/services/videos';
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
@@ -20,16 +24,23 @@ export default function AdminPage() {
   const [channelIds, setChannelIds] = useState('');
   const [videoId, setVideoId] = useState('');
 
+  const [addChannelByIds] = useAddChannelByIdsMutation();
+
+  const [addVideoByIds] = useAddVideoByIdsMutation();
+  const [syncChannels] = useLazySyncChannelsQuery();
+
   const handleAddChannel = () => {
-    api.addChannelByIds({ ids: channelIds.split(',') });
+    addChannelByIds({ ids: channelIds.split(',') });
   };
 
   const handleAddVideo = () => {
-    api.addVideoByIds([videoId]);
+    addVideoByIds({
+      ids: [videoId],
+    });
   };
 
   const handleSync = () => {
-    api.syncChannels();
+    syncChannels();
   };
 
   const handleChannelIdChange = (e: ChangeEvent<HTMLInputElement>) => {

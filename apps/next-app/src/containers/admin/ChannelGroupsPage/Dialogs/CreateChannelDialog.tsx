@@ -7,8 +7,8 @@ import Chip from '@mui/material/Chip';
 import DialogActions from '@mui/material/DialogActions';
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useListChannelsQuery } from '@/redux/services/nestApi';
-import { Channel } from '@browse_clips/api';
+import { useListChannelsQuery } from '@/redux/services/channels';
+import { Channel } from '@/redux/services/types';
 
 export interface ChannelFormData {
   channelIds: string[];

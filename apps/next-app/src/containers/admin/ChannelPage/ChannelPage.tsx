@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Layout from '@/components/Layout';
 import ChannelCard from './ChannelCard';
-import { useListChannelsQuery } from '@/redux/services/nestApi';
+import { useListChannelsQuery } from '@/redux/services/channels';
 
 export default function HomePage() {
   const { data: channels, error, isLoading } = useListChannelsQuery();

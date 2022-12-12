@@ -2096,18 +2096,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@browse_clips/api@link:../../libs/api/dist::locator=%40browse_clips%2Fnext-app%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@browse_clips/api@link:../../libs/api/dist::locator=%40browse_clips%2Fnext-app%40workspace%3A."
-  languageName: node
-  linkType: soft
-
 "@browse_clips/next-app@workspace:.":
   version: 0.0.0-use.local
   resolution: "@browse_clips/next-app@workspace:."
   dependencies:
     "@babel/core": ^7.20.5
-    "@browse_clips/api": "link:../../libs/api/dist"
     "@emotion/cache": ^11.10.3
     "@emotion/css": ^11.10.0
     "@emotion/react": ^11.10.4

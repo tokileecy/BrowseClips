@@ -10,9 +10,9 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox, { CheckboxProps } from '@mui/material/Checkbox';
 import { useForm } from 'react-hook-form';
 import { AxiosError } from 'axios';
-import api from '@/api';
 import { setAuth, setRememberJwt } from '@/redux/features/auth';
 import { RootState } from '@/redux/store';
+import { useLoginMutation } from '@/redux/services/auth';
 
 interface LoginFormFieldData {
   username: string;
@@ -35,14 +35,16 @@ export default function LoginPaper() {
     dispatch(setRememberJwt({ rememberJwt: e.target.checked }));
   };
 
+  const [login] = useLoginMutation();
+
   const handleLogin = async (data: LoginFormFieldData) => {
     try {
-      const res = await api.login({
+      const res = await login({
         username: data.username,
         password: data.password,
-      });
+      }).unwrap();
 
-      dispatch(setAuth({ jwt: res.data.accessToken }));
+      dispatch(setAuth({ jwt: res.accessToken }));
       router.push('/admin');
     } catch (error) {
       const err = error as AxiosError;

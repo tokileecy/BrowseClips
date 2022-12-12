@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { API } from '@/api';
+import { Video } from '../services/types';
 
 export type State = {
   ids: string[];
-  videoMap: Record<string, API.Video>;
+  videoMap: Record<string, Video>;
 };
 
 export const initialState: State = {
@@ -15,7 +15,7 @@ export const videosSlice = createSlice({
   name: 'videos',
   initialState,
   reducers: {
-    setVideos: (state, action: PayloadAction<{ videos: API.Video[] }>) => {
+    setVideos: (state, action: PayloadAction<{ videos: Video[] }>) => {
       const { videos } = action.payload;
 
       const idSet = new Set<string>();
@@ -29,7 +29,7 @@ export const videosSlice = createSlice({
 
     updateVideos: (
       state,
-      action: PayloadAction<{ videos: API.Video[]; ids?: string[] }>,
+      action: PayloadAction<{ videos: Video[]; ids?: string[] }>,
     ) => {
       const { videos, ids } = action.payload;
 

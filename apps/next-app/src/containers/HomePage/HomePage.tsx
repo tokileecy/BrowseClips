@@ -3,17 +3,18 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
-import api, { API } from '@/api';
 import Layout from '@/components/Layout';
 import VideoCard from '@/components/VideoCard';
 import { useDispatch } from 'react-redux';
 import { updateVideos, setVideos } from '@/redux/features/videos';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
-import { useListChannelGroupsQuery } from '@/redux/services/nestApi';
+import { useListChannelGroupsQuery } from '@/redux/services/channels';
+import { useLazyListVideosQuery } from '@/redux/services/videos';
+import { ChannelCategory } from '@/redux/services/types';
 
 export interface VideoPageProps {
-  category: API.ChannelCategory | null;
+  category: ChannelCategory | null;
 }
 
 export default function VideoPage(props: VideoPageProps) {
@@ -33,6 +34,8 @@ export default function VideoPage(props: VideoPageProps) {
   const videos = useSelector((state: RootState) => state.videos);
   const dispatch = useDispatch();
 
+  const [listVideos] = useLazyListVideosQuery();
+
   const fetchVideos = async (
     option: {
       reset?: boolean;
@@ -43,16 +46,16 @@ export default function VideoPage(props: VideoPageProps) {
     const { reset, cursor, channelGroupIds } = option;
 
     try {
-      const res = await api.listVideos({
+      const videosData = await listVideos({
         channelGroupIds,
         category: category ?? 'Streamer',
         sortBy: 'publishedAt',
         orderBy: 'desc',
         cursor: reset ? undefined : cursor,
-      });
+      }).unwrap();
 
-      if (res.data.length > 0) {
-        videoCursorRef.current = res.data[res.data.length - 1].id;
+      if (videosData.length > 0) {
+        videoCursorRef.current = videosData[videosData.length - 1].id;
       } else {
         videoCursorRef.current = undefined;
       }
@@ -60,14 +63,14 @@ export default function VideoPage(props: VideoPageProps) {
       if (cursor && !reset) {
         dispatch(
           updateVideos({
-            ids: [...videos.ids, ...res.data.map(({ id }) => id)],
-            videos: res.data,
+            ids: [...videos.ids, ...videosData.map(({ id }) => id)],
+            videos: videosData,
           }),
         );
       } else {
         dispatch(
           setVideos({
-            videos: res.data,
+            videos: videosData,
           }),
         );
       }

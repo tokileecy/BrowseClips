@@ -1,6 +1,5 @@
-import { Api } from '@browse_clips/api';
+import axios from 'axios';
 import getConfig from 'next/config';
-export * as API from '@browse_clips/api';
 
 const { publicRuntimeConfig, serverRuntimeConfig } = getConfig();
 
@@ -11,11 +10,12 @@ const { NEST_URL } = runtimeConfig;
 
 const uri = new URL('', NEST_URL).href;
 
-const api = new Api({
+const apiInstance = axios.create({
   baseURL: uri,
+  timeout: 10000,
 });
 
-api.apiInstance.interceptors.response.use(
+apiInstance.interceptors.response.use(
   (response) => {
     return response;
   },
@@ -29,4 +29,11 @@ api.apiInstance.interceptors.response.use(
   },
 );
 
-export default api;
+let jwt = '';
+
+export const setJwt = (value: string) => {
+  jwt = value;
+  apiInstance.defaults.headers.common.Authorization = `Bearer ${jwt}`;
+};
+
+export default apiInstance;
