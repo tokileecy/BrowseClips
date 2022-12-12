@@ -5,7 +5,7 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import api, { API } from '@/api';
 import Layout from '@/components/Layout';
-import VideoCard from '@/components/Layout/VideoCard';
+import VideoCard from '@/components/VideoCard';
 import { useDispatch } from 'react-redux';
 import { updateVideos, setVideos } from '@/redux/features/videos';
 import { useSelector } from 'react-redux';
