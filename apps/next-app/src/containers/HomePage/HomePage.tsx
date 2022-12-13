@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Tabs from '@mui/material/Tabs';
@@ -16,9 +15,10 @@ import { useLazyListVideosQuery } from '@/redux/services/videos';
 import { ChannelCategory } from '@/redux/services/types';
 
 const tabs = [
-  { key: 'LIVE', text: 'LIVE' },
-  { key: 'DEFAULT', text: 'ARCHIVE' },
-  { key: 'UPCOMING', text: 'UPCOMING' },
+  { value: 'LIVE', text: 'LIVE' },
+  { value: 'UPCOMING', text: 'UPCOMING' },
+  { value: 'DEFAULT', text: 'ARCHIVE' },
+  { value: undefined, text: 'ALL' },
 ] as const;
 
 export interface VideoPageProps {
@@ -58,7 +58,7 @@ export default function VideoPage(props: VideoPageProps) {
       const videosData = await listVideos({
         channelGroupIds,
         category: category ?? 'Streamer',
-        liveState: tabs[selectedTab].key,
+        liveState: tabs[selectedTab].value,
         sortBy: 'publishedAt',
         orderBy: 'desc',
         cursor: reset ? undefined : cursor,
@@ -151,7 +151,11 @@ export default function VideoPage(props: VideoPageProps) {
             aria-label="liveState tabs"
           >
             {tabs.map((tab) => (
-              <Tab key={tab.key} label={tab.text} {...tabA11yProps(tab.text)} />
+              <Tab
+                key={tab.text}
+                label={tab.text}
+                {...tabA11yProps(tab.text)}
+              />
             ))}
           </Tabs>
         </Box>
@@ -236,7 +240,7 @@ export default function VideoPage(props: VideoPageProps) {
                   id={video.id}
                   title={video.title}
                   thumbnails={thumbnails}
-                  isLive={video.liveState === 'LIVE'}
+                  liveState={video.liveState}
                 />
               </Box>
             );
