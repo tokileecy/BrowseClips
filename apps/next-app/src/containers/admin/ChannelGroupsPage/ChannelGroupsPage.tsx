@@ -177,6 +177,7 @@ export default function ChannelGroupsPage() {
                         {channelGroups.channels.map((channel) => {
                           return (
                             <ListItemButton
+                              href={`https://www.youtube.com/channel/${channel.channel.id}`}
                               sx={{ pl: 4 }}
                               key={channel.channel.id}
                             >
