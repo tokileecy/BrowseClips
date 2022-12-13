@@ -120,7 +120,9 @@ export default function VideoPage(props: VideoPageProps) {
   }, [selectedChannelGroupIdMap]);
 
   useEffect(() => {
-    fetchVideos();
+    fetchVideos({
+      channelGroupIds: getIdsFromIdMap(),
+    });
   }, [category, selectedTab]);
 
   const tabA11yProps = (tab: string) => {
