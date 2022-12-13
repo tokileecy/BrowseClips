@@ -51,9 +51,6 @@ export const channelApi = createApi({
         data,
       }),
     }),
-    syncChannels: builder.query<void, void>({
-      query: () => ({ url: '/crawler-chat/sync-channels', method: 'get' }),
-    }),
   }),
 });
 
@@ -63,5 +60,4 @@ export const {
   useGetChannelGroupByNameQuery,
   useListChannelGroupsQuery,
   useAddChannelByIdsMutation,
-  useLazySyncChannelsQuery,
 } = channelApi;

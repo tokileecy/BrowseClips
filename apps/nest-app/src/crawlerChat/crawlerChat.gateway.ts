@@ -27,7 +27,7 @@ export class CrawlerChatGateway {
   async listCrawlers() {
     const crawlers = await this.server.allSockets();
 
-    return crawlers;
+    return Array.from(crawlers);
   }
 
   async syncChannels() {

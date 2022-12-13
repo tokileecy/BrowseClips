@@ -7,11 +7,12 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Paper } from '@mui/material';
 import Layout from '@/components/Layout';
-import {
-  useAddChannelByIdsMutation,
-  useLazySyncChannelsQuery,
-} from '@/redux/services/channels';
+import { useAddChannelByIdsMutation } from '@/redux/services/channels';
 import { useAddVideoByIdsMutation } from '@/redux/services/videos';
+import {
+  useLazySyncChannelsQuery,
+  useListCrawlersQuery,
+} from '@/redux/services/crawlerChat';
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
@@ -23,6 +24,13 @@ const { NODE_ENV } = runtimeConfig;
 export default function AdminPage() {
   const [channelIds, setChannelIds] = useState('');
   const [videoId, setVideoId] = useState('');
+
+  const {
+    data: crawlers,
+    refetch,
+    isLoading: fetchCrawlerLoading,
+    error: fetchCrawlerError,
+  } = useListCrawlersQuery();
 
   const [addChannelByIds] = useAddChannelByIdsMutation();
 
@@ -57,6 +65,16 @@ export default function AdminPage() {
     }
   }, []);
 
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      refetch();
+    }, 10000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [refetch]);
+
   return (
     <Layout>
       <Box
@@ -78,8 +96,8 @@ export default function AdminPage() {
             Admin
           </Typography>
         </Box>
-        <Box>
-          <Paper sx={{ display: 'flex', p: 4, flexDirection: 'column' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+          <Paper sx={{ display: 'flex', p: 3, flexDirection: 'column' }}>
             <Typography
               sx={{
                 fontSize: '36px',
@@ -144,6 +162,48 @@ export default function AdminPage() {
               </Button>
             </Box>
           </Paper>
+          {!fetchCrawlerLoading && !fetchCrawlerError && (
+            <Paper
+              sx={{
+                p: 3,
+              }}
+            >
+              <Typography
+                sx={{
+                  fontSize: '36px',
+                  fontWeight: 'bold',
+                  color: 'black',
+                }}
+              >
+                Crawlers
+              </Typography>
+              <Box
+                sx={{
+                  mt: 2,
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr 1fr 1fr',
+                }}
+              >
+                {crawlers?.map((crawler) => (
+                  <Box
+                    key={crawler}
+                    sx={{
+                      display: 'flex',
+                      alignItems: 'center',
+
+                      width: '250px',
+                      height: '90px',
+                      p: 1,
+                      borderRadius: '4px',
+                      backgroundColor: '#c2c2c2',
+                    }}
+                  >
+                    {`crawler id: ${crawler}`}
+                  </Box>
+                ))}
+              </Box>
+            </Paper>
+          )}
         </Box>
       </Box>
     </Layout>
