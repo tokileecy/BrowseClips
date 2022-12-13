@@ -65,6 +65,7 @@ model Video {
   tags                 String[]           @default([])
   youtubeData          Json?
   liveState            String?            @default("DEFAULT")
+  needUpdate           Boolean            @default(false)
   channel              Channel            @relation(fields: [channelId], references: [id])
   subjects             SubjectsOnVideos[]
 }

@@ -7,7 +7,6 @@ export class CrawlerChatController {
 
   @Get('sync-channels')
   async sycnChannels() {
-    this.crawlerChatGateway.sycnChannels();
-    // return await this.crawlerChatGateway.listCrawlers();
+    this.crawlerChatGateway.syncChannels();
   }
 }

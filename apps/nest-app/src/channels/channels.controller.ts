@@ -21,12 +21,6 @@ export class ChannelsController {
     return this.channelsService.addChannelById(data);
   }
 
-  @UseJwtAuth()
-  @Get('sync')
-  async sync() {
-    return this.channelsService.syncChannelVideos();
-  }
-
   @Get('groups')
   async listAllGroups(@Query() query) {
     const withVideos = query.withVideos === '1';

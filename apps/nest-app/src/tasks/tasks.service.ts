@@ -11,7 +11,7 @@ export class TasksService {
   @Cron('0 * * * *', {
     timeZone: 'Asia/Taipei',
   })
-  handleCron() {
-    this.crawlerChatGateway.sycnChannels();
+  cronSyncChannels() {
+    this.crawlerChatGateway.syncChannels();
   }
 }

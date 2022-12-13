@@ -30,7 +30,7 @@ export class CrawlerChatGateway {
     return crawlers;
   }
 
-  async sycnChannels() {
+  async syncChannels() {
     const channels = await this.channelsService.listChannelIds();
 
     const chunks = [];
