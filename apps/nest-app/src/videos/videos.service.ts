@@ -12,6 +12,7 @@ export class VideosService {
   async listVideos(
     params: {
       category?: ChannelCategory;
+      liveState?: 'LIVE' | 'DEFAULT' | 'UPCOMING';
       channelGroupIds?: number[];
       channelGroupNames?: string[];
       size?: number;
@@ -24,6 +25,7 @@ export class VideosService {
     const {
       size = 60,
       page = 0,
+      liveState,
       category,
       cursor,
       sortBy,
@@ -54,6 +56,7 @@ export class VideosService {
         take: size,
         cursor: cursorData,
         where: {
+          liveState,
           channel: {
             channelGroups: {
               some: {
@@ -73,6 +76,7 @@ export class VideosService {
         take: size,
         cursor: cursorData,
         where: {
+          liveState,
           channel: {
             channelGroups: {
               some: {
@@ -94,6 +98,7 @@ export class VideosService {
         take: size,
         cursor: cursorData,
         where: {
+          liveState,
           channel: {
             category,
           },

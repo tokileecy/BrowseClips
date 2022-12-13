@@ -44,6 +44,7 @@ export default function Main(props: MainProps) {
         component="main"
         sx={{
           marginTop: 0,
+          padding: '32px 0',
         }}
       >
         {children}

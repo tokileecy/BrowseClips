@@ -3,6 +3,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import Layout from '@/components/Layout';
 import VideoCard from '@/components/VideoCard';
 import { useDispatch } from 'react-redux';
@@ -12,6 +14,12 @@ import { RootState } from '@/redux/store';
 import { useListChannelGroupsQuery } from '@/redux/services/channels';
 import { useLazyListVideosQuery } from '@/redux/services/videos';
 import { ChannelCategory } from '@/redux/services/types';
+
+const tabs = [
+  { key: 'LIVE', text: 'LIVE' },
+  { key: 'DEFAULT', text: 'ARCHIVE' },
+  { key: 'UPCOMING', text: 'UPCOMING' },
+] as const;
 
 export interface VideoPageProps {
   category: ChannelCategory | null;
@@ -34,6 +42,7 @@ export default function VideoPage(props: VideoPageProps) {
   const videos = useSelector((state: RootState) => state.videos);
   const dispatch = useDispatch();
 
+  const [selectedTab, setSelectedTab] = useState(0);
   const [listVideos] = useLazyListVideosQuery();
 
   const fetchVideos = async (
@@ -49,6 +58,7 @@ export default function VideoPage(props: VideoPageProps) {
       const videosData = await listVideos({
         channelGroupIds,
         category: category ?? 'Streamer',
+        liveState: tabs[selectedTab].key,
         sortBy: 'publishedAt',
         orderBy: 'desc',
         cursor: reset ? undefined : cursor,
@@ -111,7 +121,17 @@ export default function VideoPage(props: VideoPageProps) {
 
   useEffect(() => {
     fetchVideos();
-  }, [category]);
+  }, [category, selectedTab]);
+
+  const tabA11yProps = (tab: string) => {
+    return {
+      'aria-controls': `tabpanel-${tab}`,
+    };
+  };
+
+  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setSelectedTab(newValue);
+  };
 
   return (
     <Layout onScrollTopBottom={handleScrollTopBottom}>
@@ -124,20 +144,21 @@ export default function VideoPage(props: VideoPageProps) {
           pb: 3,
         }}
       >
-        <Box sx={{ pb: 3 }}>
-          <Typography
-            sx={{
-              fontSize: '24px',
-              fontWeight: 'bold',
-              color: 'white',
-            }}
+        <Box sx={{ backgroundColor: '#323232' }}>
+          <Tabs
+            value={selectedTab}
+            onChange={handleTabChange}
+            aria-label="liveState tabs"
           >
-            Videos
-          </Typography>
+            {tabs.map((tab) => (
+              <Tab key={tab.key} label={tab.text} {...tabA11yProps(tab.text)} />
+            ))}
+          </Tabs>
         </Box>
         <Stack
           direction="row"
           sx={{
+            mt: 3,
             mb: 3,
             gap: 1,
             flexWrap: 'wrap',

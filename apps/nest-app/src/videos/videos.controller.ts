@@ -13,6 +13,7 @@ export class VideosController {
       channelGroupIds?: string[];
       channelGroupNames?: string[];
       category?: ChannelCategory;
+      liveState?: 'LIVE' | 'DEFAULT' | 'UPCOMING';
       size?: number;
       page?: number;
       cursor?: string;
@@ -24,6 +25,7 @@ export class VideosController {
       channelGroupIds: query.channelGroupIds?.map((id) => Number(id)),
       channelGroupNames: query.channelGroupNames ?? [],
       category: query.category,
+      liveState: query.liveState,
       size: query.size,
       page: query.page,
       cursor: query.cursor,

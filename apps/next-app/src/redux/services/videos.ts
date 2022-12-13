@@ -6,6 +6,7 @@ interface ListVideoParams {
   channelGroupIds?: number[];
   channelGroupNames?: string[];
   category?: ChannelCategory;
+  liveState?: 'LIVE' | 'DEFAULT' | 'UPCOMING';
   size?: number;
   page?: number;
   cursor?: string;

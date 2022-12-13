@@ -99,6 +99,16 @@ theme = createTheme(theme, {
         },
       },
     },
+    MuiTab: {
+      styleOverrides: {
+        textColorPrimary: {
+          'color': 'white',
+          '&.Mui-selected': {
+            color: '#2894ff',
+          },
+        },
+      },
+    },
   },
 });
 
