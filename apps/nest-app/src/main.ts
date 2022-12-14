@@ -6,6 +6,7 @@ import { repl } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import 'src/global';
+import Logger from './logger';
 
 const packageFile = fs
   .readFileSync(path.resolve(__dirname, '../package.json'))
@@ -14,7 +15,9 @@ const packageFile = fs
 const PACKAGE_VERSION = JSON.parse(packageFile).version;
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: new Logger(),
+  });
 
   app.useGlobalPipes(new ValidationPipe());
 

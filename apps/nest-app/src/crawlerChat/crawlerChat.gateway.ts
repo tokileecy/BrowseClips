@@ -7,15 +7,20 @@ import { ChannelsService } from 'src/channels/channels.service';
 import type { Server, Socket } from 'socket.io';
 import { Video } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
-import { Logger } from '@nestjs/common';
+import Logger from 'src/logger';
 import { appendFileSync } from 'fs';
 import path from 'path';
+
+const socketEmitTimeout = 60000 * 10;
+const dispatchIntervalTime = 3000;
+const chunkSize = 5;
+
 //WebSocket listen  port 81
 @WebSocketGateway(81, {
   maxHttpBufferSize: 3e7,
 })
 export class CrawlerChatGateway {
-  private readonly logger = new Logger('HTTP');
+  private readonly logger = new Logger('SOCKET MSG');
 
   @WebSocketServer() server: Server;
   // crawlerStates: Record<string, 'IDLE'>
@@ -30,102 +35,126 @@ export class CrawlerChatGateway {
     return Array.from(crawlers);
   }
 
-  async syncChannels() {
-    const channels = await this.channelsService.listChannelIds();
+  async getIdleCrawler() {
+    const crawlers = Array.from(
+      this.server.sockets.adapter.rooms.get('crawler') ?? [],
+    );
 
-    const chunks = [];
-    const maxTimeOut = 60000 * 10;
+    const idleCrawler = [];
+    const promisies: Promise<string>[] = [];
 
-    while (channels.length > 0) {
-      chunks.push(channels.splice(0, 5));
+    for (let i = 0; i < crawlers.length; i++) {
+      const crawlerId = crawlers[i];
+
+      promisies.push(
+        new Promise((resolve, reject) => {
+          const timeoutId = setTimeout(() => {
+            reject('crawing timeout');
+          }, socketEmitTimeout);
+
+          this.server.sockets.sockets
+            .get(crawlerId)
+            ?.emit('isIdle', async (isIdle) => {
+              if (isIdle) {
+                idleCrawler.push(crawlerId);
+              }
+
+              clearTimeout(timeoutId);
+              resolve(isIdle);
+            });
+        }),
+      );
     }
 
-    console.log('start dispatch craw task');
+    try {
+      await Promise.all(promisies);
+    } catch (error) {
+      this.logger.error(error);
+    }
 
-    let crawTime = 0;
-    const originChunkSize = chunks.length;
+    return idleCrawler;
+  }
+
+  splitChunks<T>(datas: T[]) {
+    const chunks: T[][] = [];
+
+    while (datas.length > 0) {
+      chunks.push(datas.splice(0, chunkSize));
+    }
+
+    return chunks;
+  }
+
+  dispatchLoop<T>(
+    chunks: T[],
+    mission: (crawlerId: string, chunk: T) => void,
+    option: { crawName?: string } = {},
+  ) {
+    const { crawName = 'unknown' } = option;
+
+    this.logger.log(`${crawName}: start dispatch craw task`);
 
     const intervalId = setInterval(async () => {
-      const crawlers = Array.from(
-        this.server.sockets.adapter.rooms.get('crawler') ?? [],
-      );
-
       if (chunks.length === 0) {
         clearInterval(intervalId);
       }
 
-      const idleCrawler = [];
+      let crawTime = 0;
+      const originChunkSize = chunks.length;
 
-      const promisies: Promise<string>[] = [];
-
-      for (let i = 0; i < crawlers.length; i++) {
-        const crawlerId = crawlers[i];
-
-        promisies.push(
-          new Promise((resolve, reject) => {
-            const timeoutId = setTimeout(() => {
-              reject('crawing timeout');
-            }, maxTimeOut);
-
-            this.server.sockets.sockets
-              .get(crawlerId)
-              ?.emit('isIdle', async (isIdle) => {
-                if (isIdle) {
-                  idleCrawler.push(crawlerId);
-                }
-
-                clearTimeout(timeoutId);
-                resolve(isIdle);
-              });
-          }),
-        );
-      }
-
-      try {
-        await Promise.all(promisies);
-      } catch (error) {
-        console.error(error);
-      }
+      const idleCrawler = await this.getIdleCrawler();
 
       idleCrawler.forEach((crawlerId) => {
         crawTime++;
 
         if (crawTime > originChunkSize + 10) {
-          console.warn('craw too many times');
+          this.logger.warn(`${crawName}: craw too many times`);
           clearInterval(intervalId);
         }
 
         const chunk = chunks.pop();
 
-        console.log(
-          `dispatch to ${crawlerId}`,
-          `remain ${chunks.length} chunks`,
-        );
+        this.logger.log(`${crawName}: dispatch to ${crawlerId}`);
+        this.logger.log(`${crawName}: remain ${chunks.length} chunks`);
 
-        const timeoutId = setTimeout(() => {
-          chunks.unshift(chunk);
-          console.warn('crawChannels timeout');
-        }, maxTimeOut);
-
-        this.server.sockets.sockets
-          .get(crawlerId)
-          ?.emit(
-            'crawChannels',
-            chunk,
-            async (res: Record<string, Video[]>) => {
-              clearTimeout(timeoutId);
-
-              if (res === null) {
-                console.warn(`${crawlerId} craw failed.`);
-                chunks.unshift(chunk);
-              } else {
-                this.addVideos(res);
-                console.log(`${crawlerId} fininshed crawlering`);
-              }
-            },
-          );
+        mission(crawlerId, chunk);
       });
-    }, 3000);
+    }, dispatchIntervalTime);
+  }
+
+  async syncChannels() {
+    const channels = await this.channelsService.listChannelIds();
+
+    const chunks = this.splitChunks(channels);
+
+    const mission = (
+      crawlerId: string,
+      chunk: {
+        id: string;
+      }[],
+    ) => {
+      this.server.sockets.sockets
+        .get(crawlerId)
+        ?.timeout(socketEmitTimeout)
+        ?.emit(
+          'crawChannels',
+          chunk,
+          async (err, res: Record<string, Video[]>) => {
+            if (err) {
+              chunks.unshift(chunk);
+              this.logger.warn('crawChannels timeout');
+            } else if (res === null) {
+              this.logger.warn(`${crawlerId} craw failed.`);
+              chunks.unshift(chunk);
+            } else {
+              this.addVideos(res);
+              this.logger.log(`${crawlerId} fininshed crawlering`);
+            }
+          },
+        );
+    };
+
+    this.dispatchLoop(chunks, mission, { crawName: 'crawChannels' });
   }
 
   async addVideos(channelMap: Record<string, Video[]>) {
@@ -141,8 +170,8 @@ export class CrawlerChatGateway {
           try {
             await this.prisma.video.upsert({
               where: { id: data.id },
-              update: { ...data },
-              create: { ...data },
+              update: { ...data, needUpdate: data.liveState === 'LIVE' },
+              create: { ...data, needUpdate: data.liveState === 'LIVE' },
             });
           } catch (error) {
             appendFileSync(
@@ -152,7 +181,7 @@ export class CrawlerChatGateway {
               ${JSON.stringify(data, null, 2)} \n
               `,
             );
-            console.error(`add video failed with id: ${data.id}`);
+            this.logger.error(`add video failed with id: ${data.id}`);
           }
         }
       }
@@ -165,11 +194,11 @@ export class CrawlerChatGateway {
         client.join('crawler');
       }
     });
-    console.log(`client ${client.id} is connected`);
+    this.logger.log(`client ${client.id} is connected`);
   }
 
   handleDisconnect(client: Socket) {
-    console.log(`client ${client.id} is disConnected`);
+    this.logger.log(`client ${client.id} is disConnected`);
   }
 
   @SubscribeMessage('join')
