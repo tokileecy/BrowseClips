@@ -1,4 +1,4 @@
-import { SyntheticEvent, useMemo, useState } from 'react';
+import { SyntheticEvent, useEffect, useMemo, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import TextField from '@mui/material/TextField';
@@ -27,6 +27,7 @@ export default function CreateChannelDialog(props: CreateChannelDialogProps) {
     data: channels,
     error: listChannelsError,
     isLoading: isListChannelsLoading,
+    refetch,
   } = useListChannelsQuery();
 
   const [selectedChannels, setSelectedChannels] = useState<string[]>([]);
@@ -44,6 +45,12 @@ export default function CreateChannelDialog(props: CreateChannelDialogProps) {
       return acc;
     }, {} as Record<string, Channel>);
   }, [channels]);
+
+  useEffect(() => {
+    if (open) {
+      refetch();
+    }
+  }, [open]);
 
   return (
     <Dialog
