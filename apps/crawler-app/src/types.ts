@@ -37,3 +37,20 @@ export interface Video {
     liveStreamingDetails: unknown;
   };
 }
+
+export interface CrawledVideoData {
+  'id': string;
+  'count': string;
+  'publication': {
+    'isLiveBroadcast': string;
+    'startDate': string;
+    'endDate': string;
+  };
+  'channelId': string;
+  'datePublished': string;
+  'uploadDate': string;
+  'genre': string;
+  'name': string;
+  'description': string;
+  'interactionCount': string;
+}

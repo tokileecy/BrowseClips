@@ -1,4 +1,4 @@
-import playwright from 'playwright';
+import playwright, { BrowserContext, Page } from 'playwright';
 
 const HTTP_PROXY_URL = process.env.HTTP_PROXY_URL;
 const HTTP_PROXY_USERNAME = process.env.HTTP_PROXY_USERNAME;
@@ -23,13 +23,10 @@ export type VideoAndStreamHashMap = Record<
   }
 >;
 
-export default async function getChannelDatas(id: string) {
-  const browser = await playwright.firefox.launch({
-    headless: true, // setting this to true will not run the UI
-    proxy: proxyConfig,
-  });
-
-  const context = await browser.newContext();
+export default async function getChannelDatas(
+  context: BrowserContext,
+  id: string,
+) {
   const page = await context.newPage();
 
   console.log(`channel ${id} videos crawl starting.`);
@@ -108,7 +105,7 @@ export default async function getChannelDatas(id: string) {
     return acc;
   }, {});
 
-  await browser.close();
+  await page.close();
 
   console.log(`channel ${id} videos crawl finished`);
   return {
