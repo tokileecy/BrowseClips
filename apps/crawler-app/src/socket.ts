@@ -9,7 +9,7 @@ import crawVideos from './commands/crawVideos';
 
 dotenv.config();
 
-let isCrawingChannels = false;
+let isCrawing = false;
 let retryCount = 0;
 
 const PUBLIC_NEST_WS_URL = process.env.PUBLIC_NEST_WS_URL;
@@ -48,17 +48,19 @@ const init = async () => {
     });
 
     socket.on('crawChannels', async (channels, cb) => {
-      isCrawingChannels = true;
+      isCrawing = true;
 
       const context = await browserState.browser.newContext();
 
       const channelDatas = await crawChannels(context, channels);
 
       await cb(channelDatas);
-      isCrawingChannels = false;
+      isCrawing = false;
     });
 
     socket.on('crawVideos', async (videoIds, cb) => {
+      isCrawing = true;
+
       const context = await browserState.browser.newContext();
 
       const videoDataById: Record<string, CrawledVideoData> = await crawVideos(
@@ -66,11 +68,12 @@ const init = async () => {
         videoIds,
       );
 
-      cb(videoDataById);
+      await cb(videoDataById);
+      isCrawing = false;
     });
 
     socket.on('isIdle', async (cb) => {
-      await cb(!isCrawingChannels);
+      await cb(!isCrawing);
     });
   });
 

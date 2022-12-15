@@ -13,6 +13,7 @@ import {
   useLazySyncChannelsQuery,
   useListCrawlersQuery,
 } from '@/redux/services/crawlerChat';
+import TestingFeaturePaper from './TestingFeaturePaper';
 
 const { serverRuntimeConfig, publicRuntimeConfig } = getConfig();
 
@@ -204,6 +205,7 @@ export default function AdminPage() {
               </Box>
             </Paper>
           )}
+          <TestingFeaturePaper />
         </Box>
       </Box>
     </Layout>
