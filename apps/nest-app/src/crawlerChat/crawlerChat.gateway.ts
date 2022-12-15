@@ -48,18 +48,16 @@ export class CrawlerChatGateway {
 
       promisies.push(
         new Promise((resolve, reject) => {
-          const timeoutId = setTimeout(() => {
-            reject('crawing timeout');
-          }, socketEmitTimeout);
-
           this.server.sockets.sockets
             .get(crawlerId)
-            ?.emit('isIdle', async (isIdle) => {
-              if (isIdle) {
+            ?.timeout(socketEmitTimeout)
+            ?.emit('isIdle', async (err, isIdle) => {
+              if (err) {
+                reject('crawing timeout');
+              } else if (isIdle) {
                 idleCrawler.push(crawlerId);
               }
 
-              clearTimeout(timeoutId);
               resolve(isIdle);
             });
         }),
@@ -156,6 +154,8 @@ export class CrawlerChatGateway {
 
     this.dispatchLoop(chunks, mission, { crawName: 'crawChannels' });
   }
+
+  // async crawlerVideos(id: string) {}
 
   async addVideos(channelMap: Record<string, Video[]>) {
     const entries = Object.entries(channelMap);
