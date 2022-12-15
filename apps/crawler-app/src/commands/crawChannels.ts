@@ -104,7 +104,7 @@ const crawChannels = async (
   } catch (error) {
     appendFileSync(
       path.resolve(__dirname, '../../tmp/addVideosFailed'),
-      new Error(error).message.toString(),
+      new Error(error).message.toString() + '\n',
     );
     console.error(`addVideos failed`);
     return null;
