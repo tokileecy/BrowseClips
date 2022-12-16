@@ -4,7 +4,6 @@ import * as path from 'path';
 import { io, Socket } from 'socket.io-client';
 import { CrawledVideoData, Video } from './types';
 import crawChannels from './commands/crawChannels';
-import browserState from './browserState';
 import crawVideos from './commands/crawVideos';
 
 dotenv.config();
@@ -35,7 +34,6 @@ const socket: Socket<ServerToClientEvents, ClientToServerEvents> =
   io(PUBLIC_NEST_WS_URL);
 
 const init = async () => {
-  await browserState.init();
   socket.on('connect', function () {
     console.log('Connected');
     socket.removeAllListeners();
@@ -50,9 +48,7 @@ const init = async () => {
     socket.on('crawChannels', async (channels, cb) => {
       isCrawing = true;
 
-      const context = await browserState.browser.newContext();
-
-      const channelDatas = await crawChannels(context, channels);
+      const channelDatas = await crawChannels(channels);
 
       await cb(channelDatas);
       isCrawing = false;
@@ -61,10 +57,7 @@ const init = async () => {
     socket.on('crawVideos', async (videoIds, cb) => {
       isCrawing = true;
 
-      const context = await browserState.browser.newContext();
-
       const videoDataById: Record<string, CrawledVideoData> = await crawVideos(
-        context,
         videoIds,
       );
 

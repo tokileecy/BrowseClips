@@ -5,14 +5,14 @@ import { Video } from '../types';
 import getChannelDatas, {
   VideoAndStreamHashMap,
 } from '../utils/getChannelDatas';
-import { BrowserContext } from 'playwright';
+import initBrowser from '../initBrowser';
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
-const crawChannels = async (
-  context: BrowserContext,
-  channels: { id: string }[],
-) => {
+const crawChannels = async (channels: { id: string }[]) => {
+  const browser = await initBrowser();
+  const context = await browser.newContext();
+
   try {
     console.log(`start crawing Videos with ${channels.length} channels.`);
 
@@ -108,6 +108,9 @@ const crawChannels = async (
     );
     console.error(`addVideos failed`);
     return null;
+  } finally {
+    await context.close();
+    await browser.close();
   }
 };
 
