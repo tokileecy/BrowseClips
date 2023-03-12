@@ -18,9 +18,15 @@ export class CrawlerChatController {
   async crawChannel(@Param() params: CrawChannelDto) {
     return this.crawlerChatGateway.crawChannel(params.channelId);
   }
+
   @Get('craw-videos/:videoId')
   async crawVideo(@Param() params: CrawVideoDto) {
     return this.crawlerChatGateway.crawVideo(params.videoId);
+  }
+
+  @Get('craw-live-videos')
+  async crawLiveVideos() {
+    return this.crawlerChatGateway.crawLiveVideos();
   }
 
   @Get('crawlers')

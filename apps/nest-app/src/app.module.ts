@@ -15,7 +15,6 @@ import { join } from 'path';
 import { AuthModule } from './auth/auth.module';
 import { LoggerMiddleware } from './common/middleware/logger.middleware';
 import { CrawlerChatModule } from './crawlerChat/crawlerChat.module';
-import { TasksService } from './tasks/tasks.service';
 import { TasksModule } from './tasks/tasks.module';
 
 @Module({

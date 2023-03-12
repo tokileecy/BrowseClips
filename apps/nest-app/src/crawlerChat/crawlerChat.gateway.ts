@@ -10,6 +10,7 @@ import { PrismaService } from 'src/prisma.service';
 import Logger from 'src/logger';
 import { appendFileSync } from 'fs';
 import path from 'path';
+import { VideosService } from 'src/videos/videos.service';
 
 const socketEmitTimeout = 60000 * 10;
 const dispatchIntervalTime = 3000;
@@ -26,6 +27,7 @@ export class CrawlerChatGateway {
   // crawlerStates: Record<string, 'IDLE'>
   constructor(
     private readonly channelsService: ChannelsService,
+    private readonly videosService: VideosService,
     private readonly prisma: PrismaService,
   ) {}
 
@@ -161,6 +163,47 @@ export class CrawlerChatGateway {
 
   async crawVideo(videoId: string) {
     const chunks = [[videoId]];
+
+    const targetData: Record<string, Video[]> | null = await new Promise(
+      (resolve) => {
+        const mission = (crawlerId: string, chunk: string[]) => {
+          this.server.sockets.sockets
+            .get(crawlerId)
+            ?.timeout(socketEmitTimeout)
+            ?.emit(
+              'crawVideos',
+              chunk,
+              async (err, res: Record<string, Video[]>) => {
+                if (err) {
+                  this.logger.warn('crawVideos timeout');
+                  resolve(null);
+                } else if (res === null) {
+                  this.logger.warn(`${crawlerId} craw failed.`);
+                  resolve(null);
+                } else {
+                  resolve(res);
+                  this.logger.log(`${crawlerId} fininshed crawlering`);
+                }
+              },
+            );
+        };
+
+        this.dispatchLoop(chunks, mission, { crawName: 'crawVideos' });
+      },
+    );
+
+    return targetData;
+  }
+
+  async crawLiveVideos() {
+    const videos = (
+      await this.videosService.listVideos({
+        category: 'Streamer',
+        liveState: 'LIVE',
+      })
+    ).map((video) => video.id);
+
+    const chunks = this.splitChunks(videos);
 
     const targetData: Record<string, Video[]> | null = await new Promise(
       (resolve) => {
