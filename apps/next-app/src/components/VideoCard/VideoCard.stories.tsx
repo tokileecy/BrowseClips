@@ -14,7 +14,6 @@ const Template: Story<VideoCardProps> = (args) => {
 export const Normal = Template.bind({});
 
 Normal.args = {
-  isLive: true,
   id: '33',
   thumbnails: undefined,
   title: 'title',

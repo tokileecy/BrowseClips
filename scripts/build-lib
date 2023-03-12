@@ -6,18 +6,19 @@ YARN_CACHE_DIRECTORY="$(cd -- "$PROJECT_ROOT" >/dev/null 2>&1; cd .cache/yarn; p
 
 cd -- $PROJECT_ROOT/libs
 
-for directory in */; do
-  current=$(cd -- $directory; pwd -P)
+if [ "$(ls -A .)" ]; then
+  for directory in */; do
+    current=$(cd -- $directory; pwd -P)
 
-  /usr/bin/env sh -c "
-    cd -- $current
-    if [ -f \"package.json\" ]; then
-      echo \"================ build lib - $directory ================\"
-      yarn
-      yarn build
-    else
-      echo \"$directory is not a nodejs package\"
-    fi
-  "
-done
-
+    /usr/bin/env sh -c "
+      cd -- $current
+      if [ -f \"package.json\" ]; then
+        echo \"================ build lib - $directory ================\"
+        yarn
+        yarn build
+      else
+        echo \"$directory is not a nodejs package\"
+      fi
+    "
+  done
+fi
