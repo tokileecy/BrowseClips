@@ -52,11 +52,9 @@ export default function Aside(props: AsideProps) {
             { href: '/channel-groups', text: 'Channelgroups' },
           ].map(({ href, text }) => (
             <ListItem key={href} disablePadding>
-              <Link href={href}>
-                <ListItemButton>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </Link>
+              <ListItemButton href={href} component={Link}>
+                <ListItemText primary={text} />
+              </ListItemButton>
             </ListItem>
           ))}
         </List>

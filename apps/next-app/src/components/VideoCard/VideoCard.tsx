@@ -23,69 +23,68 @@ export default function VideoCard(props: VideoCardProps) {
         height: '100%',
       }}
     >
-      <Link href={`/video/${id}`}>
-        <Box
-          component="a"
-          sx={{
-            cursor: 'pointer',
-            position: 'relative',
-          }}
-        >
-          <CardMedia
-            component="img"
-            height="120"
-            width="250"
-            image={thumbnails}
-            alt="vedio"
-          />
-          {liveState === 'LIVE' && (
-            <Box
-              sx={{
-                fontSize: '14px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'absolute',
-                bottom: 0,
-                right: 0,
-                backgroundColor: 'rgba(204, 0, 0, 0.9)',
-                color: 'white',
-                fontWeight: 'bold',
-                borderTopLeftRadius: 4,
-                pt: 0,
-                pb: 0,
-                pl: 1.25,
-                pr: 1.25,
-              }}
-            >
-              Live
-            </Box>
-          )}
-          {liveState === 'UPCOMING' && (
-            <Box
-              sx={{
-                fontSize: '14px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                position: 'absolute',
-                bottom: 0,
-                right: 0,
-                backgroundColor: 'rgba(0, 0, 0, 0.8)',
-                color: 'white',
-                fontWeight: 'bold',
-                borderTopLeftRadius: 4,
-                pt: 0,
-                pb: 0,
-                pl: 1.25,
-                pr: 1.25,
-              }}
-            >
-              Upcoming
-            </Box>
-          )}
-        </Box>
-      </Link>
+      <Box
+        component={Link}
+        href={`/video/${id}`}
+        sx={{
+          cursor: 'pointer',
+          position: 'relative',
+        }}
+      >
+        <CardMedia
+          component="img"
+          height="120"
+          width="250"
+          image={thumbnails}
+          alt="vedio"
+        />
+        {liveState === 'LIVE' && (
+          <Box
+            sx={{
+              fontSize: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+              backgroundColor: 'rgba(204, 0, 0, 0.9)',
+              color: 'white',
+              fontWeight: 'bold',
+              borderTopLeftRadius: 4,
+              pt: 0,
+              pb: 0,
+              pl: 1.25,
+              pr: 1.25,
+            }}
+          >
+            Live
+          </Box>
+        )}
+        {liveState === 'UPCOMING' && (
+          <Box
+            sx={{
+              fontSize: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              position: 'absolute',
+              bottom: 0,
+              right: 0,
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              color: 'white',
+              fontWeight: 'bold',
+              borderTopLeftRadius: 4,
+              pt: 0,
+              pb: 0,
+              pl: 1.25,
+              pr: 1.25,
+            }}
+          >
+            Upcoming
+          </Box>
+        )}
+      </Box>
       <CardContent
         sx={{
           'display': 'flex',
