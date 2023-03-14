@@ -38,7 +38,7 @@ services:
       - ./libs:/srv/wrokspace/libs
       - ./apps/crawler-app:/srv/wrokspace/apps/crawler-app
       - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
-      - ./.cache/yarn:/home/pwuser/.yarn/berry/cache
+      - ~/.yarn/berry/cache:/home/node/.yarn/berry/cache
       - ./tmp:/srv/tmp
     working_dir: /srv/wrokspace/apps/crawler-app
     command: >
@@ -67,7 +67,7 @@ services:
       - ./libs:/srv/wrokspace/libs
       - ./apps/nest-app:/srv/wrokspace/apps/nest-app
       - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
-      - ./.cache/yarn:/home/node/.yarn/berry/cache
+      - ~/.yarn/berry/cache:/home/node/.yarn/berry/cache
       - ./tmp:/srv/tmp
     working_dir: /srv/wrokspace/apps/nest-app
     command: >
@@ -102,7 +102,7 @@ services:
       - ./libs:/srv/wrokspace/libs
       - ./apps/next-app:/srv/wrokspace/apps/next-app
       - ./docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh
-      - ./.cache/yarn:/home/node/.yarn/berry/cache
+      - ~/.yarn/berry/cache:/home/node/.yarn/berry/cache
       - ./tmp:/srv/tmp
     working_dir: /srv/wrokspace/apps/next-app
     command: >
