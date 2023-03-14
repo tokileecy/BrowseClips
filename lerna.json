@@ -1,0 +1,19 @@
+{
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "useWorkspaces": false,
+  "version": "0.1.0",
+  "packages": [
+    "apps/*"
+  ],
+  "command": {
+    "version": {
+      "message": "chore(release): %s"
+    },
+    "publish": {
+      "conventionalCommits": true,
+      "ignoreChanges": [
+        "yarn.lock"
+      ]
+    }
+  }
+}

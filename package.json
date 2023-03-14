@@ -1,0 +1,19 @@
+{
+  "name": "vtuber_clips",
+  "version": "0.1.0",
+  "main": "index.js",
+  "repository": "git@github.com:tokileecy/BrowseClips.git",
+  "author": "tokileecy <tokileecy@gmail.com>",
+  "license": "MIT",
+  "packageManager": "yarn@3.4.1",
+  "scripts": {
+    "bootstrap": "yarn && yarn lerna exec yarn",
+    "dev": "docker compose up -d",
+    "version": "yarn bootstrap && git stage .",
+    "clean": "./scripts/clean",
+    "release:version": "yarn lerna version"
+  },
+  "devDependencies": {
+    "lerna": "^6.5.1"
+  }
+}
