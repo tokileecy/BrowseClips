@@ -9,9 +9,8 @@
   "scripts": {
     "bootstrap": "yarn && yarn lerna exec yarn",
     "dev": "docker compose up -d",
-    "version": "yarn bootstrap && git stage .",
     "clean": "./scripts/clean",
-    "release:version": "yarn lerna version"
+    "release:version": "yarn lerna version --force-publish"
   },
   "devDependencies": {
     "lerna": "^6.5.1"
